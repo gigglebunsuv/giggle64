@@ -17,8 +17,10 @@ const DIR := "user://bug_reports"
 ## Seconds the "saved" line stays up.
 const SHOW_TIME := 4.0
 
-var _was_down := false
 var _shown := 0.0
+var _was_down := false
+## The frame of the last report, so one press never makes two.
+var _last_frame := -100
 var _label := ""
 
 
@@ -26,12 +28,31 @@ func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
 	set_anchors_preset(Control.PRESET_FULL_RECT)
+	# This node sits inside the game's SubViewport, where key events may never
+	# arrive, so it listens at the window as well.
+	get_tree().root.window_input.connect(_input)
+
+
+# F8 by its event (a tap shorter than a frame still counts), at the window
+# or here, and by polling whether it is held, in case neither event comes.
+func _input(event: InputEvent) -> void:
+	var k := event as InputEventKey
+	if k and k.pressed and not k.echo and k.physical_keycode == KEY:
+		_trigger()
+
+
+func _trigger() -> void:
+	var frame := Engine.get_process_frames()
+	if frame - _last_frame < 10:
+		return
+	_last_frame = frame
+	save_report()
 
 
 func _process(delta: float) -> void:
-	var down := Input.is_key_pressed(KEY)
+	var down := Input.is_physical_key_pressed(KEY)
 	if down and not _was_down:
-		save_report()
+		_trigger()
 	_was_down = down
 	if _shown > 0.0:
 		_shown -= delta

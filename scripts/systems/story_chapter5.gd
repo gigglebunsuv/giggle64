@@ -301,8 +301,8 @@ static func returned() -> void:
 	# The ice prison (bars 1-4: celesta and high strings).
 	Story._black(0.0, 1.0)
 	Cutscene.glide(vp + Vector3(1.0, 1.8, 4.6), vp + Vector3.UP * 1.4, RETURNS_CUES.shadow, 48.0)
-	await Story.say_window(["Starless dark. A block of ice drifting in it, and a king inside the ice, his burning fist frozen to his chest. And behind him, far off..."],
-		RETURNS_CUES.prison + 1.2, RETURNS_CUES.shadow - 0.2)
+	await Story.say_window(["Starless dark. Ice drifts in it, a king frozen inside, his burning fist at his chest. And behind him, far off..."],
+		RETURNS_CUES.prison + 0.6, RETURNS_CUES.shadow - 0.2)
 	# The remnant of Denangdyn: a shadow behind the crack.
 	await Story._at_time(RETURNS_CUES.shadow)
 	var shadow := Cutscene.actor("lothelye", vp + Vector3(0, -1.0, -9.0), 0.0, &"idle")
@@ -358,7 +358,7 @@ static func returned() -> void:
 		Cutscene.face(fb, mara.global_position if mara else vp)
 		Story._close_on(fb, -1.0, 3.0, 1.9)
 	await Story.say_window([
-		"*Mara.* The Scourge of Bunsriel. Good. Then let us start with Haven's own dead. Wake its kings, and let them knock on its door.",
+		"*Mara.* Good. Begin with Haven's dead. Wake its kings to knock on its door.",
 	], RETURNS_CUES.mara_reply, RETURNS_CUES.shakes - 0.9, FIREBUNS, fb)
 	# Haven shakes (bar 22): black, and back in the yard on the timpani roll.
 	await Story._at_time(RETURNS_CUES.shakes - 0.8)

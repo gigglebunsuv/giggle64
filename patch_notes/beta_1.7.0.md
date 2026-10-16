@@ -51,6 +51,7 @@ A polish and release-readiness update: an instruction booklet, a fresh world map
 
 ## Fixes
 - The Purple and Gold Coin messages still said "Rupees".
+- **The vision of Firebuns' return** (Chapter V) ran up to 1.6 seconds behind its music. Two of its boxes held more words than fit before their cue. They are shorter now, and the scene keeps time.
 
 ## Under the hood
 - The project is now a git repository, with a README and the promo art.
@@ -61,7 +62,7 @@ A polish and release-readiness update: an instruction booklet, a fresh world map
 - **Animation.** `CharacterModel.min_blend` sets the shortest crossfade. Enemies use `Enemy.ENEMY_MIN_BLEND` (0.08 s) and townsfolk 0.12 s.
 - **Debug and bug reports.**
   - `DebugMenu.allowed()` is true in debug builds or with the `g64_debug` export feature, which the beta presets include.
-  - `BugReport` (`scripts/systems/bug_report.gd`) handles F8.
+  - `BugReport` (`scripts/systems/bug_report.gd`) handles F8. It listens at the window (`window_input`) and also polls the key, because key events don't always reach the game's SubViewport in exported builds.
 - **Promo tools.**
   - `tests/manual_capture.tscn` takes the booklet's screenshots.
   - `--pad-glyphs` shows Xbox icons without a pad attached.
@@ -71,5 +72,7 @@ A polish and release-readiness update: an instruction booklet, a fresh world map
   - test_bug_report
   - test_older_dungeon_secrets
   - test_audio_mix_levels
-- **Updated test:** test_beta_title now checks `GameManager.VERSION`.
+- **Updated tests:**
+  - test_beta_title now checks `GameManager.VERSION`.
+  - test_scored_scenes_keep_time answered the peace's save prompt with "Save", which returned to the title and restarted the test runner, so the suite looped forever. It now stays in the test and answers "Don't save".
 - **Plans for later** (not built) are in `design/`: `randomizer_plan.md`, `boss_rush_plan.md` and `saga_v_plan.md`.

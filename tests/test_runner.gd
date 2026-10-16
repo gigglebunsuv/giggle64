@@ -2635,6 +2635,8 @@ func test_play_time_and_completion() -> void:
 ## without a button.
 func test_scored_scenes_keep_time() -> void:
 	_isolate()
+	# Stay in the test after the peace's save prompt (it would reload the scene).
+	Story.end_to_title = false
 	var fb: Node3D = load("res://assets/models/firebuns.tscn").instantiate()
 	World.area_node.add_child(fb)
 	fb.global_position = _player.global_position + _player.forward() * 3.0
@@ -2643,8 +2645,16 @@ func test_scored_scenes_keep_time() -> void:
 	await _tap_until(func() -> bool: return Progress.flag("ch4:peace"), 300.0)
 	check(Progress.flag("ch4:sealed") and Progress.flag("ch4:peace"), "the sealing plays through to the peace")
 	check(Story.score_late < 0.6, "the sealing keeps time with its music (%.2f s late)" % Story.score_late)
-	while Cutscene.active or Dialogue.active:
-		await _seconds(0.5)
+	# The save prompt comes after the peace: answer "Don't save".
+	for i in 120:
+		if not Cutscene.active and not Dialogue.active:
+			break
+		if Dialogue.active:
+			if Dialogue.phase == Dialogue.Phase.CHOOSING:
+				Dialogue.choice = 1
+			await _event_tap("interact")
+		await _seconds(0.25)
+	check(not Cutscene.active and not Dialogue.active, "the save prompt after the peace can be answered")
 	await _load_level()
 	Progress.flags.erase("ch5:returned")
 	Story.score_late = 0.0
@@ -10787,6 +10797,23 @@ func test_bug_report() -> void:
 	for f in DirAccess.get_files_at(dir):
 		DirAccess.remove_absolute(dir.path_join(f))
 	DirAccess.remove_absolute(dir)
+	# F8 itself, pressed and let go between two frames.
+	var before := DirAccess.get_directories_at(BugReport.DIR).size() if DirAccess.dir_exists_absolute(BugReport.DIR) else 0
+	await _seconds(1.1)   # a new second, so a new folder name
+	for pressed in [true, false]:
+		var ev := InputEventKey.new()
+		ev.physical_keycode = BugReport.KEY
+		ev.keycode = BugReport.KEY
+		ev.pressed = pressed
+		Input.parse_input_event(ev)
+	await _physics(5)
+	var dirs := DirAccess.get_directories_at(BugReport.DIR)
+	check(dirs.size() == before + 1, "a quick tap of F8 writes a report (%d -> %d)" % [before, dirs.size()])
+	if dirs.size() == before + 1:
+		var newest := BugReport.DIR.path_join(dirs[dirs.size() - 1])
+		for f in DirAccess.get_files_at(newest):
+			DirAccess.remove_absolute(newest.path_join(f))
+		DirAccess.remove_absolute(newest)
 
 
 ## Beta 1.7.0: the Iron Mallet's pegs in the Southern Tower's den raise a chest,
