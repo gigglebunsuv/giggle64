@@ -48,6 +48,8 @@ func _ready() -> void:
 	add_to_group("interactable")
 	add_to_group("npcs")
 	model = get_node_or_null("Model") as CharacterModel
+	if model:
+		model.min_blend = 0.12
 	_home_yaw = rotation.y
 	Dialogue.page_started.connect(_on_page)
 	if partner_name != "":

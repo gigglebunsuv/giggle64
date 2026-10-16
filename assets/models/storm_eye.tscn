@@ -366,48 +366,48 @@ _data = {
 &"stunned": SubResource("Animation_0sd35")
 }
 
-[node name="StormEyeModel" type="Node3D" unique_id=153893165]
+[node name="StormEyeModel" type="Node3D" unique_id=1375483146]
 script = ExtResource("1_3hphf")
 
-[node name="Core" type="Node3D" parent="." unique_id=1643007875]
+[node name="Core" type="Node3D" parent="." unique_id=890808280]
 
-[node name="CoreMesh" type="MeshInstance3D" parent="Core" unique_id=530075538]
+[node name="CoreMesh" type="MeshInstance3D" parent="Core" unique_id=2108556248]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_bkrs1")
 
-[node name="CoreGlow" type="MeshInstance3D" parent="Core" unique_id=422422512]
+[node name="CoreGlow" type="MeshInstance3D" parent="Core" unique_id=535161555]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_o345u")
 metadata/no_tint = true
 
-[node name="Plate0" type="Node3D" parent="Core" unique_id=830457391]
+[node name="Plate0" type="Node3D" parent="Core" unique_id=923002829]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.70710677, 0, 0.70710677)
 
-[node name="Plate0Mesh" type="MeshInstance3D" parent="Core/Plate0" unique_id=1852811640]
+[node name="Plate0Mesh" type="MeshInstance3D" parent="Core/Plate0" unique_id=1738794327]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_1mqft")
 
-[node name="Plate1" type="Node3D" parent="Core" unique_id=1250157329]
+[node name="Plate1" type="Node3D" parent="Core" unique_id=1559956465]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.70710677, 0, 0.70710677)
 
-[node name="Plate1Mesh" type="MeshInstance3D" parent="Core/Plate1" unique_id=1726683301]
+[node name="Plate1Mesh" type="MeshInstance3D" parent="Core/Plate1" unique_id=1318626717]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_w30fv")
 
-[node name="Plate2" type="Node3D" parent="Core" unique_id=1853805783]
+[node name="Plate2" type="Node3D" parent="Core" unique_id=1819620987]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.70710677, 0, -0.70710677)
 
-[node name="Plate2Mesh" type="MeshInstance3D" parent="Core/Plate2" unique_id=1388237523]
+[node name="Plate2Mesh" type="MeshInstance3D" parent="Core/Plate2" unique_id=1774637014]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_dkh8w")
 
-[node name="Plate3" type="Node3D" parent="Core" unique_id=1233119381]
+[node name="Plate3" type="Node3D" parent="Core" unique_id=486820001]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.70710677, 0, -0.70710677)
 
-[node name="Plate3Mesh" type="MeshInstance3D" parent="Core/Plate3" unique_id=878489948]
+[node name="Plate3Mesh" type="MeshInstance3D" parent="Core/Plate3" unique_id=361180207]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_3o5q8")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=2145268856]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1755166322]
 libraries/ = SubResource("AnimationLibrary_mrdbj")
 autoplay = &"idle"

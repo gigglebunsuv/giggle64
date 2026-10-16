@@ -2655,173 +2655,173 @@ _data = {
 &"walk": SubResource("Animation_w3c5u")
 }
 
-[node name="CarapaxModel" type="Node3D" unique_id=935748156]
+[node name="CarapaxModel" type="Node3D" unique_id=1370554975]
 script = ExtResource("1_rbcij")
 
-[node name="Body" type="Node3D" parent="." unique_id=1436033425]
+[node name="Body" type="Node3D" parent="." unique_id=1010899247]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.9, 0)
 
-[node name="BodyMesh" type="MeshInstance3D" parent="Body" unique_id=239513588]
+[node name="BodyMesh" type="MeshInstance3D" parent="Body" unique_id=126831766]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_w674h")
 
-[node name="Stalk" type="Node3D" parent="Body" unique_id=1655681543]
+[node name="Stalk" type="Node3D" parent="Body" unique_id=645164504]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, -1.05)
 
-[node name="StalkMesh" type="MeshInstance3D" parent="Body/Stalk" unique_id=333066796]
+[node name="StalkMesh" type="MeshInstance3D" parent="Body/Stalk" unique_id=547301444]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_3d1ep")
 
-[node name="Eye" type="Node3D" parent="Body/Stalk" unique_id=1326201473]
+[node name="Eye" type="Node3D" parent="Body/Stalk" unique_id=1870859062]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 
-[node name="EyeMesh" type="MeshInstance3D" parent="Body/Stalk/Eye" unique_id=1366850408]
+[node name="EyeMesh" type="MeshInstance3D" parent="Body/Stalk/Eye" unique_id=994592840]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_q5kpt")
 
-[node name="EyeGlow" type="MeshInstance3D" parent="Body/Stalk/Eye" unique_id=124945548]
+[node name="EyeGlow" type="MeshInstance3D" parent="Body/Stalk/Eye" unique_id=1306363983]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_xh4bc")
 metadata/no_tint = true
 
-[node name="ArmR" type="Node3D" parent="Body" unique_id=1056085414]
+[node name="ArmR" type="Node3D" parent="Body" unique_id=797176070]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.35, -0.1, -1.1)
 
-[node name="ArmRMesh" type="MeshInstance3D" parent="Body/ArmR" unique_id=1199818356]
+[node name="ArmRMesh" type="MeshInstance3D" parent="Body/ArmR" unique_id=2145726586]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_vh5gd")
 
-[node name="ForeR" type="Node3D" parent="Body/ArmR" unique_id=1623890012]
+[node name="ForeR" type="Node3D" parent="Body/ArmR" unique_id=556685611]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.51029193, 0.12757298, -0.8504865)
 
-[node name="ForeRMesh" type="MeshInstance3D" parent="Body/ArmR/ForeR" unique_id=524820095]
+[node name="ForeRMesh" type="MeshInstance3D" parent="Body/ArmR/ForeR" unique_id=1698738259]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_bh01a")
 
-[node name="PincerR" type="Node3D" parent="Body/ArmR/ForeR" unique_id=782644372]
+[node name="PincerR" type="Node3D" parent="Body/ArmR/ForeR" unique_id=10893463]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.16932975, 0.45399463, -0.84664875)
 
-[node name="PincerRMesh" type="MeshInstance3D" parent="Body/ArmR/ForeR/PincerR" unique_id=496935157]
+[node name="PincerRMesh" type="MeshInstance3D" parent="Body/ArmR/ForeR/PincerR" unique_id=1539699151]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_odfod")
 
-[node name="LegMountR0" type="Node3D" parent="Body" unique_id=1664983354]
+[node name="LegMountR0" type="Node3D" parent="Body" unique_id=526615230]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.6, -0.35, -0.3)
 
-[node name="LegR0" type="Node3D" parent="Body/LegMountR0" unique_id=58797079]
+[node name="LegR0" type="Node3D" parent="Body/LegMountR0" unique_id=1507642255]
 
-[node name="LegR0Mesh" type="MeshInstance3D" parent="Body/LegMountR0/LegR0" unique_id=1057568396]
+[node name="LegR0Mesh" type="MeshInstance3D" parent="Body/LegMountR0/LegR0" unique_id=947796138]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_axt0f")
 
-[node name="ShinR0" type="Node3D" parent="Body/LegMountR0/LegR0" unique_id=827282973]
+[node name="ShinR0" type="Node3D" parent="Body/LegMountR0/LegR0" unique_id=1170633563]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8146183, 0.488771, 0)
 
-[node name="ShinR0Mesh" type="MeshInstance3D" parent="Body/LegMountR0/LegR0/ShinR0" unique_id=1012182941]
+[node name="ShinR0Mesh" type="MeshInstance3D" parent="Body/LegMountR0/LegR0/ShinR0" unique_id=1841893217]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_5ptkm")
 
-[node name="LegMountR1" type="Node3D" parent="Body" unique_id=1350172114]
+[node name="LegMountR1" type="Node3D" parent="Body" unique_id=399335823]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.6, -0.35, 0.3)
 
-[node name="LegR1" type="Node3D" parent="Body/LegMountR1" unique_id=535040787]
+[node name="LegR1" type="Node3D" parent="Body/LegMountR1" unique_id=1490826287]
 
-[node name="LegR1Mesh" type="MeshInstance3D" parent="Body/LegMountR1/LegR1" unique_id=2016546044]
+[node name="LegR1Mesh" type="MeshInstance3D" parent="Body/LegMountR1/LegR1" unique_id=1499193785]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_386wx")
 
-[node name="ShinR1" type="Node3D" parent="Body/LegMountR1/LegR1" unique_id=1275489982]
+[node name="ShinR1" type="Node3D" parent="Body/LegMountR1/LegR1" unique_id=2010840176]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8146183, 0.488771, 0)
 
-[node name="ShinR1Mesh" type="MeshInstance3D" parent="Body/LegMountR1/LegR1/ShinR1" unique_id=1670892205]
+[node name="ShinR1Mesh" type="MeshInstance3D" parent="Body/LegMountR1/LegR1/ShinR1" unique_id=1897167441]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_skmh3")
 
-[node name="LegMountR2" type="Node3D" parent="Body" unique_id=1774427653]
+[node name="LegMountR2" type="Node3D" parent="Body" unique_id=1561339678]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.6, -0.35, 0.9)
 
-[node name="LegR2" type="Node3D" parent="Body/LegMountR2" unique_id=1689574715]
+[node name="LegR2" type="Node3D" parent="Body/LegMountR2" unique_id=2004513231]
 
-[node name="LegR2Mesh" type="MeshInstance3D" parent="Body/LegMountR2/LegR2" unique_id=1439964934]
+[node name="LegR2Mesh" type="MeshInstance3D" parent="Body/LegMountR2/LegR2" unique_id=1793708060]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_itkl1")
 
-[node name="ShinR2" type="Node3D" parent="Body/LegMountR2/LegR2" unique_id=910242539]
+[node name="ShinR2" type="Node3D" parent="Body/LegMountR2/LegR2" unique_id=205216069]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8146183, 0.488771, 0)
 
-[node name="ShinR2Mesh" type="MeshInstance3D" parent="Body/LegMountR2/LegR2/ShinR2" unique_id=1845611051]
+[node name="ShinR2Mesh" type="MeshInstance3D" parent="Body/LegMountR2/LegR2/ShinR2" unique_id=1529678752]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_jk7og")
 
-[node name="ArmL" type="Node3D" parent="Body" unique_id=1509098543]
+[node name="ArmL" type="Node3D" parent="Body" unique_id=2086088016]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.35, -0.1, -1.1)
 
-[node name="ArmLMesh" type="MeshInstance3D" parent="Body/ArmL" unique_id=262698366]
+[node name="ArmLMesh" type="MeshInstance3D" parent="Body/ArmL" unique_id=2138948068]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_vufh0")
 
-[node name="ForeL" type="Node3D" parent="Body/ArmL" unique_id=842513798]
+[node name="ForeL" type="Node3D" parent="Body/ArmL" unique_id=1488437936]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.51029193, 0.12757298, -0.8504865)
 
-[node name="ForeLMesh" type="MeshInstance3D" parent="Body/ArmL/ForeL" unique_id=1717816496]
+[node name="ForeLMesh" type="MeshInstance3D" parent="Body/ArmL/ForeL" unique_id=1140165106]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_4hj3h")
 
-[node name="PincerL" type="Node3D" parent="Body/ArmL/ForeL" unique_id=1263154568]
+[node name="PincerL" type="Node3D" parent="Body/ArmL/ForeL" unique_id=260259130]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.16932975, 0.45399463, -0.84664875)
 
-[node name="PincerLMesh" type="MeshInstance3D" parent="Body/ArmL/ForeL/PincerL" unique_id=815295182]
+[node name="PincerLMesh" type="MeshInstance3D" parent="Body/ArmL/ForeL/PincerL" unique_id=482085415]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_83sbs")
 
-[node name="LegMountL0" type="Node3D" parent="Body" unique_id=2094814511]
+[node name="LegMountL0" type="Node3D" parent="Body" unique_id=1366406085]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -1.6, -0.35, -0.3)
 
-[node name="LegL0" type="Node3D" parent="Body/LegMountL0" unique_id=897605827]
+[node name="LegL0" type="Node3D" parent="Body/LegMountL0" unique_id=1037501393]
 
-[node name="LegL0Mesh" type="MeshInstance3D" parent="Body/LegMountL0/LegL0" unique_id=1802220418]
+[node name="LegL0Mesh" type="MeshInstance3D" parent="Body/LegMountL0/LegL0" unique_id=1422080986]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_lne1k")
 
-[node name="ShinL0" type="Node3D" parent="Body/LegMountL0/LegL0" unique_id=2007707367]
+[node name="ShinL0" type="Node3D" parent="Body/LegMountL0/LegL0" unique_id=352460337]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8146183, 0.488771, 0)
 
-[node name="ShinL0Mesh" type="MeshInstance3D" parent="Body/LegMountL0/LegL0/ShinL0" unique_id=113964557]
+[node name="ShinL0Mesh" type="MeshInstance3D" parent="Body/LegMountL0/LegL0/ShinL0" unique_id=1686533877]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_3opfj")
 
-[node name="LegMountL1" type="Node3D" parent="Body" unique_id=743945242]
+[node name="LegMountL1" type="Node3D" parent="Body" unique_id=438430334]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -1.6, -0.35, 0.3)
 
-[node name="LegL1" type="Node3D" parent="Body/LegMountL1" unique_id=1088564370]
+[node name="LegL1" type="Node3D" parent="Body/LegMountL1" unique_id=1481843312]
 
-[node name="LegL1Mesh" type="MeshInstance3D" parent="Body/LegMountL1/LegL1" unique_id=106460518]
+[node name="LegL1Mesh" type="MeshInstance3D" parent="Body/LegMountL1/LegL1" unique_id=1403925401]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_6n4x0")
 
-[node name="ShinL1" type="Node3D" parent="Body/LegMountL1/LegL1" unique_id=1783997836]
+[node name="ShinL1" type="Node3D" parent="Body/LegMountL1/LegL1" unique_id=1903984787]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8146183, 0.488771, 0)
 
-[node name="ShinL1Mesh" type="MeshInstance3D" parent="Body/LegMountL1/LegL1/ShinL1" unique_id=1784365650]
+[node name="ShinL1Mesh" type="MeshInstance3D" parent="Body/LegMountL1/LegL1/ShinL1" unique_id=1999858642]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_tkdd6")
 
-[node name="LegMountL2" type="Node3D" parent="Body" unique_id=475936664]
+[node name="LegMountL2" type="Node3D" parent="Body" unique_id=278285973]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -1.6, -0.35, 0.9)
 
-[node name="LegL2" type="Node3D" parent="Body/LegMountL2" unique_id=1260397313]
+[node name="LegL2" type="Node3D" parent="Body/LegMountL2" unique_id=1553090726]
 
-[node name="LegL2Mesh" type="MeshInstance3D" parent="Body/LegMountL2/LegL2" unique_id=2119934723]
+[node name="LegL2Mesh" type="MeshInstance3D" parent="Body/LegMountL2/LegL2" unique_id=537959953]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_v3og6")
 
-[node name="ShinL2" type="Node3D" parent="Body/LegMountL2/LegL2" unique_id=520164982]
+[node name="ShinL2" type="Node3D" parent="Body/LegMountL2/LegL2" unique_id=995214806]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8146183, 0.488771, 0)
 
-[node name="ShinL2Mesh" type="MeshInstance3D" parent="Body/LegMountL2/LegL2/ShinL2" unique_id=1753515670]
+[node name="ShinL2Mesh" type="MeshInstance3D" parent="Body/LegMountL2/LegL2/ShinL2" unique_id=308746840]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_nfy6b")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1232652164]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1372045487]
 libraries/ = SubResource("AnimationLibrary_g5aux")
 autoplay = &"idle"

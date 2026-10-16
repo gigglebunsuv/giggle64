@@ -14,7 +14,7 @@ radius = 0.4
 [sub_resource type="SphereShape3D" id="SphereShape3D_100og"]
 radius = 0.6
 
-[node name="WindWisp" type="CharacterBody3D" unique_id=387172456]
+[node name="WindWisp" type="CharacterBody3D" unique_id=870140293]
 collision_layer = 4
 collision_mask = 7
 motion_mode = 1
@@ -23,25 +23,25 @@ target_offset = 0.4
 boomerang_stun = 2.0
 boomerang_damage = 1
 
-[node name="Collision" type="CollisionShape3D" parent="." unique_id=178430916]
+[node name="Collision" type="CollisionShape3D" parent="." unique_id=1162679201]
 shape = SubResource("SphereShape3D_hy7og")
 
-[node name="Model" type="Node3D" parent="." unique_id=1278859697 instance=ExtResource("2_vp28i")]
+[node name="Model" type="Node3D" parent="." unique_id=1122506010 instance=ExtResource("2_vp28i")]
 script = ExtResource("3_2x5eb")
 
-[node name="Health" type="Node" parent="." unique_id=120014327]
+[node name="Health" type="Node" parent="." unique_id=1377925554]
 script = ExtResource("4_45764")
 max_health = 2
 
-[node name="Hurtbox" type="Area3D" parent="." unique_id=1301280559]
+[node name="Hurtbox" type="Area3D" parent="." unique_id=1423181843]
 collision_layer = 16
 collision_mask = 0
 script = ExtResource("5_85xdx")
 
-[node name="Shape" type="CollisionShape3D" parent="Hurtbox" unique_id=1294976960]
+[node name="Shape" type="CollisionShape3D" parent="Hurtbox" unique_id=1859701461]
 shape = SubResource("SphereShape3D_100og")
 
-[node name="BlobShadow" type="MeshInstance3D" parent="." unique_id=152092355]
+[node name="BlobShadow" type="MeshInstance3D" parent="." unique_id=64309169]
 mesh = ExtResource("6_72mmx")
 script = ExtResource("7_33te7")
 radius = 0.4

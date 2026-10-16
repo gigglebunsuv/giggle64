@@ -133,20 +133,20 @@ _data = {
 &"stunned": SubResource("Animation_ammm5")
 }
 
-[node name="FreezardModel" type="Node3D" unique_id=2043325211]
+[node name="FreezardModel" type="Node3D" unique_id=930481428]
 script = ExtResource("1_nlwev")
 
-[node name="Body" type="Node3D" parent="." unique_id=1864631850]
+[node name="Body" type="Node3D" parent="." unique_id=578148880]
 
-[node name="BodyMesh" type="MeshInstance3D" parent="Body" unique_id=1438014255]
+[node name="BodyMesh" type="MeshInstance3D" parent="Body" unique_id=2116431235]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_y22gj")
 
-[node name="BodyGlow" type="MeshInstance3D" parent="Body" unique_id=1723409625]
+[node name="BodyGlow" type="MeshInstance3D" parent="Body" unique_id=1855281080]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_fidnv")
 metadata/no_tint = true
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1015205950]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1905793799]
 libraries/ = SubResource("AnimationLibrary_vbnud")
 autoplay = &"idle"

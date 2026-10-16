@@ -234,33 +234,33 @@ _data = {
 &"walk": SubResource("Animation_smxtr")
 }
 
-[node name="CinderlingModel" type="Node3D" unique_id=1636133471]
+[node name="CinderlingModel" type="Node3D" unique_id=1592662604]
 script = ExtResource("1_nn3qk")
 
-[node name="Body" type="Node3D" parent="." unique_id=369385826]
+[node name="Body" type="Node3D" parent="." unique_id=390316898]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.28, 0)
 
-[node name="BodyMesh" type="MeshInstance3D" parent="Body" unique_id=1079384316]
+[node name="BodyMesh" type="MeshInstance3D" parent="Body" unique_id=1971287603]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_x3h4c")
 
-[node name="BodyGlow" type="MeshInstance3D" parent="Body" unique_id=1031754593]
+[node name="BodyGlow" type="MeshInstance3D" parent="Body" unique_id=1261237078]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_8wlsm")
 metadata/no_tint = true
 
-[node name="Head" type="Node3D" parent="Body" unique_id=1589702365]
+[node name="Head" type="Node3D" parent="Body" unique_id=317541911]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, -0.5)
 
-[node name="HeadMesh" type="MeshInstance3D" parent="Body/Head" unique_id=83864274]
+[node name="HeadMesh" type="MeshInstance3D" parent="Body/Head" unique_id=1654924481]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_jaufv")
 
-[node name="HeadGlow" type="MeshInstance3D" parent="Body/Head" unique_id=1973301511]
+[node name="HeadGlow" type="MeshInstance3D" parent="Body/Head" unique_id=1112755221]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_qowna")
 metadata/no_tint = true
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=136960108]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1914494958]
 libraries/ = SubResource("AnimationLibrary_de2gv")
 autoplay = &"idle"

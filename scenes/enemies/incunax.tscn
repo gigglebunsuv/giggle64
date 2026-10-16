@@ -18,7 +18,7 @@ radius = 1.6
 [sub_resource type="BoxShape3D" id="BoxShape3D_36te0"]
 size = Vector3(2.6, 2.6, 2.6)
 
-[node name="Incunax" type="CharacterBody3D" unique_id=408305847]
+[node name="Incunax" type="CharacterBody3D" unique_id=113892574]
 collision_layer = 4
 collision_mask = 7
 motion_mode = 1
@@ -27,33 +27,33 @@ drop_table = -1
 target_offset = 0.3
 boomerang_stun = 0.0
 
-[node name="Collision" type="CollisionShape3D" parent="." unique_id=709798494]
+[node name="Collision" type="CollisionShape3D" parent="." unique_id=879911510]
 shape = SubResource("SphereShape3D_n4qw6")
 
-[node name="Model" type="Node3D" parent="." unique_id=414771229 instance=ExtResource("2_qilij")]
+[node name="Model" type="Node3D" parent="." unique_id=666474922 instance=ExtResource("2_qilij")]
 script = ExtResource("3_v3uqt")
 
-[node name="Health" type="Node" parent="." unique_id=1425579667]
+[node name="Health" type="Node" parent="." unique_id=983208153]
 script = ExtResource("4_qelff")
 max_health = 14
 
-[node name="Hurtbox" type="Area3D" parent="." unique_id=523881321]
+[node name="Hurtbox" type="Area3D" parent="." unique_id=300030579]
 collision_layer = 16
 collision_mask = 0
 script = ExtResource("5_ib3tt")
 
-[node name="Shape" type="CollisionShape3D" parent="Hurtbox" unique_id=405748726]
+[node name="Shape" type="CollisionShape3D" parent="Hurtbox" unique_id=2048668002]
 shape = SubResource("SphereShape3D_qlpsg")
 
-[node name="AttackHitbox" type="Area3D" parent="." unique_id=810507429]
+[node name="AttackHitbox" type="Area3D" parent="." unique_id=967448613]
 collision_layer = 64
 collision_mask = 8
 script = ExtResource("6_jepdi")
 
-[node name="Shape" type="CollisionShape3D" parent="AttackHitbox" unique_id=1214710537]
+[node name="Shape" type="CollisionShape3D" parent="AttackHitbox" unique_id=630781744]
 shape = SubResource("BoxShape3D_36te0")
 
-[node name="BlobShadow" type="MeshInstance3D" parent="." unique_id=623009433]
+[node name="BlobShadow" type="MeshInstance3D" parent="." unique_id=1347514524]
 mesh = ExtResource("7_1pphd")
 script = ExtResource("8_qhx7i")
 radius = 1.8

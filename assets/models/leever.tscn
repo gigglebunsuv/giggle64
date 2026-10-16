@@ -169,20 +169,20 @@ _data = {
 &"stunned": SubResource("Animation_rdfxq")
 }
 
-[node name="LeeverModel" type="Node3D" unique_id=221409948]
+[node name="LeeverModel" type="Node3D" unique_id=975354729]
 script = ExtResource("1_hqbhj")
 
-[node name="Body" type="Node3D" parent="." unique_id=2009796123]
+[node name="Body" type="Node3D" parent="." unique_id=854705788]
 
-[node name="BodyMesh" type="MeshInstance3D" parent="Body" unique_id=515180907]
+[node name="BodyMesh" type="MeshInstance3D" parent="Body" unique_id=968282949]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_lw0bc")
 
-[node name="BodyGlow" type="MeshInstance3D" parent="Body" unique_id=1531038400]
+[node name="BodyGlow" type="MeshInstance3D" parent="Body" unique_id=253537502]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_xib15")
 metadata/no_tint = true
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=548418801]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1679704193]
 libraries/ = SubResource("AnimationLibrary_t48xb")
 autoplay = &"buried"

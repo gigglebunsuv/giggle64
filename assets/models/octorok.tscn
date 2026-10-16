@@ -241,22 +241,22 @@ _data = {
 &"stunned": SubResource("Animation_q6tak")
 }
 
-[node name="OctorokModel" type="Node3D" unique_id=586705463]
+[node name="OctorokModel" type="Node3D" unique_id=1731361547]
 script = ExtResource("1_728m8")
 
-[node name="Body" type="Node3D" parent="." unique_id=1480749366]
+[node name="Body" type="Node3D" parent="." unique_id=1578454021]
 
-[node name="BodyMesh" type="MeshInstance3D" parent="Body" unique_id=282538680]
+[node name="BodyMesh" type="MeshInstance3D" parent="Body" unique_id=1408330751]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_cy32l")
 
-[node name="Snout" type="Node3D" parent="Body" unique_id=1240413587]
+[node name="Snout" type="Node3D" parent="Body" unique_id=1289732075]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.42, -0.35)
 
-[node name="SnoutMesh" type="MeshInstance3D" parent="Body/Snout" unique_id=702019049]
+[node name="SnoutMesh" type="MeshInstance3D" parent="Body/Snout" unique_id=1527698364]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_s7khf")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1001971351]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1607935890]
 libraries/ = SubResource("AnimationLibrary_txevq")
 autoplay = &"hidden"

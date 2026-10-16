@@ -946,91 +946,91 @@ _data = {
 &"stunned": SubResource("Animation_dqh4x")
 }
 
-[node name="PepperModel" type="Node3D" unique_id=1678408475]
+[node name="PepperModel" type="Node3D" unique_id=531618518]
 script = ExtResource("1_k74ca")
 
-[node name="Body" type="Node3D" parent="." unique_id=221275583]
+[node name="Body" type="Node3D" parent="." unique_id=1060002468]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.26, 0)
 
-[node name="BodyMesh" type="MeshInstance3D" parent="Body" unique_id=2001334413]
+[node name="BodyMesh" type="MeshInstance3D" parent="Body" unique_id=1031412432]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_6oliv")
 
-[node name="Head" type="Node3D" parent="Body" unique_id=955690420]
+[node name="Head" type="Node3D" parent="Body" unique_id=113997280]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0275, -0.231)
 
-[node name="HeadMesh" type="MeshInstance3D" parent="Body/Head" unique_id=135652678]
+[node name="HeadMesh" type="MeshInstance3D" parent="Body/Head" unique_id=336520507]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_01gwo")
 
-[node name="HeadGlow" type="MeshInstance3D" parent="Body/Head" unique_id=1164114214]
+[node name="HeadGlow" type="MeshInstance3D" parent="Body/Head" unique_id=1817495913]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_82ybr")
 metadata/no_tint = true
 
-[node name="LegFl" type="Node3D" parent="Body" unique_id=1074180709]
+[node name="LegFl" type="Node3D" parent="Body" unique_id=816954310]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.062, -0.033, -0.1344)
 
-[node name="LegFlMesh" type="MeshInstance3D" parent="Body/LegFl" unique_id=1516065181]
+[node name="LegFlMesh" type="MeshInstance3D" parent="Body/LegFl" unique_id=1502160433]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_bg48r")
 
-[node name="LegFlLow" type="Node3D" parent="Body/LegFl" unique_id=1613855966]
+[node name="LegFlLow" type="Node3D" parent="Body/LegFl" unique_id=1629877323]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.11, 0)
 
-[node name="LegFlLowMesh" type="MeshInstance3D" parent="Body/LegFl/LegFlLow" unique_id=1775172088]
+[node name="LegFlLowMesh" type="MeshInstance3D" parent="Body/LegFl/LegFlLow" unique_id=260973844]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_f7tv5")
 
-[node name="LegFr" type="Node3D" parent="Body" unique_id=1782487684]
+[node name="LegFr" type="Node3D" parent="Body" unique_id=676943114]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.062, -0.033, -0.1344)
 
-[node name="LegFrMesh" type="MeshInstance3D" parent="Body/LegFr" unique_id=1391023635]
+[node name="LegFrMesh" type="MeshInstance3D" parent="Body/LegFr" unique_id=778726878]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_pulpc")
 
-[node name="LegFrLow" type="Node3D" parent="Body/LegFr" unique_id=181856425]
+[node name="LegFrLow" type="Node3D" parent="Body/LegFr" unique_id=373984963]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.11, 0)
 
-[node name="LegFrLowMesh" type="MeshInstance3D" parent="Body/LegFr/LegFrLow" unique_id=644351306]
+[node name="LegFrLowMesh" type="MeshInstance3D" parent="Body/LegFr/LegFrLow" unique_id=2045155111]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_qp1jt")
 
-[node name="LegBl" type="Node3D" parent="Body" unique_id=1745155813]
+[node name="LegBl" type="Node3D" parent="Body" unique_id=1550404140]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.062, -0.033, 0.1344)
 
-[node name="LegBlMesh" type="MeshInstance3D" parent="Body/LegBl" unique_id=1054725461]
+[node name="LegBlMesh" type="MeshInstance3D" parent="Body/LegBl" unique_id=1829752012]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_gpkdl")
 
-[node name="LegBlLow" type="Node3D" parent="Body/LegBl" unique_id=351395401]
+[node name="LegBlLow" type="Node3D" parent="Body/LegBl" unique_id=45989290]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.11, 0)
 
-[node name="LegBlLowMesh" type="MeshInstance3D" parent="Body/LegBl/LegBlLow" unique_id=1009688484]
+[node name="LegBlLowMesh" type="MeshInstance3D" parent="Body/LegBl/LegBlLow" unique_id=1367536980]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_lpivh")
 
-[node name="LegBr" type="Node3D" parent="Body" unique_id=737002038]
+[node name="LegBr" type="Node3D" parent="Body" unique_id=1741836930]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.062, -0.033, 0.1344)
 
-[node name="LegBrMesh" type="MeshInstance3D" parent="Body/LegBr" unique_id=56078793]
+[node name="LegBrMesh" type="MeshInstance3D" parent="Body/LegBr" unique_id=1970665547]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_66nys")
 
-[node name="LegBrLow" type="Node3D" parent="Body/LegBr" unique_id=415248557]
+[node name="LegBrLow" type="Node3D" parent="Body/LegBr" unique_id=173601884]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.11, 0)
 
-[node name="LegBrLowMesh" type="MeshInstance3D" parent="Body/LegBr/LegBrLow" unique_id=1995064150]
+[node name="LegBrLowMesh" type="MeshInstance3D" parent="Body/LegBr/LegBrLow" unique_id=128333253]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_lh310")
 
-[node name="Tail" type="Node3D" parent="Body" unique_id=2114152166]
+[node name="Tail" type="Node3D" parent="Body" unique_id=1586511990]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.044, 0.231)
 
-[node name="TailMesh" type="MeshInstance3D" parent="Body/Tail" unique_id=1330590415]
+[node name="TailMesh" type="MeshInstance3D" parent="Body/Tail" unique_id=425387094]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_dar32")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=730688322]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1569081633]
 libraries/ = SubResource("AnimationLibrary_4qsn4")
 autoplay = &"idle"

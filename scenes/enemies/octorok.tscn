@@ -14,34 +14,34 @@ radius = 0.45
 [sub_resource type="SphereShape3D" id="SphereShape3D_5tlkv"]
 radius = 0.55
 
-[node name="Octorok" type="CharacterBody3D" unique_id=1422290355]
+[node name="Octorok" type="CharacterBody3D" unique_id=496187741]
 collision_layer = 4
 collision_mask = 7
 script = ExtResource("1_gtq6n")
 target_offset = 1.1
 boomerang_stun = 3.0
 
-[node name="Collision" type="CollisionShape3D" parent="." unique_id=1908677425]
+[node name="Collision" type="CollisionShape3D" parent="." unique_id=21330195]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.45, 0)
 shape = SubResource("SphereShape3D_soyjl")
 
-[node name="Model" type="Node3D" parent="." unique_id=586705463 instance=ExtResource("2_st3ik")]
+[node name="Model" type="Node3D" parent="." unique_id=1731361547 instance=ExtResource("2_st3ik")]
 script = ExtResource("3_xc6i2")
 
-[node name="Health" type="Node" parent="." unique_id=1878025907]
+[node name="Health" type="Node" parent="." unique_id=1954123688]
 script = ExtResource("4_j6h7v")
 max_health = 1
 
-[node name="Hurtbox" type="Area3D" parent="." unique_id=1652337325]
+[node name="Hurtbox" type="Area3D" parent="." unique_id=986126571]
 collision_layer = 16
 collision_mask = 0
 script = ExtResource("5_jo4ei")
 
-[node name="Shape" type="CollisionShape3D" parent="Hurtbox" unique_id=739036776]
+[node name="Shape" type="CollisionShape3D" parent="Hurtbox" unique_id=1004318674]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 shape = SubResource("SphereShape3D_5tlkv")
 
-[node name="BlobShadow" type="MeshInstance3D" parent="." unique_id=1034698769]
+[node name="BlobShadow" type="MeshInstance3D" parent="." unique_id=2051882523]
 mesh = ExtResource("6_vjdef")
 script = ExtResource("7_dgflw")
 radius = 0.0

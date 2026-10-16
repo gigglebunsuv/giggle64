@@ -15,7 +15,7 @@ radius = 0.45
 radius = 0.6
 height = 2.2
 
-[node name="Velloran" type="CharacterBody3D" unique_id=2064936971]
+[node name="Velloran" type="CharacterBody3D" unique_id=1439541287]
 collision_layer = 4
 collision_mask = 7
 motion_mode = 1
@@ -24,28 +24,28 @@ drop_table = -1
 target_offset = 2.3
 boomerang_stun = 0.0
 
-[node name="Collision" type="CollisionShape3D" parent="." unique_id=265382432]
+[node name="Collision" type="CollisionShape3D" parent="." unique_id=306311212]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CapsuleShape3D_q3urh")
 
-[node name="Model" type="Node3D" parent="." unique_id=1535226101 instance=ExtResource("2_ois0g")]
+[node name="Model" type="Node3D" parent="." unique_id=523244665 instance=ExtResource("2_ois0g")]
 transform = Transform3D(1.14, 0, 0, 0, 1.14, 0, 0, 0, 1.14, 0, 0, 0)
 script = ExtResource("3_pf2na")
 
-[node name="Health" type="Node" parent="." unique_id=1511690659]
+[node name="Health" type="Node" parent="." unique_id=1127634999]
 script = ExtResource("4_hs7yt")
 max_health = 28
 
-[node name="Hurtbox" type="Area3D" parent="." unique_id=591864311]
+[node name="Hurtbox" type="Area3D" parent="." unique_id=1840031508]
 collision_layer = 16
 collision_mask = 0
 script = ExtResource("5_yqrmm")
 
-[node name="Shape" type="CollisionShape3D" parent="Hurtbox" unique_id=233530518]
+[node name="Shape" type="CollisionShape3D" parent="Hurtbox" unique_id=318561765]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.05, 0)
 shape = SubResource("CapsuleShape3D_g24km")
 
-[node name="BlobShadow" type="MeshInstance3D" parent="." unique_id=1709080666]
+[node name="BlobShadow" type="MeshInstance3D" parent="." unique_id=871743818]
 mesh = ExtResource("6_nwbn4")
 script = ExtResource("7_eqg7i")
 radius = 0.55

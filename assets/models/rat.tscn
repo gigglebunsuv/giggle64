@@ -476,63 +476,63 @@ _data = {
 &"stunned": SubResource("Animation_xhdtd")
 }
 
-[node name="RatModel" type="Node3D" unique_id=1359138233]
+[node name="RatModel" type="Node3D" unique_id=1843423350]
 script = ExtResource("1_jqtnm")
 
-[node name="Body" type="Node3D" parent="." unique_id=200745348]
+[node name="Body" type="Node3D" parent="." unique_id=1109449146]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.22, 0)
 
-[node name="BodyMesh" type="MeshInstance3D" parent="Body" unique_id=218381329]
+[node name="BodyMesh" type="MeshInstance3D" parent="Body" unique_id=1459234192]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_wgey0")
 
-[node name="Head" type="Node3D" parent="Body" unique_id=1029750766]
+[node name="Head" type="Node3D" parent="Body" unique_id=1004251034]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.04, -0.3)
 
-[node name="HeadMesh" type="MeshInstance3D" parent="Body/Head" unique_id=383959886]
+[node name="HeadMesh" type="MeshInstance3D" parent="Body/Head" unique_id=201197469]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_v6qbp")
 
-[node name="HeadGlow" type="MeshInstance3D" parent="Body/Head" unique_id=1516657396]
+[node name="HeadGlow" type="MeshInstance3D" parent="Body/Head" unique_id=1944848837]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_mrcfc")
 metadata/no_tint = true
 
-[node name="Tail" type="Node3D" parent="Body" unique_id=669459076]
+[node name="Tail" type="Node3D" parent="Body" unique_id=1076651899]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.02, 0.32)
 
-[node name="TailMesh" type="MeshInstance3D" parent="Body/Tail" unique_id=1961765455]
+[node name="TailMesh" type="MeshInstance3D" parent="Body/Tail" unique_id=74356054]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_lyrwm")
 
-[node name="LegFl" type="Node3D" parent="Body" unique_id=156560882]
+[node name="LegFl" type="Node3D" parent="Body" unique_id=2093473078]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.1, -0.1, -0.18)
 
-[node name="LegFlMesh" type="MeshInstance3D" parent="Body/LegFl" unique_id=592258692]
+[node name="LegFlMesh" type="MeshInstance3D" parent="Body/LegFl" unique_id=103447079]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_17b37")
 
-[node name="LegFr" type="Node3D" parent="Body" unique_id=11629652]
+[node name="LegFr" type="Node3D" parent="Body" unique_id=588112396]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, -0.1, -0.18)
 
-[node name="LegFrMesh" type="MeshInstance3D" parent="Body/LegFr" unique_id=1754762426]
+[node name="LegFrMesh" type="MeshInstance3D" parent="Body/LegFr" unique_id=1121046078]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_5kd6c")
 
-[node name="LegBl" type="Node3D" parent="Body" unique_id=1303933810]
+[node name="LegBl" type="Node3D" parent="Body" unique_id=925735586]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.12, -0.1, 0.18)
 
-[node name="LegBlMesh" type="MeshInstance3D" parent="Body/LegBl" unique_id=271431294]
+[node name="LegBlMesh" type="MeshInstance3D" parent="Body/LegBl" unique_id=956465688]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_afb86")
 
-[node name="LegBr" type="Node3D" parent="Body" unique_id=1198559610]
+[node name="LegBr" type="Node3D" parent="Body" unique_id=570195852]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.12, -0.1, 0.18)
 
-[node name="LegBrMesh" type="MeshInstance3D" parent="Body/LegBr" unique_id=142955118]
+[node name="LegBrMesh" type="MeshInstance3D" parent="Body/LegBr" unique_id=1989566083]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_xsjyg")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=591436297]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=239501587]
 libraries/ = SubResource("AnimationLibrary_rouwk")
 autoplay = &"idle"

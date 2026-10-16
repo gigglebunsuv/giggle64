@@ -16,7 +16,7 @@ height = 1.8
 radius = 0.55
 height = 1.9
 
-[node name="BattleMage" type="CharacterBody3D" unique_id=1469342699]
+[node name="BattleMage" type="CharacterBody3D" unique_id=659793448]
 collision_layer = 4
 collision_mask = 7
 script = ExtResource("1_bngxy")
@@ -25,28 +25,28 @@ target_offset = 1.6
 boomerang_stun = 1.0
 tint = Color(1.15, 0.8, 0.75, 1)
 
-[node name="Collision" type="CollisionShape3D" parent="." unique_id=1160533535]
+[node name="Collision" type="CollisionShape3D" parent="." unique_id=1576474507]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
 shape = SubResource("CapsuleShape3D_pf65i")
 
-[node name="Model" type="Node3D" parent="." unique_id=2018374616 instance=ExtResource("2_6wrf4")]
+[node name="Model" type="Node3D" parent="." unique_id=1441934624 instance=ExtResource("2_6wrf4")]
 transform = Transform3D(1.04, 0, 0, 0, 1.04, 0, 0, 0, 1.04, 0, 0, 0)
 script = ExtResource("3_ne5oq")
 
-[node name="Health" type="Node" parent="." unique_id=110941646]
+[node name="Health" type="Node" parent="." unique_id=2116847690]
 script = ExtResource("4_bay8b")
 max_health = 16
 
-[node name="Hurtbox" type="Area3D" parent="." unique_id=645926646]
+[node name="Hurtbox" type="Area3D" parent="." unique_id=1231642880]
 collision_layer = 16
 collision_mask = 0
 script = ExtResource("5_ijanp")
 
-[node name="Shape" type="CollisionShape3D" parent="Hurtbox" unique_id=471776713]
+[node name="Shape" type="CollisionShape3D" parent="Hurtbox" unique_id=61779934]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.95, 0)
 shape = SubResource("CapsuleShape3D_b6n0f")
 
-[node name="BlobShadow" type="MeshInstance3D" parent="." unique_id=1444472598]
+[node name="BlobShadow" type="MeshInstance3D" parent="." unique_id=1442308157]
 mesh = ExtResource("6_fs48i")
 script = ExtResource("7_61rwi")
 radius = 0.6

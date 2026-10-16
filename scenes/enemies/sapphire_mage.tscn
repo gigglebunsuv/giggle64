@@ -14,7 +14,7 @@ height = 1.8
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_kqwyg"]
 
-[node name="SapphireMage" type="CharacterBody3D" unique_id=1550799675]
+[node name="SapphireMage" type="CharacterBody3D" unique_id=313785665]
 collision_layer = 4
 collision_mask = 7
 motion_mode = 1
@@ -23,27 +23,27 @@ drop_table = 2
 target_offset = 2.1
 boomerang_stun = 2.0
 
-[node name="Collision" type="CollisionShape3D" parent="." unique_id=585863312]
+[node name="Collision" type="CollisionShape3D" parent="." unique_id=2054567437]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.95, 0)
 shape = SubResource("CapsuleShape3D_8j6hf")
 
-[node name="Model" type="Node3D" parent="." unique_id=2018374616 instance=ExtResource("2_1exs8")]
+[node name="Model" type="Node3D" parent="." unique_id=1441934624 instance=ExtResource("2_1exs8")]
 transform = Transform3D(1.04, 0, 0, 0, 1.04, 0, 0, 0, 1.04, 0, 0, 0)
 script = ExtResource("3_nrppc")
 
-[node name="Health" type="Node" parent="." unique_id=656786922]
+[node name="Health" type="Node" parent="." unique_id=385443814]
 script = ExtResource("4_vcg8t")
 max_health = 4
 
-[node name="Hurtbox" type="Area3D" parent="." unique_id=782062385]
+[node name="Hurtbox" type="Area3D" parent="." unique_id=1493736542]
 collision_layer = 16
 collision_mask = 0
 script = ExtResource("5_irc6x")
 
-[node name="Shape" type="CollisionShape3D" parent="Hurtbox" unique_id=2047745705]
+[node name="Shape" type="CollisionShape3D" parent="Hurtbox" unique_id=609322241]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CapsuleShape3D_kqwyg")
 
-[node name="BlobShadow" type="MeshInstance3D" parent="." unique_id=1299113890]
+[node name="BlobShadow" type="MeshInstance3D" parent="." unique_id=1324423218]
 mesh = ExtResource("6_v17py")
 script = ExtResource("7_bo1cb")

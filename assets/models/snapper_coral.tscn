@@ -629,49 +629,49 @@ _data = {
 &"windup": SubResource("Animation_b7p1d")
 }
 
-[node name="SnapperCoralModel" type="Node3D" unique_id=1969053372]
+[node name="SnapperCoralModel" type="Node3D" unique_id=336000]
 script = ExtResource("1_vt17w")
 
-[node name="Leaves" type="Node3D" parent="." unique_id=827432539]
+[node name="Leaves" type="Node3D" parent="." unique_id=701305933]
 
-[node name="LeavesMesh" type="MeshInstance3D" parent="Leaves" unique_id=1023673657]
+[node name="LeavesMesh" type="MeshInstance3D" parent="Leaves" unique_id=1677591848]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_ljidm")
 
-[node name="Stem1" type="Node3D" parent="." unique_id=7299718]
+[node name="Stem1" type="Node3D" parent="." unique_id=859970975]
 
-[node name="Stem1Mesh" type="MeshInstance3D" parent="Stem1" unique_id=1412717102]
+[node name="Stem1Mesh" type="MeshInstance3D" parent="Stem1" unique_id=1852691498]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_013mh")
 
-[node name="Stem2" type="Node3D" parent="Stem1" unique_id=563433928]
+[node name="Stem2" type="Node3D" parent="Stem1" unique_id=1437950862]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
 
-[node name="Stem2Mesh" type="MeshInstance3D" parent="Stem1/Stem2" unique_id=1341526836]
+[node name="Stem2Mesh" type="MeshInstance3D" parent="Stem1/Stem2" unique_id=206812681]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_8f7yl")
 
-[node name="Head" type="Node3D" parent="Stem1/Stem2" unique_id=1681499135]
+[node name="Head" type="Node3D" parent="Stem1/Stem2" unique_id=430280319]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
 
-[node name="HeadMesh" type="MeshInstance3D" parent="Stem1/Stem2/Head" unique_id=1171716829]
+[node name="HeadMesh" type="MeshInstance3D" parent="Stem1/Stem2/Head" unique_id=1468109534]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_jn4uv")
 
-[node name="JawTop" type="Node3D" parent="Stem1/Stem2/Head" unique_id=1188936280]
+[node name="JawTop" type="Node3D" parent="Stem1/Stem2/Head" unique_id=1602225807]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.05)
 
-[node name="JawTopMesh" type="MeshInstance3D" parent="Stem1/Stem2/Head/JawTop" unique_id=1357179406]
+[node name="JawTopMesh" type="MeshInstance3D" parent="Stem1/Stem2/Head/JawTop" unique_id=1784563080]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_k8fxj")
 
-[node name="JawBot" type="Node3D" parent="Stem1/Stem2/Head" unique_id=260944196]
+[node name="JawBot" type="Node3D" parent="Stem1/Stem2/Head" unique_id=1800590421]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.05)
 
-[node name="JawBotMesh" type="MeshInstance3D" parent="Stem1/Stem2/Head/JawBot" unique_id=1355514599]
+[node name="JawBotMesh" type="MeshInstance3D" parent="Stem1/Stem2/Head/JawBot" unique_id=1513532737]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_ejn6b")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1195808647]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1160106328]
 libraries/ = SubResource("AnimationLibrary_qqgi0")
 autoplay = &"hide"

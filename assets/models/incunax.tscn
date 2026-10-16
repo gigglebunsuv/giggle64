@@ -512,54 +512,54 @@ _data = {
 &"rise": SubResource("Animation_117jw")
 }
 
-[node name="IncunaxModel" type="Node3D" unique_id=414771229]
+[node name="IncunaxModel" type="Node3D" unique_id=666474922]
 script = ExtResource("1_6nk2v")
 
-[node name="Spine" type="Node3D" parent="." unique_id=410380084]
+[node name="Spine" type="Node3D" parent="." unique_id=414801904]
 
-[node name="SpineMesh" type="MeshInstance3D" parent="Spine" unique_id=162955160]
+[node name="SpineMesh" type="MeshInstance3D" parent="Spine" unique_id=2090139856]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_ip0px")
 
-[node name="SpineGlow" type="MeshInstance3D" parent="Spine" unique_id=1832756058]
+[node name="SpineGlow" type="MeshInstance3D" parent="Spine" unique_id=701955161]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_vhjwu")
 metadata/no_tint = true
 
-[node name="Eye" type="Marker3D" parent="Spine" unique_id=722027141]
+[node name="Eye" type="Marker3D" parent="Spine" unique_id=1726400172]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.3)
 
-[node name="CoverL" type="Node3D" parent="Spine" unique_id=314806176]
+[node name="CoverL" type="Node3D" parent="Spine" unique_id=588431727]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.32, 0, 0.5)
 
-[node name="CoverLMesh" type="MeshInstance3D" parent="Spine/CoverL" unique_id=1888332762]
+[node name="CoverLMesh" type="MeshInstance3D" parent="Spine/CoverL" unique_id=643075465]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_g787g")
 
-[node name="CoverLGlow" type="MeshInstance3D" parent="Spine/CoverL" unique_id=2050277717]
+[node name="CoverLGlow" type="MeshInstance3D" parent="Spine/CoverL" unique_id=1599778424]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_s4igd")
 metadata/no_tint = true
 
-[node name="CoverR" type="Node3D" parent="Spine" unique_id=1038700053]
+[node name="CoverR" type="Node3D" parent="Spine" unique_id=1643925273]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.32, 0, 0.5)
 
-[node name="CoverRMesh" type="MeshInstance3D" parent="Spine/CoverR" unique_id=641969831]
+[node name="CoverRMesh" type="MeshInstance3D" parent="Spine/CoverR" unique_id=1258494272]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_wmt7f")
 
-[node name="CoverRGlow" type="MeshInstance3D" parent="Spine/CoverR" unique_id=1014786701]
+[node name="CoverRGlow" type="MeshInstance3D" parent="Spine/CoverR" unique_id=1099242912]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_pd5ot")
 metadata/no_tint = true
 
-[node name="Chains" type="Node3D" parent="Spine" unique_id=441667077]
+[node name="Chains" type="Node3D" parent="Spine" unique_id=1634698403]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.2, 0.3)
 
-[node name="ChainsMesh" type="MeshInstance3D" parent="Spine/Chains" unique_id=312561997]
+[node name="ChainsMesh" type="MeshInstance3D" parent="Spine/Chains" unique_id=946389706]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_wqpn2")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=2017385692]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=841133413]
 libraries/ = SubResource("AnimationLibrary_f6iak")
 autoplay = &"idle"

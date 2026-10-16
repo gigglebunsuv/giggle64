@@ -282,12 +282,19 @@ func _mara_anims(lib: AnimationLibrary, rest: Dictionary) -> void:
 		"shoulder_l": [[0.0, V.call(20, 0, -30)]], "elbow_l": [[0.0, V.call(30, 0, 0)]],
 		"leg_r": [[0.0, V.call(-15, 0, 8)]], "leg_l": [[0.0, V.call(20, 0, -8)]], "knee_l": [[0.0, V.call(-30, 0, 0)]],
 	}, rest)
+	# The lunge (Beta 1.7.0: it was one held pose): coiled for a moment, the
+	# blade driven out on the step, then her weight carries on into it.
 	_anim(lib, "thrust", 0.5, false, {
-		"hips@pos": [[0.0, V.call(0, 0.76, 0)]],
-		"torso": [[0.0, V.call(14, -24, 0)]], "head": [[0.0, V.call(-10, 22, 0)]],
-		"shoulder_r": [[0.0, V.call(86, 0, 4)]], "elbow_r": [[0.0, V.call(6, 0, 0)]], "hand_r": [[0.0, V.call(-6, 0, 0)]],
-		"shoulder_l": [[0.0, V.call(70, 0, -10)]], "elbow_l": [[0.0, V.call(20, 0, 0)]],
-		"leg_r": [[0.0, V.call(40, 0, 6)]], "knee_r": [[0.0, V.call(-40, 0, 0)]], "leg_l": [[0.0, V.call(-30, 0, -6)]], "knee_l": [[0.0, V.call(-10, 0, 0)]],
+		"hips@pos": [[0.0, V.call(0, 0.8, 0.04)], [0.08, V.call(0, 0.76, 0)], [0.5, V.call(0, 0.74, -0.04)]],
+		"torso": [[0.0, V.call(6, -42, 0)], [0.08, V.call(14, -24, 0)], [0.5, V.call(18, -20, 0)]],
+		"head": [[0.0, V.call(-4, 36, 0)], [0.08, V.call(-10, 22, 0)], [0.5, V.call(-12, 18, 0)]],
+		"shoulder_r": [[0.0, V.call(58, 0, 38)], [0.08, V.call(86, 0, 4)], [0.5, V.call(90, 0, 2)]],
+		"elbow_r": [[0.0, V.call(74, 0, 0)], [0.08, V.call(6, 0, 0)], [0.5, V.call(2, 0, 0)]],
+		# The blade levelled at her foe (hand X -100; measured with the arm out).
+		"hand_r": [[0.0, V.call(-60, 0, 0)], [0.08, V.call(-100, 0, 0)], [0.5, V.call(-102, 0, 0)]],
+		"shoulder_l": [[0.0, V.call(40, 0, -20)], [0.08, V.call(70, 0, -10)], [0.5, V.call(64, 0, -14)]], "elbow_l": [[0.0, V.call(40, 0, 0)], [0.08, V.call(20, 0, 0)]],
+		"leg_r": [[0.0, V.call(18, 0, 6)], [0.08, V.call(40, 0, 6)], [0.5, V.call(46, 0, 6)]], "knee_r": [[0.0, V.call(-22, 0, 0)], [0.08, V.call(-40, 0, 0)], [0.5, V.call(-46, 0, 0)]],
+		"leg_l": [[0.0, V.call(-12, 0, -6)], [0.08, V.call(-30, 0, -6)], [0.5, V.call(-34, 0, -6)]], "knee_l": [[0.0, V.call(-18, 0, 0)], [0.08, V.call(-10, 0, 0)]],
 	}, rest)
 	_anim(lib, "slam", 0.45, false, {
 		"hips@pos": [[0.0, V.call(0, 0.8, 0)], [0.2, V.call(0, 0.7, 0)]],

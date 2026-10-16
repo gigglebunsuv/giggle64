@@ -762,35 +762,35 @@ tracks/1/enabled = true
 tracks/1/path = NodePath("Body")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
-tracks/1/keys = PackedFloat32Array(0, 1, 0.12186935, 0, 0, 0.99254614)
+tracks/1/keys = PackedFloat32Array(0, 1, 0.12186935, 0, 0, 0.99254614, 0.033333335, 1, 0.12008693, 0, 0, 0.9927634, 0.06666667, 1, 0.11530816, 0, 0, 0.99332976, 0.1, 1, 0.10838492, 0, 0, 0.994109, 0.13333334, 1, 0.100170195, 0, 0, 0.9949703, 0.16666667, 1, 0.091519505, 0, 0, 0.9958033, 0.2, 1, 0.083291344, 0, 0, 0.9965252, 0.23333333, 1, 0.07634664, 0, 0, 0.99708134, 0.26666668, 1, 0.0715476, 0, 0, 0.9974372, 0.3, 1, 0.06975647, 0, 0, 0.9975641, 0.33333334, 1, 0.0715476, 0, 0, 0.9974372, 0.36666667, 1, 0.07634664, 0, 0, 0.99708134, 0.4, 1, 0.083291344, 0, 0, 0.9965252, 0.43333334, 1, 0.091519505, 0, 0, 0.9958033, 0.46666667, 1, 0.100170195, 0, 0, 0.9949703, 0.5, 1, 0.10838492, 0, 0, 0.994109, 0.53333336, 1, 0.11530816, 0, 0, 0.99332976, 0.56666666, 1, 0.12008693, 0, 0, 0.9927634, 0.6, 1, 0.12186935, 0, 0, 0.99254614)
 tracks/2/type = "rotation_3d"
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/path = NodePath("Body/LegR")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
-tracks/2/keys = PackedFloat32Array(0, 1, 0.4599915, 0.04024404, -0.07730808, 0.88363546)
+tracks/2/keys = PackedFloat32Array(0, 1, 0.4599915, 0.04024404, -0.07730808, 0.88363546, 0.033333335, 1, 0.45544204, 0.040395446, -0.07857234, 0.8858708, 0.06666667, 1, 0.4431931, 0.040742453, -0.08197705, 0.8917397, 0.1, 1, 0.42531893, 0.041092303, -0.08694599, 0.89991975, 0.13333334, 1, 0.4039227, 0.04127129, -0.09289128, 0.9091283, 0.16666667, 1, 0.38118416, 0.041180868, -0.09920101, 0.91823846, 0.2, 1, 0.3593731, 0.040827733, -0.10524, 0.9263416, 0.23333333, 1, 0.34083498, 0.040326, -0.11035885, 0.932752, 0.26666668, 1, 0.32795975, 0.03986994, -0.11390486, 0.9369517, 0.3, 1, 0.3231414, 0.039676778, -0.11522973, 0.9384708, 0.33333334, 1, 0.32795975, 0.03986994, -0.11390486, 0.9369517, 0.36666667, 1, 0.34083498, 0.040326, -0.11035885, 0.932752, 0.4, 1, 0.3593731, 0.040827733, -0.10524, 0.9263416, 0.43333334, 1, 0.38118416, 0.041180868, -0.09920101, 0.91823846, 0.46666667, 1, 0.4039227, 0.04127129, -0.09289128, 0.9091283, 0.5, 1, 0.42531893, 0.041092303, -0.08694599, 0.89991975, 0.53333336, 1, 0.4431931, 0.040742453, -0.08197705, 0.8917397, 0.56666666, 1, 0.45544204, 0.040395446, -0.07857234, 0.8858708, 0.6, 1, 0.4599915, 0.04024404, -0.07730808, 0.88363546)
 tracks/3/type = "rotation_3d"
 tracks/3/imported = false
 tracks/3/enabled = true
 tracks/3/path = NodePath("Body/LegL")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
-tracks/3/keys = PackedFloat32Array(0, 1, 0.4599915, -0.04024404, 0.07730808, 0.88363546)
+tracks/3/keys = PackedFloat32Array(0, 1, 0.4599915, -0.04024404, 0.07730808, 0.88363546, 0.033333335, 1, 0.45544204, -0.040395446, 0.07857234, 0.8858708, 0.06666667, 1, 0.4431931, -0.040742453, 0.08197705, 0.8917397, 0.1, 1, 0.42531893, -0.041092303, 0.08694599, 0.89991975, 0.13333334, 1, 0.4039227, -0.04127129, 0.09289128, 0.9091283, 0.16666667, 1, 0.38118416, -0.041180868, 0.09920101, 0.91823846, 0.2, 1, 0.3593731, -0.040827733, 0.10524, 0.9263416, 0.23333333, 1, 0.34083498, -0.040326, 0.11035885, 0.932752, 0.26666668, 1, 0.32795975, -0.03986994, 0.11390486, 0.9369517, 0.3, 1, 0.3231414, -0.039676778, 0.11522973, 0.9384708, 0.33333334, 1, 0.32795975, -0.03986994, 0.11390486, 0.9369517, 0.36666667, 1, 0.34083498, -0.040326, 0.11035885, 0.932752, 0.4, 1, 0.3593731, -0.040827733, 0.10524, 0.9263416, 0.43333334, 1, 0.38118416, -0.041180868, 0.09920101, 0.91823846, 0.46666667, 1, 0.4039227, -0.04127129, 0.09289128, 0.9091283, 0.5, 1, 0.42531893, -0.041092303, 0.08694599, 0.89991975, 0.53333336, 1, 0.4431931, -0.040742453, 0.08197705, 0.8917397, 0.56666666, 1, 0.45544204, -0.040395446, 0.07857234, 0.8858708, 0.6, 1, 0.4599915, -0.04024404, 0.07730808, 0.88363546)
 tracks/4/type = "rotation_3d"
 tracks/4/imported = false
 tracks/4/enabled = true
 tracks/4/path = NodePath("Body/ArmR")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
-tracks/4/keys = PackedFloat32Array(0, 1, -0.4190027, -0.055162758, -0.11829691, 0.8985542)
+tracks/4/keys = PackedFloat32Array(0, 1, -0.4190027, -0.055162758, -0.11829691, 0.8985542, 0.033333335, 1, -0.42210954, -0.056471616, -0.11997697, 0.8967943, 0.06666667, 1, -0.4303907, -0.06004096, -0.12443782, 0.8920057, 0.1, 1, -0.44226095, -0.065365836, -0.13078585, 0.88488847, 0.13333334, 1, -0.4561461, -0.07191623, -0.13813768, 0.87617165, 0.16666667, 1, -0.47052795, -0.07908104, -0.14566164, 0.8666789, 0.2, 1, -0.4839726, -0.0861441, -0.15260425, 0.8573573, 0.23333333, 1, -0.4951378, -0.09228959, -0.15829729, 0.8492721, 0.26666668, 1, -0.502754, -0.09663291, -0.16214028, 0.8435704, 0.3, 1, -0.50557536, -0.098273896, -0.16355523, 0.8414187, 0.33333334, 1, -0.502754, -0.09663291, -0.16214028, 0.8435704, 0.36666667, 1, -0.4951378, -0.09228959, -0.15829729, 0.8492721, 0.4, 1, -0.4839726, -0.0861441, -0.15260425, 0.8573573, 0.43333334, 1, -0.47052795, -0.07908104, -0.14566164, 0.8666789, 0.46666667, 1, -0.4561461, -0.07191623, -0.13813768, 0.87617165, 0.5, 1, -0.44226095, -0.065365836, -0.13078585, 0.88488847, 0.53333336, 1, -0.4303907, -0.06004096, -0.12443782, 0.8920057, 0.56666666, 1, -0.42210954, -0.056471616, -0.11997697, 0.8967943, 0.6, 1, -0.4190027, -0.055162758, -0.11829691, 0.8985542)
 tracks/5/type = "rotation_3d"
 tracks/5/imported = false
 tracks/5/enabled = true
 tracks/5/path = NodePath("Body/ArmL")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
-tracks/5/keys = PackedFloat32Array(0, 1, -0.4190027, 0.055162758, 0.11829691, 0.8985542)
+tracks/5/keys = PackedFloat32Array(0, 1, -0.4190027, 0.055162758, 0.11829691, 0.8985542, 0.033333335, 1, -0.42210954, 0.056471616, 0.11997697, 0.8967943, 0.06666667, 1, -0.4303907, 0.06004096, 0.12443782, 0.8920057, 0.1, 1, -0.44226095, 0.065365836, 0.13078585, 0.88488847, 0.13333334, 1, -0.4561461, 0.07191623, 0.13813768, 0.87617165, 0.16666667, 1, -0.47052795, 0.07908104, 0.14566164, 0.8666789, 0.2, 1, -0.4839726, 0.0861441, 0.15260425, 0.8573573, 0.23333333, 1, -0.4951378, 0.09228959, 0.15829729, 0.8492721, 0.26666668, 1, -0.502754, 0.09663291, 0.16214028, 0.8435704, 0.3, 1, -0.50557536, 0.098273896, 0.16355523, 0.8414187, 0.33333334, 1, -0.502754, 0.09663291, 0.16214028, 0.8435704, 0.36666667, 1, -0.4951378, 0.09228959, 0.15829729, 0.8492721, 0.4, 1, -0.4839726, 0.0861441, 0.15260425, 0.8573573, 0.43333334, 1, -0.47052795, 0.07908104, 0.14566164, 0.8666789, 0.46666667, 1, -0.4561461, 0.07191623, 0.13813768, 0.87617165, 0.5, 1, -0.44226095, 0.065365836, 0.13078585, 0.88488847, 0.53333336, 1, -0.4303907, 0.06004096, 0.12443782, 0.8920057, 0.56666666, 1, -0.42210954, 0.056471616, 0.11997697, 0.8967943, 0.6, 1, -0.4190027, 0.055162758, 0.11829691, 0.8985542)
 tracks/6/type = "scale_3d"
 tracks/6/imported = false
 tracks/6/enabled = true
@@ -1164,63 +1164,63 @@ _data = {
 &"unflip": SubResource("Animation_015f2")
 }
 
-[node name="GullagogModel" type="Node3D" unique_id=390056317]
+[node name="GullagogModel" type="Node3D" unique_id=2045893404]
 script = ExtResource("1_mspd6")
 
-[node name="Body" type="Node3D" parent="." unique_id=2108460820]
+[node name="Body" type="Node3D" parent="." unique_id=621229842]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3, 0)
 
-[node name="BodyMesh" type="MeshInstance3D" parent="Body" unique_id=1181475673]
+[node name="BodyMesh" type="MeshInstance3D" parent="Body" unique_id=565646160]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_crf2m")
 
-[node name="BodyGlow" type="MeshInstance3D" parent="Body" unique_id=406588219]
+[node name="BodyGlow" type="MeshInstance3D" parent="Body" unique_id=861207332]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_hn8h3")
 metadata/no_tint = true
 
-[node name="Jaw" type="Node3D" parent="Body" unique_id=973764746]
+[node name="Jaw" type="Node3D" parent="Body" unique_id=330652840]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.35, -0.6)
 
-[node name="JawMesh" type="MeshInstance3D" parent="Body/Jaw" unique_id=1922018310]
+[node name="JawMesh" type="MeshInstance3D" parent="Body/Jaw" unique_id=1490101494]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_x7nfu")
 
-[node name="Tongue" type="Node3D" parent="Body/Jaw" unique_id=300886157]
+[node name="Tongue" type="Node3D" parent="Body/Jaw" unique_id=61437999]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, -0.4)
 
-[node name="TongueMesh" type="MeshInstance3D" parent="Body/Jaw/Tongue" unique_id=1975557627]
+[node name="TongueMesh" type="MeshInstance3D" parent="Body/Jaw/Tongue" unique_id=451406304]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_mmvhl")
 
-[node name="ArmR" type="Node3D" parent="Body" unique_id=1066947654]
+[node name="ArmR" type="Node3D" parent="Body" unique_id=955756761]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.2, -0.6, -0.9)
 
-[node name="ArmRMesh" type="MeshInstance3D" parent="Body/ArmR" unique_id=2057626228]
+[node name="ArmRMesh" type="MeshInstance3D" parent="Body/ArmR" unique_id=1654333789]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_y0tyo")
 
-[node name="LegR" type="Node3D" parent="Body" unique_id=1518892646]
+[node name="LegR" type="Node3D" parent="Body" unique_id=353635909]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.45, -0.4, 0.9)
 
-[node name="LegRMesh" type="MeshInstance3D" parent="Body/LegR" unique_id=1581725582]
+[node name="LegRMesh" type="MeshInstance3D" parent="Body/LegR" unique_id=165643620]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_i6u7e")
 
-[node name="ArmL" type="Node3D" parent="Body" unique_id=1244215392]
+[node name="ArmL" type="Node3D" parent="Body" unique_id=1473752937]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.2, -0.6, -0.9)
 
-[node name="ArmLMesh" type="MeshInstance3D" parent="Body/ArmL" unique_id=2090582630]
+[node name="ArmLMesh" type="MeshInstance3D" parent="Body/ArmL" unique_id=1069845735]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_56apf")
 
-[node name="LegL" type="Node3D" parent="Body" unique_id=1070066633]
+[node name="LegL" type="Node3D" parent="Body" unique_id=1922553595]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.45, -0.4, 0.9)
 
-[node name="LegLMesh" type="MeshInstance3D" parent="Body/LegL" unique_id=1508273186]
+[node name="LegLMesh" type="MeshInstance3D" parent="Body/LegL" unique_id=848060831]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_wvqj3")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1924343221]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=795270974]
 libraries/ = SubResource("AnimationLibrary_aen71")
 autoplay = &"idle"

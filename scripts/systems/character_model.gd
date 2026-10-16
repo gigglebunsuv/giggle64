@@ -17,6 +17,11 @@ extends Node3D
 @onready var anim: AnimationPlayer = $AnimationPlayer
 
 var current_anim: StringName = &""
+## The shortest crossfade between two animations (Beta 1.7.0). Enemies and
+## people set it so no change of state snaps from one pose to the next, as
+## OoT morphs between animations over a few frames (Animation_Change's
+## morphFrames). The hero keeps 0: his blends are tuned one by one.
+var min_blend := 0.0
 ## Upper-body lean in radians: x = forward pitch, y = roll into a turn.
 var lean := Vector2.ZERO
 ## Head turn layered over the animation in radians: x = yaw (left +), y = pitch
@@ -104,10 +109,15 @@ func play(anim_name: StringName, blend := 0.06, speed := 1.0, restart := false) 
 	anim.speed_scale = speed
 	if anim_name == current_anim and not restart:
 		return
+	var same := anim_name == current_anim
 	current_anim = anim_name
-	if restart:
+	# A restart cuts straight to the first frame, except that a model with a
+	# min_blend still eases from a different animation into it.
+	if restart and (same or min_blend <= 0.0):
 		anim.stop()
-	anim.play(anim_name, blend)
+		anim.play(anim_name, blend)
+		return
+	anim.play(anim_name, maxf(blend, min_blend))
 
 
 func animation_finished() -> bool:

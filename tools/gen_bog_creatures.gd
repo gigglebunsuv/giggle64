@@ -142,9 +142,9 @@ func _build_gullagog() -> void:
 	}, rest)
 	_anim(lib, "leap", 0.6, true, {
 		"body@pos": [[0.0, V.call(0, 1.4, 0)]],
-		"body": [[0.0, V.call(14, 0, 0)]],
-		"leg_r": [[0.0, V.call(55, 0, -10)]], "leg_l": [[0.0, V.call(55, 0, 10)]],
-		"arm_r": [[0.0, V.call(-50, 0, -15)]], "arm_l": [[0.0, V.call(-50, 0, 15)]],
+		"body": [[0.0, V.call(14, 0, 0)], [0.3, V.call(8, 0, 0)]],
+		"leg_r": [[0.0, V.call(55, 0, -10)], [0.3, V.call(38, 0, -14)]], "leg_l": [[0.0, V.call(55, 0, 10)], [0.3, V.call(38, 0, 14)]],
+		"arm_r": [[0.0, V.call(-50, 0, -15)], [0.3, V.call(-62, 0, -22)]], "arm_l": [[0.0, V.call(-50, 0, 15)], [0.3, V.call(-62, 0, 22)]],
 		"tongue@scale": [[0.0, V.call(1, 1, 0.3)]],
 		"body@scale": [[0.0, V.call(1, 1, 1)]],
 	}, rest)

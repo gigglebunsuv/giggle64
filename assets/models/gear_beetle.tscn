@@ -608,70 +608,70 @@ _data = {
 &"walk": SubResource("Animation_wptnp")
 }
 
-[node name="GearBeetleModel" type="Node3D" unique_id=1045583080]
+[node name="GearBeetleModel" type="Node3D" unique_id=53621970]
 script = ExtResource("1_fhas0")
 
-[node name="Body" type="Node3D" parent="." unique_id=86428684]
+[node name="Body" type="Node3D" parent="." unique_id=1282817822]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.42, 0)
 
-[node name="BodyMesh" type="MeshInstance3D" parent="Body" unique_id=2038571360]
+[node name="BodyMesh" type="MeshInstance3D" parent="Body" unique_id=47958620]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_ql8mn")
 
-[node name="Head" type="Node3D" parent="Body" unique_id=775993177]
+[node name="Head" type="Node3D" parent="Body" unique_id=147089284]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.5)
 
-[node name="HeadMesh" type="MeshInstance3D" parent="Body/Head" unique_id=171990536]
+[node name="HeadMesh" type="MeshInstance3D" parent="Body/Head" unique_id=808238420]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_0sq7n")
 
-[node name="HeadGlow" type="MeshInstance3D" parent="Body/Head" unique_id=2055208087]
+[node name="HeadGlow" type="MeshInstance3D" parent="Body/Head" unique_id=1410245792]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_ekdha")
 metadata/no_tint = true
 
-[node name="Leg0" type="Node3D" parent="Body" unique_id=752625469]
+[node name="Leg0" type="Node3D" parent="Body" unique_id=1272504631]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.35, -0.08, -0.25)
 
-[node name="Leg0Mesh" type="MeshInstance3D" parent="Body/Leg0" unique_id=1125578562]
+[node name="Leg0Mesh" type="MeshInstance3D" parent="Body/Leg0" unique_id=2032318075]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_0xry6")
 
-[node name="Leg1" type="Node3D" parent="Body" unique_id=1874198703]
+[node name="Leg1" type="Node3D" parent="Body" unique_id=1320145076]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.35, -0.08, 0)
 
-[node name="Leg1Mesh" type="MeshInstance3D" parent="Body/Leg1" unique_id=1547908404]
+[node name="Leg1Mesh" type="MeshInstance3D" parent="Body/Leg1" unique_id=1180682283]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_7ddau")
 
-[node name="Leg2" type="Node3D" parent="Body" unique_id=1946780035]
+[node name="Leg2" type="Node3D" parent="Body" unique_id=1648147571]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.35, -0.08, 0.25)
 
-[node name="Leg2Mesh" type="MeshInstance3D" parent="Body/Leg2" unique_id=293629106]
+[node name="Leg2Mesh" type="MeshInstance3D" parent="Body/Leg2" unique_id=2140246545]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_5xbdc")
 
-[node name="Leg3" type="Node3D" parent="Body" unique_id=1685842615]
+[node name="Leg3" type="Node3D" parent="Body" unique_id=2136335020]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.35, -0.08, -0.25)
 
-[node name="Leg3Mesh" type="MeshInstance3D" parent="Body/Leg3" unique_id=1180249461]
+[node name="Leg3Mesh" type="MeshInstance3D" parent="Body/Leg3" unique_id=921138768]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_w2tdl")
 
-[node name="Leg4" type="Node3D" parent="Body" unique_id=1123343225]
+[node name="Leg4" type="Node3D" parent="Body" unique_id=1248723361]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.35, -0.08, 0)
 
-[node name="Leg4Mesh" type="MeshInstance3D" parent="Body/Leg4" unique_id=1635919309]
+[node name="Leg4Mesh" type="MeshInstance3D" parent="Body/Leg4" unique_id=1472584004]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_whsqf")
 
-[node name="Leg5" type="Node3D" parent="Body" unique_id=443969810]
+[node name="Leg5" type="Node3D" parent="Body" unique_id=1902871159]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.35, -0.08, 0.25)
 
-[node name="Leg5Mesh" type="MeshInstance3D" parent="Body/Leg5" unique_id=1314778111]
+[node name="Leg5Mesh" type="MeshInstance3D" parent="Body/Leg5" unique_id=576790121]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_fgjrd")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1581293972]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=876351685]
 libraries/ = SubResource("AnimationLibrary_lf8pb")
 autoplay = &"idle"

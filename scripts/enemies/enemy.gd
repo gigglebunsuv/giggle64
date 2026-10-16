@@ -14,6 +14,8 @@ signal died
 ## frame per frame is 18 m/s^2.
 const OOT_SPEED := 0.9
 const OOT_GRAVITY := 18.0
+## Every enemy's shortest crossfade between animations (CharacterModel.min_blend).
+const ENEMY_MIN_BLEND := 0.08
 
 ## Drop table for Drops.random() when it dies (-1 = nothing).
 @export var drop_table := 1
@@ -80,6 +82,8 @@ func _ready() -> void:
 		health.died.connect(_on_died)
 	if attack_hitbox:
 		attack_hitbox.hit_landed.connect(_on_attack_landed)
+	if model:
+		model.min_blend = ENEMY_MIN_BLEND
 	if model and tint != Color(1, 1, 1):
 		model.set_tint(tint)
 	add_to_group("enemies")

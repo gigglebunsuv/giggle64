@@ -214,27 +214,27 @@ _data = {
 &"stunned": SubResource("Animation_k0lj0")
 }
 
-[node name="WyrmModel" type="Node3D" unique_id=1009001315]
+[node name="WyrmModel" type="Node3D" unique_id=592967460]
 script = ExtResource("1_3hijx")
 
-[node name="Skull" type="Node3D" parent="." unique_id=79925555]
+[node name="Skull" type="Node3D" parent="." unique_id=1987336939]
 
-[node name="SkullMesh" type="MeshInstance3D" parent="Skull" unique_id=834150252]
+[node name="SkullMesh" type="MeshInstance3D" parent="Skull" unique_id=2003311017]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_7rcxh")
 
-[node name="SkullGlow" type="MeshInstance3D" parent="Skull" unique_id=895190532]
+[node name="SkullGlow" type="MeshInstance3D" parent="Skull" unique_id=2121608581]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_nve1e")
 metadata/no_tint = true
 
-[node name="Jaw" type="Node3D" parent="Skull" unique_id=871882174]
+[node name="Jaw" type="Node3D" parent="Skull" unique_id=2097273151]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, 0.6)
 
-[node name="JawMesh" type="MeshInstance3D" parent="Skull/Jaw" unique_id=1657497961]
+[node name="JawMesh" type="MeshInstance3D" parent="Skull/Jaw" unique_id=2073459779]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_k8h0i")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1146686545]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1716529102]
 libraries/ = SubResource("AnimationLibrary_jtqv8")
 autoplay = &"rear"

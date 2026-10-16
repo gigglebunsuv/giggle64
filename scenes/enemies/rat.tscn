@@ -18,7 +18,7 @@ radius = 0.4
 [sub_resource type="BoxShape3D" id="BoxShape3D_ars0e"]
 size = Vector3(0.6, 0.5, 0.7)
 
-[node name="Rat" type="CharacterBody3D" unique_id=43904528]
+[node name="Rat" type="CharacterBody3D" unique_id=849653734]
 collision_layer = 4
 collision_mask = 7
 script = ExtResource("1_rl5i1")
@@ -26,36 +26,36 @@ target_offset = 0.6
 boomerang_stun = 4.0
 boomerang_damage = 1
 
-[node name="Collision" type="CollisionShape3D" parent="." unique_id=1554119061]
+[node name="Collision" type="CollisionShape3D" parent="." unique_id=967875525]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
 shape = SubResource("SphereShape3D_hclp1")
 
-[node name="Model" type="Node3D" parent="." unique_id=1359138233 instance=ExtResource("2_t1pi2")]
+[node name="Model" type="Node3D" parent="." unique_id=1843423350 instance=ExtResource("2_t1pi2")]
 script = ExtResource("3_fffwg")
 
-[node name="Health" type="Node" parent="." unique_id=981189722]
+[node name="Health" type="Node" parent="." unique_id=1206900719]
 script = ExtResource("4_ac66d")
 max_health = 1
 
-[node name="Hurtbox" type="Area3D" parent="." unique_id=323952157]
+[node name="Hurtbox" type="Area3D" parent="." unique_id=874232721]
 collision_layer = 16
 collision_mask = 0
 script = ExtResource("5_hajvu")
 
-[node name="Shape" type="CollisionShape3D" parent="Hurtbox" unique_id=664304544]
+[node name="Shape" type="CollisionShape3D" parent="Hurtbox" unique_id=1830246720]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
 shape = SubResource("SphereShape3D_ur0id")
 
-[node name="AttackHitbox" type="Area3D" parent="." unique_id=1246443209]
+[node name="AttackHitbox" type="Area3D" parent="." unique_id=174216637]
 collision_layer = 64
 collision_mask = 8
 script = ExtResource("6_ujef0")
 
-[node name="Shape" type="CollisionShape3D" parent="AttackHitbox" unique_id=1538296790]
+[node name="Shape" type="CollisionShape3D" parent="AttackHitbox" unique_id=1342074984]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, -0.5)
 shape = SubResource("BoxShape3D_ars0e")
 
-[node name="BlobShadow" type="MeshInstance3D" parent="." unique_id=2005108302]
+[node name="BlobShadow" type="MeshInstance3D" parent="." unique_id=608326433]
 mesh = ExtResource("7_h50a5")
 script = ExtResource("8_1spx8")
 radius = 0.35

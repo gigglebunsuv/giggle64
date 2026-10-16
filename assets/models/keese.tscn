@@ -237,34 +237,34 @@ _data = {
 &"swoop": SubResource("Animation_4jde8")
 }
 
-[node name="KeeseModel" type="Node3D" unique_id=157057281]
+[node name="KeeseModel" type="Node3D" unique_id=898407182]
 script = ExtResource("1_aqcxw")
 
-[node name="Body" type="Node3D" parent="." unique_id=923393847]
+[node name="Body" type="Node3D" parent="." unique_id=843908452]
 
-[node name="BodyMesh" type="MeshInstance3D" parent="Body" unique_id=1263596641]
+[node name="BodyMesh" type="MeshInstance3D" parent="Body" unique_id=1423702396]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_x4g7c")
 
-[node name="BodyGlow" type="MeshInstance3D" parent="Body" unique_id=1198281752]
+[node name="BodyGlow" type="MeshInstance3D" parent="Body" unique_id=25343913]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_cgeue")
 metadata/no_tint = true
 
-[node name="WingR" type="Node3D" parent="Body" unique_id=841680909]
+[node name="WingR" type="Node3D" parent="Body" unique_id=1431201348]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.12, 0.03, 0)
 
-[node name="WingRMesh" type="MeshInstance3D" parent="Body/WingR" unique_id=252918053]
+[node name="WingRMesh" type="MeshInstance3D" parent="Body/WingR" unique_id=1501194178]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_x6jwk")
 
-[node name="WingL" type="Node3D" parent="Body" unique_id=223686951]
+[node name="WingL" type="Node3D" parent="Body" unique_id=1235927594]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.12, 0.03, 0)
 
-[node name="WingLMesh" type="MeshInstance3D" parent="Body/WingL" unique_id=601662479]
+[node name="WingLMesh" type="MeshInstance3D" parent="Body/WingL" unique_id=511523955]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_en8qj")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1121321971]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=828558367]
 libraries/ = SubResource("AnimationLibrary_4iycp")
 autoplay = &"idle"

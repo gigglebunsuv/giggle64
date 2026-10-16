@@ -451,11 +451,11 @@ func _bird_anims() -> AnimationLibrary:
 	}, rest)
 	# Swooping: wings swept back, talons reaching forward.
 	_anim(lib, "swoop", 0.4, true, {
-		"body": [[0.0, V.call(-15, 0, 0)]],
-		"wing_r": [[0.0, V.call(0, -55, 10)]], "wing_l": [[0.0, V.call(0, 55, -10)]],
-		"tip_r": [[0.0, V.call(0, -30, 0)]], "tip_l": [[0.0, V.call(0, 30, 0)]],
-		"leg_r": [[0.0, V.call(-60, 0, 0)]], "leg_l": [[0.0, V.call(-60, 0, 0)]],
-		"head": [[0.0, V.call(10, 0, 0)]],
+		"body": [[0.0, V.call(-15, 0, 0)], [0.2, V.call(-12, 0, 0)]],
+		"wing_r": [[0.0, V.call(0, -55, 10)], [0.2, V.call(0, -50, 4)]], "wing_l": [[0.0, V.call(0, 55, -10)], [0.2, V.call(0, 50, -4)]],
+		"tip_r": [[0.0, V.call(0, -30, 0)], [0.2, V.call(0, -40, 8)]], "tip_l": [[0.0, V.call(0, 30, 0)], [0.2, V.call(0, 40, -8)]],
+		"leg_r": [[0.0, V.call(-60, 0, 0)], [0.2, V.call(-66, 0, 0)]], "leg_l": [[0.0, V.call(-60, 0, 0)], [0.2, V.call(-66, 0, 0)]],
+		"head": [[0.0, V.call(10, 0, 0)], [0.2, V.call(6, 0, 0)]],
 	}, rest)
 	_anim(lib, "screech", 1.0, false, {
 		"body": [[0.0, V.call(20, 0, 0)], [0.5, V.call(30, 0, 0)], [1.0, V.call(20, 0, 0)]],

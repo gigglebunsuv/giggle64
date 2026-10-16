@@ -1993,130 +1993,130 @@ _data = {
 &"windup": SubResource("Animation_m51kg")
 }
 
-[node name="HollowKingModel" type="Node3D" unique_id=50586354]
+[node name="HollowKingModel" type="Node3D" unique_id=1564595728]
 transform = Transform3D(2.5, 0, 0, 0, 2.5, 0, 0, 0, 2.5, 0, 0, 0)
 script = ExtResource("1_837ue")
 
-[node name="Hips" type="Node3D" parent="." unique_id=347609364]
+[node name="Hips" type="Node3D" parent="." unique_id=837065104]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.55, 0)
 
-[node name="HipsMesh" type="MeshInstance3D" parent="Hips" unique_id=603990887]
+[node name="HipsMesh" type="MeshInstance3D" parent="Hips" unique_id=2060600996]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_lchd7")
 
-[node name="Torso" type="Node3D" parent="Hips" unique_id=1083063800]
+[node name="Torso" type="Node3D" parent="Hips" unique_id=1775726668]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.06, 0)
 
-[node name="TorsoMesh" type="MeshInstance3D" parent="Hips/Torso" unique_id=885083039]
+[node name="TorsoMesh" type="MeshInstance3D" parent="Hips/Torso" unique_id=375599162]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_b053y")
 
-[node name="Eye" type="Marker3D" parent="Hips/Torso" unique_id=1431954811]
+[node name="Eye" type="Marker3D" parent="Hips/Torso" unique_id=145892236]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.24, -0.3)
 
-[node name="Head" type="Node3D" parent="Hips/Torso" unique_id=461214454]
+[node name="Head" type="Node3D" parent="Hips/Torso" unique_id=1862553523]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.42, -0.14)
 
-[node name="HeadMesh" type="MeshInstance3D" parent="Hips/Torso/Head" unique_id=618588131]
+[node name="HeadMesh" type="MeshInstance3D" parent="Hips/Torso/Head" unique_id=1572025258]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_cbxmm")
 
-[node name="HeadGlow" type="MeshInstance3D" parent="Hips/Torso/Head" unique_id=1716670339]
+[node name="HeadGlow" type="MeshInstance3D" parent="Hips/Torso/Head" unique_id=126714784]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_hjvc0")
 metadata/no_tint = true
 
-[node name="ShoulderR" type="Node3D" parent="Hips/Torso" unique_id=1409046707]
+[node name="ShoulderR" type="Node3D" parent="Hips/Torso" unique_id=563381088]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.31, 0.3, -0.07)
 
-[node name="ShoulderRMesh" type="MeshInstance3D" parent="Hips/Torso/ShoulderR" unique_id=58473035]
+[node name="ShoulderRMesh" type="MeshInstance3D" parent="Hips/Torso/ShoulderR" unique_id=1277959045]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_ewwqh")
 
-[node name="ElbowR" type="Node3D" parent="Hips/Torso/ShoulderR" unique_id=614951502]
+[node name="ElbowR" type="Node3D" parent="Hips/Torso/ShoulderR" unique_id=1679526493]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.26, 0)
 
-[node name="ElbowRMesh" type="MeshInstance3D" parent="Hips/Torso/ShoulderR/ElbowR" unique_id=657587628]
+[node name="ElbowRMesh" type="MeshInstance3D" parent="Hips/Torso/ShoulderR/ElbowR" unique_id=1504630574]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_1chpn")
 
-[node name="HandR" type="Node3D" parent="Hips/Torso/ShoulderR/ElbowR" unique_id=1429846373]
+[node name="HandR" type="Node3D" parent="Hips/Torso/ShoulderR/ElbowR" unique_id=1612523917]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.26, 0)
 
-[node name="HandRMesh" type="MeshInstance3D" parent="Hips/Torso/ShoulderR/ElbowR/HandR" unique_id=164303694]
+[node name="HandRMesh" type="MeshInstance3D" parent="Hips/Torso/ShoulderR/ElbowR/HandR" unique_id=1832277339]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_y6for")
 
-[node name="Club" type="Node3D" parent="Hips/Torso/ShoulderR/ElbowR/HandR" unique_id=1770195859]
+[node name="Club" type="Node3D" parent="Hips/Torso/ShoulderR/ElbowR/HandR" unique_id=907178624]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.07, 0)
 
-[node name="ClubMesh" type="MeshInstance3D" parent="Hips/Torso/ShoulderR/ElbowR/HandR/Club" unique_id=1767270722]
+[node name="ClubMesh" type="MeshInstance3D" parent="Hips/Torso/ShoulderR/ElbowR/HandR/Club" unique_id=1276957057]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_4l5u6")
 
-[node name="ShoulderL" type="Node3D" parent="Hips/Torso" unique_id=1745522170]
+[node name="ShoulderL" type="Node3D" parent="Hips/Torso" unique_id=180442409]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.31, 0.3, -0.07)
 
-[node name="ShoulderLMesh" type="MeshInstance3D" parent="Hips/Torso/ShoulderL" unique_id=1409978714]
+[node name="ShoulderLMesh" type="MeshInstance3D" parent="Hips/Torso/ShoulderL" unique_id=1627778785]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_2mvmn")
 
-[node name="ElbowL" type="Node3D" parent="Hips/Torso/ShoulderL" unique_id=720743025]
+[node name="ElbowL" type="Node3D" parent="Hips/Torso/ShoulderL" unique_id=433247547]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.26, 0)
 
-[node name="ElbowLMesh" type="MeshInstance3D" parent="Hips/Torso/ShoulderL/ElbowL" unique_id=1864718159]
+[node name="ElbowLMesh" type="MeshInstance3D" parent="Hips/Torso/ShoulderL/ElbowL" unique_id=1518578550]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_n7u0l")
 
-[node name="HandL" type="Node3D" parent="Hips/Torso/ShoulderL/ElbowL" unique_id=1657302716]
+[node name="HandL" type="Node3D" parent="Hips/Torso/ShoulderL/ElbowL" unique_id=1244317127]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.26, 0)
 
-[node name="HandLMesh" type="MeshInstance3D" parent="Hips/Torso/ShoulderL/ElbowL/HandL" unique_id=877274053]
+[node name="HandLMesh" type="MeshInstance3D" parent="Hips/Torso/ShoulderL/ElbowL/HandL" unique_id=2097885973]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_yf0ns")
 
-[node name="LegR" type="Node3D" parent="Hips" unique_id=819762508]
+[node name="LegR" type="Node3D" parent="Hips" unique_id=471035849]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.13, -0.12, 0)
 
-[node name="LegRMesh" type="MeshInstance3D" parent="Hips/LegR" unique_id=1393224098]
+[node name="LegRMesh" type="MeshInstance3D" parent="Hips/LegR" unique_id=136852431]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_ggmfo")
 
-[node name="KneeR" type="Node3D" parent="Hips/LegR" unique_id=913278505]
+[node name="KneeR" type="Node3D" parent="Hips/LegR" unique_id=1816369012]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.2, 0)
 
-[node name="KneeRMesh" type="MeshInstance3D" parent="Hips/LegR/KneeR" unique_id=1099374295]
+[node name="KneeRMesh" type="MeshInstance3D" parent="Hips/LegR/KneeR" unique_id=64056796]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_64u7p")
 
-[node name="FootR" type="Node3D" parent="Hips/LegR/KneeR" unique_id=1032526283]
+[node name="FootR" type="Node3D" parent="Hips/LegR/KneeR" unique_id=1822654139]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.18, 0)
 
-[node name="FootRMesh" type="MeshInstance3D" parent="Hips/LegR/KneeR/FootR" unique_id=594388697]
+[node name="FootRMesh" type="MeshInstance3D" parent="Hips/LegR/KneeR/FootR" unique_id=1706739649]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_testp")
 
-[node name="LegL" type="Node3D" parent="Hips" unique_id=1452670038]
+[node name="LegL" type="Node3D" parent="Hips" unique_id=1592213776]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.13, -0.12, 0)
 
-[node name="LegLMesh" type="MeshInstance3D" parent="Hips/LegL" unique_id=198640910]
+[node name="LegLMesh" type="MeshInstance3D" parent="Hips/LegL" unique_id=145762188]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_niw5l")
 
-[node name="KneeL" type="Node3D" parent="Hips/LegL" unique_id=1196276834]
+[node name="KneeL" type="Node3D" parent="Hips/LegL" unique_id=1969802152]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.2, 0)
 
-[node name="KneeLMesh" type="MeshInstance3D" parent="Hips/LegL/KneeL" unique_id=1180605590]
+[node name="KneeLMesh" type="MeshInstance3D" parent="Hips/LegL/KneeL" unique_id=1333417890]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_sukwa")
 
-[node name="FootL" type="Node3D" parent="Hips/LegL/KneeL" unique_id=1763652429]
+[node name="FootL" type="Node3D" parent="Hips/LegL/KneeL" unique_id=864641814]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.18, 0)
 
-[node name="FootLMesh" type="MeshInstance3D" parent="Hips/LegL/KneeL/FootL" unique_id=1858229970]
+[node name="FootLMesh" type="MeshInstance3D" parent="Hips/LegL/KneeL/FootL" unique_id=1876693828]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_spoyw")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=298722220]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1183766163]
 libraries/ = SubResource("AnimationLibrary_hqyhq")
 autoplay = &"idle"

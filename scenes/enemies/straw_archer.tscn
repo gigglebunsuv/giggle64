@@ -14,33 +14,33 @@ height = 1.9
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_71woy"]
 
-[node name="StrawArcher" type="CharacterBody3D" unique_id=1873261922]
+[node name="StrawArcher" type="CharacterBody3D" unique_id=1101974372]
 collision_layer = 4
 collision_mask = 7
 script = ExtResource("1_mikro")
 target_offset = 2.1
 tint = Color(1.25, 0.6, 0.55, 1)
 
-[node name="Collision" type="CollisionShape3D" parent="." unique_id=127647174]
+[node name="Collision" type="CollisionShape3D" parent="." unique_id=693357591]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.95, 0)
 shape = SubResource("CapsuleShape3D_5gi6m")
 
-[node name="Model" type="Node3D" parent="." unique_id=1856247759 instance=ExtResource("2_pjpbg")]
+[node name="Model" type="Node3D" parent="." unique_id=1138222081 instance=ExtResource("2_pjpbg")]
 script = ExtResource("3_srei0")
 
-[node name="Health" type="Node" parent="." unique_id=263633539]
+[node name="Health" type="Node" parent="." unique_id=52820036]
 script = ExtResource("4_0cbnc")
 max_health = 3
 
-[node name="Hurtbox" type="Area3D" parent="." unique_id=1743233812]
+[node name="Hurtbox" type="Area3D" parent="." unique_id=361448110]
 collision_layer = 16
 collision_mask = 0
 script = ExtResource("5_qfd72")
 
-[node name="Shape" type="CollisionShape3D" parent="Hurtbox" unique_id=1088024615]
+[node name="Shape" type="CollisionShape3D" parent="Hurtbox" unique_id=68113248]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0)
 shape = SubResource("CapsuleShape3D_71woy")
 
-[node name="BlobShadow" type="MeshInstance3D" parent="." unique_id=694292753]
+[node name="BlobShadow" type="MeshInstance3D" parent="." unique_id=1462167046]
 mesh = ExtResource("6_w84xw")
 script = ExtResource("7_haetl")

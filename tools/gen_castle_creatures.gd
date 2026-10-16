@@ -260,12 +260,12 @@ func _firebuns_anims(lib: AnimationLibrary, rest: Dictionary) -> void:
 		"shoulder_l": [[0.0, V.call(30, 0, -10)], [0.7, V.call(8, 0, 8)]], "elbow_l": [[0.0, V.call(5, 0, 0)], [0.7, V.call(20, 0, 0)]],
 		"hand_l": [[0.0, V.call(-60, 0, 0)], [0.7, V.call(-90, 0, 0)]],
 	}, rest)
-	_anim(lib, "guard", 0.6, true, {
-		"torso": [[0.0, V.call(-4, 10, 0)]],
-		"shoulder_l": [[0.0, V.call(60, 30, 20)]], "elbow_l": [[0.0, V.call(70, 0, 0)]], "hand_l": [[0.0, V.call(0, 0, 60)]],
-		"shoulder_r": [[0.0, V.call(30, 0, -15)]], "elbow_r": [[0.0, V.call(30, 0, 0)]],
-		"leg_r": [[0.0, V.call(-12, 0, 8)]], "leg_l": [[0.0, V.call(14, 0, -8)]], "knee_r": [[0.0, V.call(-12, 0, 0)]], "knee_l": [[0.0, V.call(-12, 0, 0)]],
-		"hips@pos": [[0.0, V.call(0, 0.8, 0)]],
+	_anim(lib, "guard", 1.2, true, {
+		"torso": [[0.0, V.call(-4, 10, 0)], [0.6, V.call(-1, 12, 0)]], "head": [[0.0, V.call(0, 0, 0)], [0.6, V.call(-3, -2, 0)]],
+		"shoulder_l": [[0.0, V.call(60, 30, 20)], [0.6, V.call(63, 30, 20)]], "elbow_l": [[0.0, V.call(70, 0, 0)]], "hand_l": [[0.0, V.call(0, 0, 60)]],
+		"shoulder_r": [[0.0, V.call(30, 0, -15)], [0.6, V.call(33, 0, -17)]], "elbow_r": [[0.0, V.call(30, 0, 0)]],
+		"leg_r": [[0.0, V.call(-12, 0, 8)]], "leg_l": [[0.0, V.call(14, 0, -8)]], "knee_r": [[0.0, V.call(-12, 0, 0)], [0.6, V.call(-15, 0, 0)]], "knee_l": [[0.0, V.call(-12, 0, 0)], [0.6, V.call(-15, 0, 0)]],
+		"hips@pos": [[0.0, V.call(0, 0.8, 0)], [0.6, V.call(0, 0.787, 0)]],
 	}, rest)
 	_anim(lib, "hurt", 0.4, false, with.call(sword_down, {
 		"torso": [[0.0, V.call(0, 0, 0)], [0.1, V.call(16, 0, 0)], [0.4, V.call(0, 0, 0)]],

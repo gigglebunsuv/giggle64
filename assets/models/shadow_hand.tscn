@@ -141,21 +141,21 @@ _data = {
 &"stunned": SubResource("Animation_2mcnl")
 }
 
-[node name="ShadowHandModel" type="Node3D" unique_id=1667743382]
+[node name="ShadowHandModel" type="Node3D" unique_id=1234796419]
 script = ExtResource("1_t25rr")
 
-[node name="Hand" type="Node3D" parent="." unique_id=559189955]
+[node name="Hand" type="Node3D" parent="." unique_id=2116466774]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
 
-[node name="HandMesh" type="MeshInstance3D" parent="Hand" unique_id=1811128193]
+[node name="HandMesh" type="MeshInstance3D" parent="Hand" unique_id=1878042370]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_nipps")
 
-[node name="HandGlow" type="MeshInstance3D" parent="Hand" unique_id=2060477470]
+[node name="HandGlow" type="MeshInstance3D" parent="Hand" unique_id=1156501138]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_k6ebq")
 metadata/no_tint = true
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=988528932]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1964253442]
 libraries/ = SubResource("AnimationLibrary_bcpdp")
 autoplay = &"idle"
