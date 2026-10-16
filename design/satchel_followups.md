@@ -36,3 +36,13 @@ Written 2026-10-12 after the 1.6.0 item update. See also `design/item_plan.md` �
 - **Iron Mallet targets:** rusted floor switches and stakes to hammer down (OoT's Megaton Hammer puzzles). The code already calls `mallet_hit()` on anything in the `mallet_targets` group.
 - **Fish in a bottle:** let a caught fish go into an empty bottle, as the original plan had it.
 - **EQUIPMENT page:** give it the same tray styling as SELECT ITEM, plus the planned Tunics row and upgrades column (`design/item_plan.md` §3–4).
+
+## Status (beta 1.7.0, 2026-10-16)
+
+- Questions 1-3 were settled by the Goddess Springs update (alpha 1.7.0) and the Beta's item sources.
+- **Looking Glass secrets:** besides the Mirror Lake chest, there are now:
+  - false-wall alcoves in the Southern, Ladhellin and Skyreach towers;
+  - false walls in Frostpeak Hollow and the Sapphire Sanctum;
+  - hidden chests in the Lake Shrine's coral hall (Purple Coin) and the Castle's wine cellar (Gold Coin).
+- **Iron Mallet targets:** besides Frostpeak Hollow, the Sanctum and the Citadel, three-peg puzzles now raise a Purple Coin chest in the Southern Tower (den), Ladhellin Tower (shrine) and Bog Tower (snare room).
+- Fish in a bottle and the EQUIPMENT tray were built earlier (alpha 1.7.0 / beta 1.0.0).

@@ -348,6 +348,8 @@ func _coral_hall(k) -> void:
 	k.pot(-22.5, -9.5, "", true)
 	k.pot(-22.5, 9.5, "arrows_10", true)
 	k.chest(-29.0, 0.0, -PI / 2.0, "small_key", false, D + ":chest_key1", D + ":r2_clear")
+	# By the waterfall, a chest only Mira's Looking Glass shows (Beta 1.7.0).
+	k.lens_chest(-37.5, 4.0, -PI / 2.0, "rupee_purple", D + ":chest_lens")
 
 
 func _bridge_room(k) -> void:

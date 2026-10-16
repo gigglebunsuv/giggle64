@@ -335,6 +335,13 @@ func _snare(k) -> void:
 	_root(k, Vector3(-37.5, 4.5, -8), Vector3(-32, 1.5, -6), Vector3(-26, 0, -2), 0.4)
 	_root(k, Vector3(-37.5, 5.0, 7), Vector3(-33, 2.0, 5), Vector3(-30, 0, 8.5), 0.35)
 	k.chest(-28.0, 0.0, -PI / 2.0, "small_key", false, D + ":chest_key1", D + ":snare_clear")
+	# Pegs for the Iron Mallet, and a chest when all three are down (Beta 1.7.0).
+	var stakes: Array = []
+	for s in [[-22.5, -5.5, "stake_a"], [-22.5, 5.5, "stake_b"], [-33.5, 0.5, "stake_c"]]:
+		k.mallet_stake(s[0], s[1], D + ":" + s[2], room_y("snare"))
+		stakes.append(D + ":" + s[2])
+	k.flag_all(stakes, D + ":stakes")
+	k.chest(-36.0, -1.0, -PI / 2.0, "rupee_purple", false, D + ":chest_stakes", D + ":stakes", room_y("snare"))
 	k.pot(-36.5, -8.5, "arrows_10")
 	k.pot(-35.5, -8.5)
 	k.pot(-36.5, 8.5, "bombs_5")

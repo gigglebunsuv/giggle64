@@ -390,6 +390,7 @@ func _ready() -> void:
 		"test_castle_town_restored",
 		"test_old_world_secrets",
 		"test_bug_report",
+		"test_older_dungeon_secrets",
 	]
 	# --tests=a,b runs only those (handy while working on one feature).
 	for a in OS.get_cmdline_user_args():
@@ -416,6 +417,7 @@ func _ready() -> void:
 
 ## Tests that start somewhere other than the test area, and where.
 const AREA_TESTS := {
+	"test_older_dungeon_secrets": "southern_tower",
 	"test_swimming": "lake", "test_lake_house_door_and_mira": "lake", "test_lake_ladder_to_roof": "lake",
 	"test_footsteps_by_surface": "field", "test_area_ambience": "field",
 	"test_lake_shrine_entrance": "lake", "test_shrine_shutters_and_key_chest": "lake_shrine",
@@ -10784,3 +10786,31 @@ func test_bug_report() -> void:
 	for f in DirAccess.get_files_at(dir):
 		DirAccess.remove_absolute(dir.path_join(f))
 	DirAccess.remove_absolute(dir)
+
+
+## Beta 1.7.0: the Iron Mallet's pegs in the Southern Tower's den raise a chest,
+## and the older dungeons hide chests only Mira's Looking Glass shows.
+func test_older_dungeon_secrets() -> void:
+	check(World.area_id == "southern_tower", "the Southern Tower loads")
+	var stakes: Array = []
+	var chest: Node = null
+	for n in World.area_node.find_children("*", "", true, false):
+		if n is MalletStake and String(n.flag).begins_with("southern_tower:stake_"):
+			stakes.append(n)
+		elif n.get("flag") == "southern_tower:chest_stakes":
+			chest = n
+	check(stakes.size() == 3 and chest != null, "three pegs and their chest (%d)" % stakes.size())
+	if chest:
+		check(not (chest as Node3D).visible, "the chest waits")
+	for st in stakes:
+		st.mallet_hit(_player)
+	await _physics(10)
+	check(Progress.flag("southern_tower:stakes"), "all three driven down")
+	if chest:
+		check((chest as Node3D).visible, "the chest appears")
+	for area in ["lake_shrine", "castle"]:
+		var src := FileAccess.get_file_as_string("res://scenes/areas/%s.tscn" % area)
+		check(src.contains("%s:chest_lens" % area) and src.contains("lens_hidden = true"), "a Looking Glass chest in %s" % area)
+	for area in ["ladhellin_tower", "bog_tower"]:
+		var src := FileAccess.get_file_as_string("res://scenes/areas/%s.tscn" % area)
+		check(src.contains("%s:stake_c" % area) and src.contains("%s:chest_stakes" % area), "Mallet pegs in %s" % area)

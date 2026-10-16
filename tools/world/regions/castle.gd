@@ -480,6 +480,8 @@ func _wine(k) -> void:
 	k.bomb_wall(44.0, -25.6, 0.0, D + ":treasury_wall", y)
 	k.pot(52.5, -44.5, "", false, y)
 	k.pot(51.5, -44.5, "heart", false, y)
+	# Behind the casks, a chest only Mira's Looking Glass shows (Beta 1.7.0).
+	k.lens_chest(47.5, -43.8, PI, "rupee_gold", D + ":chest_lens", y)
 
 
 func _treasury(k) -> void:

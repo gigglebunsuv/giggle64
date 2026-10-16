@@ -329,6 +329,13 @@ func _shrine(k) -> void:
 	_obelisk(k, 26.0, -6.0, 0.0)
 	_obelisk(k, 26.0, 10.0, 0.0)
 	k.chest(38.0, 2.0, -PI / 2.0, "map", false, D + ":chest_map", "", 0.0)
+	# Pegs for the Iron Mallet, and a chest when all three are down (Beta 1.7.0).
+	var stakes: Array = []
+	for st in [[31.0, -6.5, "stake_a"], [31.0, 10.5, "stake_b"], [34.5, -2.5, "stake_c"]]:
+		k.mallet_stake(st[0], st[1], D + ":" + st[2], 0.0)
+		stakes.append(D + ":" + st[2])
+	k.flag_all(stakes, D + ":stakes")
+	k.chest(32.0, 12.4, 0.0, "rupee_purple", false, D + ":chest_stakes", D + ":stakes", 0.0)
 
 
 # --- 2F --------------------------------------------------------------------------

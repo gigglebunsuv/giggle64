@@ -111,12 +111,12 @@ Now you can carry more Bombs!",
 Now you can carry more Puff Nuts!",
 	]},
 	"rupee_purple": {"mesh": "rupee_purple_mesh", "fanfare": "fanfare_item", "scale": 1.6, "text": [
-		"You got a *Purple Rupee*!
-That's *fifty* Rupees!",
+		"You got a *Purple Coin*!
+That's *fifty* coins!",
 	]},
 	"rupee_gold": {"mesh": "rupee_gold_mesh", "fanfare": "fanfare_item", "scale": 1.6, "text": [
-		"You got a *Gold Rupee*!
-That's *one hundred* Rupees!",
+		"You got a *Gold Coin*!
+That's *one hundred* coins!",
 	]},
 	"shield_polish": {"mesh": "shield_wooden_flat_mesh", "fanfare": "fanfare_big", "scale": 1.1, "rot": Vector3(-90, 0, 0), "text": [
 		"Your shields have been *gilded*!",

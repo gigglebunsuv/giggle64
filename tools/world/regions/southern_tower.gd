@@ -306,6 +306,14 @@ func _den(k) -> void:
 	k.chest(-30.0, 0.0, -PI / 2.0, "small_key", false, D + ":chest_key2", D + ":den_clear", y)
 	# Behind a false wall on the north side (Mira's Looking Glass), a red rupee.
 	k.lens_alcove(Vector2(-27.0, -8.0), Vector2(0, 1), 3.0, 2.4, y, "rupee_red", D + ":chest_lens", "stone", wall_col * Color(0.85, 0.8, 0.78))
+	# Three old pegs in the floor: drive them down with the Iron Mallet and a
+	# chest appears (Beta 1.7.0; the Mallet comes later, in the castle).
+	var stakes: Array = []
+	for s in [[-34.5, 0.0, "stake_a"], [-23.5, -4.5, "stake_b"], [-23.5, 2.5, "stake_c"]]:
+		k.mallet_stake(s[0], s[1], D + ":" + s[2], y)
+		stakes.append(D + ":" + s[2])
+	k.flag_all(stakes, D + ":stakes")
+	k.chest(-21.5, -6.2, PI, "rupee_purple", false, D + ":chest_stakes", D + ":stakes", y)
 
 
 # --- 1F --------------------------------------------------------------------------
