@@ -565,3 +565,30 @@ is feature complete after it; only fixes follow.
     regions sanctum_ruin / astral_rift / house_interior, enemies velloran /
     firebuns_final / shadow_hand / volley_orb, ui/game_over.gd.
   THE GAME IS FEATURE COMPLETE. Later updates: fixes and polish only.
+
+
+==========================================================================
+9. AFTER BETA 1.6 (written 2026-10-16, beta 1.7.0)
+==========================================================================
+
+The game is feature complete. Beta patches go on until the 1.0 release,
+after the user's own playtests. Polish and tooling only:
+
+  Beta 1.7.0 "Seal of Quality"  BUILT 2026-10-16
+    the N64-size instruction booklet (promo/manual), the git repository and
+    its README, the world map redrawn in the pause screen's layout, F8 bug
+    reports, the debug menu gated to debug builds, the animation pass (no
+    frozen poses, no snapped state changes), Mallet pegs and Looking Glass
+    chests in the older dungeons, the audio mix pass (AudioLevels), the
+    release export presets, and the OST album with all 59 tracks.
+
+  1.0  after the user's playtests: fixes from the playtest, then release.
+
+Plans written, not built (design/):
+  randomizer_plan.md   seeded item shuffle with a logic solver (uses the
+                       geometry audit's reach fills); chapter-locked first,
+                       OPEN STORY later
+  boss_rush_plan.md    the Questlords' Arena (post-game boss trials, records)
+                       and speedrun support (IGT timer, splits, fast text)
+  saga_v_plan.md       the next game: Saga V "The Fall", Camue the Lord of
+                       Death, Sir Gigglebuns V in exile
