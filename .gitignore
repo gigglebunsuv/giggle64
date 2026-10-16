@@ -17,3 +17,10 @@
 Thumbs.db
 desktop.ini
 .DS_Store
+
+# Personal notes, tabs and motif sketches in the project root (kept out of the repo)
+/Age of Enlightenment Tabs.mid
+/Bugs so far*.md
+/beta * plan.txt
+/* motif.png
+/* motif.png.import
