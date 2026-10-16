@@ -1,0 +1,567 @@
+GIGGLE 64: THE GAUNTLET OF FIRE  -  MASTERPLAN
+To the end of Saga IV
+Written 2026-10-13, at the start of Beta 1.1.0.
+
+This is the plan for everything still to come, up to the end of Saga IV.
+Use it as a reference when adding something; it is not a promise of exact
+rooms or numbers. Each update builds only its own chapter. Change anything
+here freely, and when a chapter is built, mark it BUILT.
+
+Lore source: The Complete Story of the Kingdom of Bunsriel (Saga IV, Arcs I-III).
+The chapters below follow it closely from here on.
+
+
+==========================================================================
+0. WHERE THE GAME IS NOW (BUILT)
+==========================================================================
+
+Chapter I  "The Gauntlet of Fire"      (Saga IV Arc I, retold)
+  Lake Shrine (Boomerang) -> Southern Tower (Hookshot, Alan's piece)
+  -> Ladhellin Tower (Serielye's piece) -> Skyreach Spire (Aphiel's piece)
+  -> Bog Tower (Bloom Rod) -> the Bun Sword is drawn, Lothelye's legend
+  -> Firebuns III, holding the Gauntlet, takes Castle Town
+  -> the ruined Castle (30 rooms) -> the final battle, LOST.
+
+Chapter II "The Gauntlet's Trail"      (Beta 1.0.0)
+  Wake at home -> Himeko's shelter -> Iron Mallet (castle armory)
+  -> Shade Cloak (Idrith) -> Frostpeak Hollow -> Bun Bracers (Aladriel)
+  -> the Sun Trial -> the Order's map points east, to the Batela Fells:
+  the Sapphire Order means to wake Denangdyn.
+
+Why the hero lost (keep this consistent from now on): the Bun Sword was
+drawn but is still ASLEEP. In the lore, only a hero with a pure heart can
+wake it, in the sacred grove of the Dark Forest. That happens in Chapter IV.
+
+
+==========================================================================
+1. THE STORY TO THE END OF SAGA IV
+==========================================================================
+
+The thread under all of it:
+  Firebuns III's "deal with a dark and powerful entity" (lore, Arc I) was a
+  deal with what is left of DENANGDYN. Serielye destroyed his body long ago
+  (Saga I), but a remnant of him still sits in the Astral Dimension. The
+  Sapphire Order made that deal for Firebuns: they keep his soul alive, and
+  he burns the way open for their master. Each chapter peels back a layer.
+
+--------------------------------------------------------------------------
+CHAPTER III  "THE BATELA FELLS"                      (Beta 1.1.0, BUILT)
+Saga IV Arc I: the land Firebuns ruled, poisoned and burned.
+--------------------------------------------------------------------------
+  1. The Order's map leads east past the Sun Trial into the FOREST OF THE
+     DEAD: a Lost Woods-style maze of dead trees and grave mounds between
+     Ladhellin and the Fells. Wrong turns loop you back to the entrance.
+     Wisps of the Batela dead drift along the right paths; watch them and
+     listen for the bells.
+  2. Out of the forest: the BATELA FELLS. Decrepit, burnt upland moors under
+     ash-fall: dead villages, charred pines, a black tarn, the ruins of
+     Batela Keep on the ridge.
+  3. ASHWICK, the survivors' camp: the last of the Batela people, who fled
+     when Firebuns burned his own land. It is the hub (shop, inn bed,
+     waystone, quests). Elder Maud runs it.
+  4. Firebuns' heraldry hangs in the Keep ruins: Firebuns I, the Evil King;
+     Firebuns II, who "died a hero"; and Firebuns III's empty frame.
+  5. Elder Maud admits it: her people poisoned Firebuns III in his sleep.
+     She thinks the burning was revenge for that, and that she brought it
+     on everyone.
+  6. Batela Keep: Firebuns III is there, waiting. A duel you survive but
+     cannot win (the sword is still asleep). He leaves you alive on purpose:
+     "Go home, little hero. Watch it burn."
+  7. Under the Fells: the SAPPHIRE SANCTUM (dungeon), the Order's hideout,
+     where they study the Fari Incunabulum. The Order has taken command of
+     its torches and braziers (the Gauntlet answers them). You find
+     Lothelye's starlight in the Sanctum's lowest vault, and your Lantern
+     becomes the STARLIGHT LANTERN: a cold blue flame the Gauntlet cannot
+     command.
+  8. Mini-boss: the Sapphire Warden. Boss: INCUNAX, THE BOUND PAGE, a beast
+     torn out of the Incunabulum.
+  9. Ending: Archmagus Velloran, the Order's leader, finishes part of the
+     ritual. The Astral seal CRACKS, and a power surges into Firebuns III
+     across the whole world. The hero takes a copy of BUNSRIEL'S DARK
+     PROPHECY from the Sanctum. Ottilie reads it at the start of Chapter IV.
+  Side: Incunabulum pages (5) to collect, the trade chain to the Questlord's
+  Shield, the fourth bottle, waystones, weather.
+
+--------------------------------------------------------------------------
+CHAPTER IV  "THE FALL OF BUNSRIEL"         (Beta 1.2.0, BUILT, Saga IV Arc II)
+--------------------------------------------------------------------------
+  As built (2026-10-13). The whole chapter went into one update.
+  1. Ottilie reads the Dark Prophecy (END OF CHAPTER III), then the CHAPTER IV
+     card, and a soldier of the Haven Guard runs into the library: Northwatch
+     is burning ("ch4:war"). From now until the sealing, the field is
+     field_war (smoke, burns, fires, goblin patrols, boar riders, archers)
+     and the village is village_refuge (tents, a palisade across its north
+     side, the gatehouse ballista).
+  2. Captain Rowena of the Haven Guard, in the refuge: break the three goblin
+     WAR CAMPS on the field. The last camp broken, Eastgate's beacon goes out.
+  3. THE SIEGE OF HAVEN (the update's major addition): a night defense of the
+     palisade in four waves (ladders; siege towers, war boars and archers,
+     with the ballista; all at once; an Order battle-mage, who flees west).
+     Aladriel holds the east of the wall, Idrith the west (Ally). West/east
+     HOLD meters and the gate's health; a lost wave starts again. Between
+     waves the gate's planks are mended with the Iron Mallet.
+  4. WESTMARCH FORTRESS (19 rooms): the Anchor Boots (armory), the Sapphire
+     Staff (the battle-mage, mini-boss), GRUKK THE SIEGEBREAKER (boss, dazed by
+     charging into walls or Staff blocks). Three soldiers in its cells. After
+     Grukk, Firebuns' fire falls on it: the Questlords bring the hero home.
+  5. Despair in the refuge; the hero remembers the prophecy's last line (the
+     grove). The brambles on the desert's south-east track open. Wren in
+     Ashwick lends the GRAVE SPADE (and the first treasure chart).
+  6. THE DARK FOREST: a 4 x 4 maze of black woods; STAR-STONES mark the true
+     road, but only in the Starlight Lantern's light. The sacred grove: dig
+     out the buried stair.
+  7. THE TEMPLE OF BUN (20 rooms): the trial of the pure heart (DARK
+     GIGGLEBUNS kneels; strike it and it rises whole, spare it and it fades)
+     -> the STARFALL ARROWS; the PEDESTAL GUARDIAN (boss: Starfall Arrow in
+     its eye). At the heart: Firebuns II's ghost (ice and starlight), the
+     sword laid on the old pedestal wakes (BUN SWORD (AWAKENED): damage 6,
+     a starlight beam at any health that puts out wards), and Lothelye gives
+     the ASTRAL SEAL.
+  8. THE BURNING CITADEL (31 rooms, six storeys, the largest yet): the
+     LONGSHOT; fire jets (Staff blocks stop them), lava, flame wards, the
+     Order's last guard (Boss Key).
+  9. Firebuns III on the throne-room roof: a FLAME SHIELD only Starfall
+     Arrows break; the awakened sword wounds him; the Astral Seal freezes him
+     and carries him into the Astral Dimension ("ch4:sealed").
+ 10. The peace: "Though peace would not last forever...", END OF CHAPTER IV,
+     wake at home. Castle Town is rebuilt district by district (the
+     Rebuilding Fund); Ashwick's people come to live in Haven.
+  Side (built): the lost garrison (8 soldiers; Bomb Bag 30, a bigger quiver,
+  a Piece of Heart, gilded shields), the buried treasure charts (6 scraps,
+  6 dig spots), Pepper the dog, the Bestiary, the memorial in the refuge, the
+  Haven siege title scene, dungeon enemy tiers (EnemyScale).
+  Not built: the Sand Treads (cut in Beta 1.5.0).
+
+--------------------------------------------------------------------------
+CHAPTER V  "FIREBUNS RETURNS"                       (Saga IV Arc III)
+--------------------------------------------------------------------------
+  FIRST HALF: Beta 1.3.0 "Firebuns Returns" (BUILT 2026-10-13, see section 8).
+  SECOND HALF: Beta 1.4.0 (Ridge, Mara) and Beta 1.5.0 (the end) BUILT.
+  As built:
+  a. After the peace, a summons from the castle waits on the hero's table at
+     home. Read it when ready (nothing is missed: the peace's side quests stay
+     open until then): "THE YEARS PASSED IN PEACE..." over black, the CHAPTER V
+     card, and the KNIGHTING in the castle yard of a Castle Town finished long
+     ago (castle_town_restored; every district rebuilt). Commander Rowena
+     knights him in the Crown's name; Himeko insists on doing the
+     sword-tap herself. KNIGHT'S TABARD (vanity: Haven blue and silver, a cape).
+     Flags "ch5:knight".
+  b. KNIGHT'S TECHNIQUES (the update's major addition): Rowena trains the new
+     knight in the KNIGHTS' YARD beside the castle gate, a trial for each:
+       GREAT SPIN   hold B to gather strength, let go: a full turn of the
+                    blade that strikes all round, twice as hard ("tech:spin")
+       DOWN THRUST  B while dropping from a height: the blade driven down,
+                    a shock where it lands; breaks cracked floor seals
+                    ("tech:thrust")
+       SHIELD BASH  A with the shield up: a shove behind the shield that
+                    knocks foes back and breaks an undead knight's guard
+                    ("tech:bash")
+     All three learned: a Piece of Heart, and then the sky cracks.
+  c. FIREBUNS RETURNS (cutscene): the Astral Seal in the pack splits; a vision
+     of the ice prison in starless dark, the remnant of Denangdyn's shadow
+     behind the crack, the ice shattering. Firebuns III laughs. MARA rises
+     beside him. The ground under Haven shakes: the royal crypt has opened
+     ("ch5:returned", "ch5:barrow_open"). The Astral Seal is "cracked" from now.
+  d. THE BARROW OF KINGS (dungeon, ~18 rooms, under the castle; the Kings'
+     Stair in the castle square): risen Haven kings and their knights. BARROW
+     KNIGHTS (shield up: bash it). Floor seals (Down Thrust). Ring switches
+     (Great Spin). Prize: the QUESTLORD'S GAUNTLETS (bracers tier 2): grip and
+     drag GREAT STONES. Seven kings' tombs with EPITAPHS (journal page). Boss:
+     THE HOLLOW KING. Freed, he says where the burning one has gone:
+     Cinderhold ("ch5:barrow_done").
+  e. CINDERHOLD (region): Serielye's old volcano past the Northeastern
+     Cliffs' east pass (a great stone across it: the Gauntlets). Lava rivers,
+     obsidian, steam, ash-fall, a hot spring at its foot (CINDERFIN), a waystone.
+  f. THE CINDER VAULT (dungeon, ~24 rooms): where the Gauntlet of Fire was
+     first kept, frozen shut by Serielye's wardens. The EMBER ROD (lights
+     torches, burns thorns and webs, melts rime-ice, hurts the undead).
+     Boss: MAGMAW, the lava serpent (Frost Arrows crust it, then strike).
+  g. At its heart: too late. Firebuns III has rekindled the Gauntlet at the old
+     anvil. Mara comes for him. SERIELYE'S ECHO watches, neither friend nor foe,
+     and speaks to the hero. They leave west for BLACK WATER RIDGE
+     ("ch5:cinder_done"); the black water floods the marshes' west pass until
+     Beta 1.4.0 opens it.
+  Side (1.3.0): old-world secrets the Gauntlets and the Ember Rod open in
+  earlier regions (four Pieces of Heart, Bomb Bag 40, Puff Nut Pouch 40),
+  Pepper all grown up, Cinderfin, the knighting title scene + title art.
+
+  The plan for all of Chapter V (from 2026-10-13):
+  1. Some years later. The hero is now KNIGHT GIGGLEBUNS: knight's tunic
+     and new title-screen art. Haven is rebuilt and at peace. Mira is
+     older, and so are the rest of the cast.
+  2. Firebuns III breaks out of his icy prison. The remnant of Denangdyn,
+     sitting in the same dimension behind the crack the Order made, frees
+     him. He returns with an ARMY OF THE UNDEAD led by MARA, THE SCOURGE OF
+     BUNSRIEL.
+  3. The undead rise first under Haven itself: THE BARROW OF KINGS
+     (dungeon), the royal crypt under the castle, the old Haven kings and
+     knights risen against their own city. Its prize: the QUESTLORD'S
+     GAUNTLETS (bracers tier 2; pull pillars and great stones). Named for
+     the Questlords, NOT the Gauntlet of Fire.
+  4. CINDERHOLD (fire region + dungeon): Serielye's old volcano, where the
+     Gauntlet of Fire was first kept. Firebuns rekindles his power here.
+     Item: EMBER ROD. Serielye is present as an echo (the goddess of balance,
+     watching, neither friend nor foe). The players who remember Saga I are
+     meant to fear her a little.
+  5. BLACK WATER RIDGE (region): a dark ridge of black waterfalls and
+     undead camps where the undead are strongest. RIDGE KEEP (dungeon),
+     Mara's fortress. Item: IRON FLAIL (breaks undead shields and barred
+     gates). One-on-one with MARA at the top of the falls (lore: "a fierce
+     one-on-one battle at Black Water Ridge"). With Mara gone, the undead
+     army crumbles.
+  6. Archmagus Velloran's end: the Order's last stand at the Sanctum's ruin
+     in the Fells. Lothelye gives LOTHELYE'S DREAM (the 4th spell) at her
+     spring, which lets the hero walk on dream-light and see the astral way.
+     The cracked Astral Seal opens the way in.
+  7. FINAL DUNGEON: THE ASTRAL RIFT, the biggest in the game (40+ rooms):
+     the broken edge of the Astral Dimension, with pieces of every place the
+     hero has been floating in starless dark, and the ice prison shattered
+     at its heart.
+     AVALON'S SCENE (user request, beta 1.3.1): deep in the Astral Dimension,
+     before the heart of the Rift, a cutscene with AVALON (Val), Warrior of
+     the Cosmos, Keeper of the Stars and Keeper of Hope, born from the
+     prayers of Bunsriel's people, Lothelye's kindred ally, bearer of the
+     Luminous Blade (Cosmolite, forged in Ladhellin, starlight from
+     Lothelye). Her look: overwhelming beauty, short blue hair, brown eyes,
+     a beautiful white dress. Her manner: deeply kind and sweet; the one
+     warm, gentle moment in the starless dark before the last battle.
+     Her theme: avalon.mid (written 1.3.1, _giggle64_work/tools/
+     make_avalon_midi.py), A major / D Lydian, on the user's motif sheet
+     (giggle-64/avalon motif.png); her second motif is the Pachelbel Canon
+     progression (A E F#m C#m D A D E), and the two are sung together at
+     the climax. Scene details (what she gives or says) to be decided
+     when Chapter V's finale is built.
+  8. THE TRUE FINAL BATTLE: Firebuns III, everything he has, three phases
+     (flame, Gauntlet, and Denangdyn's shadow through him). Lore: "with one
+     final blow from his sword, he struck Firebuns III down and destroyed
+     him once and for all."
+  9. The remnant of Denangdyn reaches out of the dying Firebuns for the hero.
+     SERIELYE appears, as she did for Gigglebuns I (Saga I), and snuffs it
+     out without effort: balance restored. She looks at the hero for a long
+     moment, and this hero does NOT raise his sword (the opposite of
+     Gigglebuns I). She leaves. That ends the Order and Denangdyn thread.
+ 10. Ending and CREDITS (bittersweet, Super Mario 64 style): a slow tour of
+     every region at peace while the credits roll. Haven celebrates; Ashwick
+     is rebuilt in the Fells; a candle for Firebuns II; Idrith and Aladriel
+     back to back on a dune; Mira on her roof deck; the Bun Sword back on
+     its pedestal, its glow fading. Post-credits hook toward Saga V, never
+     resolved: dark riders gathering in the Batela Fells, and a scythe.
+
+
+==========================================================================
+2. DUNGEONS AND BIG AREAS (ALL OF THEM, IN ORDER)
+==========================================================================
+
+Size rule: the Lake Shrine and the Bog Tower are small; the goddess towers
+grow in order; each chapter's last dungeon is its biggest; the Astral Rift
+is the biggest of all.
+
+  #  Name                    Chapter  Size (rooms)  Prize                     Status
+  1  Lake Shrine             I        small ~10     Boomerang, heart piece    BUILT
+  2  Southern Tower          I        13            Hookshot, Alan's piece    BUILT
+  3  Ladhellin Tower         I        19            Serielye's piece          BUILT
+  4  Skyreach Spire          I        24            Aphiel's piece            BUILT
+  5  Bog Tower               I        small ~10     Bloom Rod                 BUILT
+  6  The Ruined Castle       I        30            (lost final battle)       BUILT
+  7  Frostpeak Hollow        II       medium        (story; Frost Mantle sold)BUILT
+  8  The Sun Trial           II       small         (story)                   BUILT
+  9  Forest of the Dead      III      maze area     (path to the Fells)       BUILT
+ 10  Sapphire Sanctum        III      20, 5 floors  Starlight Lantern         BUILT
+ 11  Westmarch Fortress      IV       19            Sapphire Staff, Anchor    BUILT
+ 12  Dark Forest             IV       maze, 16      Grave Spade route         BUILT
+ 13  Temple of Bun           IV       20            Starfall Arrows, sword    BUILT
+                                                    awakens, Astral Seal
+ 14  The Citadel Assault     IV       31            Longshot (sealed in ice)  BUILT
+ 15  Barrow of Kings         V        18, 4 floors  Questlord's Gauntlets     BUILT
+ 16  Cinder Vault            V        18, 4 floors  Ember Rod                 BUILT
+     (in the Cinderhold region)
+ 17  Ridge Keep              V        23, 4 floors  Iron Flail (the Jailer)   BUILT
+ 18  The Astral Rift         V        40 (5 drifts) (true final battle)       BUILT
+     (+ the Sanctum Ruin     V        5             Velloran                  BUILT)
+
+Bosses still to come:
+  Sanctum: Sapphire Warden (mini), Incunax, the Bound Page
+  Keep ruins: Firebuns III duel (scripted, cannot be won)
+  Westmarch: Order Battle-Mage (mini), Siege Ogre / goblin warlord
+  Temple of Bun: Dark Gigglebuns (mini), the Pedestal Guardian
+  Citadel: Firebuns III part 2 (WON, sealed in ice)
+  Barrow: Barrow Champion (mini), the Hollow King (Harrow)            BUILT
+  Cinder Vault: Vault Warden (mini), Magmaw, the Lava Serpent         BUILT
+  Ridge Keep: the Jailer (mini), Mara, Scourge of Bunsriel          BUILT
+  Sanctum Ruin: Archmagus Velloran                                  BUILT
+  Astral Rift: spire/ember/barrow echoes (minis), FIREBUNS III final BUILT
+
+
+==========================================================================
+3. SELECT ITEM: 28 SLOTS
+==========================================================================
+
+The grid grows from 5 x 4 (20) to 7 x 4 (28) in Beta 1.1.0: 24 items plus
+the 4 bottles. The rows keep their sections. Slots for items that do not
+exist yet stay empty (dark sockets) until their chapter builds them.
+
+  ARMS   Bow | Sun Arrows | Frost Arrows | STARFALL ARROWS | Bombs | Puff Nuts | IRON FLAIL
+  TOOLS  Boomerang | Hookshot* | Bloom Rod | Iron Mallet | GRAVE SPADE | Lantern** | Fishing Rod
+  MAGIC  EMBER ROD | Looking Glass | Alan's Harvest | Aphiel's Gale | Serielye's Ruin | LOTHELYE'S DREAM | SAPPHIRE STAFF
+  PACK   Bottle | Bottle | Bottle | Bottle | Sugar Cube | TRADE ITEM | ASTRAL SEAL
+
+  *  The Hookshot upgrades in place to the Longshot (Chapter IV).
+  ** The Lantern upgrades in place to the Starlight Lantern (Chapter III).
+
+The 8 new items (CAPITALS above):
+
+  Trade Item        PACK   III  The trade chain's current object (horseshoe, sketch, card, ledger, page);
+                                ends at Pink, who forges the Questlord's Shield.
+                                BUILT in 1.1.0 (Clover > Pink > Ottilie > Marigold > Mira > Pink).
+  Grave Spade       TOOLS  IV   From Ashwick's gravekeeper. Dig at soft-earth spots:
+                                graves, buried stairs (the way into the Temple of Bun),
+                                rupees, heart pieces.
+  Sapphire Staff    MAGIC  IV   Taken from the Westmarch battle-mage. Conjures one
+                                sapphire block (weight switches, stepping stone, shield
+                                from fire). Costs magic. (The Order's magic turned on them.)
+  Starfall Arrows   ARMS   IV   Temple of Bun. Lothelye's light: break Order wards and
+                                Firebuns' flame shield, light the dark. Cost magic.
+  Astral Seal       PACK   IV   Lothelye, at the Temple's heart. Story item: freezes
+                                Firebuns at the end of Chapter IV. It is cracked when he
+                                escapes (Chapter V); the cracked seal opens astral rifts.
+  Ember Rod         MAGIC  V    Cinderhold. Throws a fireball: lights torches, burns
+                                brambles and webs, melts ice, hurts the undead.
+  Iron Flail        ARMS   V    BUILT in 1.4.0 (the Jailer, Ridge Keep). Throw a ball and chain: breaks
+                                undead shields, barred gates, cracked pillars at range.
+  Lothelye's Dream  MAGIC  V    Lothelye's spring, before the Astral Rift. While it lasts:
+                                walk on dream-light paths, see astral platforms.
+
+No instrument items (standing rule).
+The Gauntlet of Fire stays a story object; the player never gets it.
+
+
+==========================================================================
+4. EQUIPMENT STILL TO COME
+==========================================================================
+
+  Swords   Bun Sword (Awakened)       IV   Temple of Bun (sword row slot 4 becomes it)
+           Questlord's Greatsword     V    Aladriel, once knighted (two-handed)  BUILT
+  Shields  Questlord's Shield         III  trade chain (Pink): widest guard, fireproof   BUILT
+  Tunics   Knight's Tabard (vanity)   V    the knighting                         BUILT
+  Boots    Anchor Boots               IV   Westmarch Fortress (moat floor, gale walls)
+           Sand Treads                --   CUT (Beta 1.5.0: nothing needs them)
+  Upgrades Bracers tier 2: Questlord's Gauntlets   V  Barrow of Kings     BUILT
+           Quiver 50, Bomb Bag 30/40, Puff Nut Pouch 30/40   side games across III-V
+           4th bottle                 III  every Piece of Heart, from Ottilie   BUILT
+
+
+==========================================================================
+5. NEW REGIONS AND PLACES (MAP)
+==========================================================================
+
+  Forest of the Dead   III  east of the desert / Sun Trial trail; maze of dead woods
+  Batela Fells         III  past the forest; ash moors, Batela Keep ruins, the tarn,
+                            Ashwick camp, the Sanctum's entrance in a sunken chapel
+  Dark Forest          IV   south of the Desert of Ladhellin; the Temple of Bun
+  Westmarch Fortress   IV   one of Haven's three fortresses (west of the field).
+                            The other two (Northwatch, Eastgate) fall as story beats.
+  Bunsriel at war      IV   field variant: war camps, fires, goblin hordes
+  Haven (years later)  V    rebuilt Castle Town, older cast, new shops
+  Haven (years later)  V    castle_town_restored: the Knights' Yard, the chapel   BUILT
+  Cinderhold           V    Serielye's volcano, a fire region (NE beyond the cliffs) BUILT
+  Black Water Ridge    V    dark ridge of black waterfalls (west, beyond the marsh)  BUILT
+  The Astral Rift      V    reached from the cracked seal (Ridge plateau)  BUILT
+  The Sanctum Ruin     V    the Fells' crypt stair, rift_seen..velloran_done  BUILT
+  Houses               V    28 Castle Town interiors, 6 Haven, 3 Ashwick tents BUILT
+
+The pause MAP grows each chapter (the world map widens east for the Fells).
+
+
+==========================================================================
+6. CAST STILL TO COME
+==========================================================================
+
+  Elder Maud           III  Ashwick's elder; helped poison Firebuns III; guilt
+  Ashwick folk         III  gravekeeper (Grave Spade later), a cook, children, a
+                            Batela ex-guard who served Firebuns
+  Archmagus Velloran   III-V leader of the Sapphire Order; studies the Incunabulum
+  Firebuns II (ghost)  IV   the good Firebuns; Temple of Bun
+  Mara                 V    the Scourge of Bunsriel; leads the undead
+  Serielye             V    the goddess of destruction and balance (finale)
+  Avalon (Val)         V    Warrior of the Cosmos; her scene in the Astral
+                            Dimension (short blue hair, brown eyes, white dress)
+  Returning: Mira, Himeko, Pink, Idrith and Aladriel, Ottilie, Marigold, Clover,
+  Tansy, Hilde, Lothelye.
+
+
+==========================================================================
+7. MUSIC 
+==========================================================================
+
+Have (ogg in assets/music): title_theme, bunsriel_field, haven_village,
+castle_town, the_forest, hidden_forest, west_marshlands, southern_fields,
+northeastern_cliffs, frostpeak, ladhellin_desert, mirror_lake, inside_house,
+lake_shrine, southern_tower, ladhellin_tower, skyreach_spire, bog_tower,
+castle, boss_battle, final_battle, firebuns_theme, lothelye_legend.
+
+Written in 1.1.0 , also "ending" (the Chapter I defeat captions):
+  castle_town_fallen   the market tune burnt hollow (used since 1.1.0, no file yet)
+  goddess_spring       the springs (used since 1.7.0, no file yet)
+  frostpeak_hollow     Chapter II dungeon
+  sun_trial            Chapter II trial
+  forest_of_the_dead   lost-woods loop, a ghost of the Firebuns motif
+  batela_fells         a lament on the Firebuns triplet motif
+  ashwick              the survivors' camp, warm but tired
+  sapphire_sanctum     the Order's hideout, cold and arcane
+  credits              bittersweet, SM64-credits style, the main motif at the end
+
+Still to write in later chapters (when that chapter is built, so they fit it):
+  ch IV (written in 1.2.0): bunsriel_at_war, haven_refuge, siege_of_haven,
+         westmarch_fortress, dark_forest, temple_of_bun,
+         citadel_assault, firebuns_sealed (cutscene)
+  ch V (written in 1.3.0): haven_restored, barrow_of_kings, cinderhold,
+         cinder_vault, firebuns_returns (cutscene). Mara's motif is in
+         _giggle64_work/tools/g64ch5.py (MARA): use it for mara_battle.
+  ch V (written for 1.4.0, 2026-10-14): black_water_ridge (the user's
+         Black Water Ridge motif, C minor, made less heroic), mara_battle
+         (the user's description: driving snare, slow bass, a guitar line
+         root -> fourth and hold; strictly minor, v minor). Generators in
+         _giggle64_work/tools; motif in _giggle64_work/music/
+         black_water_ridge_motif.txt. ridge_keep (F minor: the Ridge motif on
+         low horns over a marching ostinato, Mara's guitar line far off).
+  ch V (written for 1.5.0, 2026-10-15): astral_rift (A major on Avalon's
+         motif, F# minor B section), velloran_battle, true_final_battle,
+         final_hope (phase 3: Avalon + the main motif), ending_cutscene
+         (Serielye), prologue, game_over, tavern.
+  written early (1.3.1): avalon (Avalon's theme, A major / D Lydian +
+         the Pachelbel progression) for her Astral Dimension scene.
+
+
+==========================================================================
+8. UPDATE ROADMAP (suggested)
+==========================================================================
+
+  Beta 1.1.0  "The Batela Fells"       Chapter III (the full list below)   BUILT 2026-10-13
+  Beta 1.2.0  "The Fall of Bunsriel"   all of Chapter IV                    BUILT 2026-10-13
+  Beta 1.3.0  "Firebuns Returns"       Chapter V first half: time skip, Barrow,
+                                       Cinderhold                           BUILT 2026-10-13
+  Beta 1.4.0  "Black Water Ridge"      Chapter V second half: Ridge Keep, Mara
+                                       BUILT 2026-10-14
+  Beta 1.5.0  "The Astral Rift"        the final dungeon, final battle, Serielye,
+                                       credits                              BUILT 2026-10-15
+  1.0 release after that: polish only.
+
+Beta 1.1.0 contents (agreed 2026-10-13):
+  MAJOR  1 Batela Fells region (+ Forest of the Dead, Ashwick, Keep ruins)
+         2 Sapphire Sanctum dungeon (Starlight Lantern)
+         3 Chapter III story chain (Maud's confession, Firebuns duel, the crack)
+  MINOR  1 trade chain -> Questlord's Shield    2 fourth bottle (all heart pieces)
+         3 weather (ash-fall, rain)              4 waystone fast travel
+         5 new themes (see section 7)
+  TINY   1 Incunabulum pages (5, JOURNAL)        2 Firebuns heraldry in the Keep
+         3 tarn fish species                     4 burnt bell tower heart piece
+         5 title scene: Batela at dusk, ash     6 reaction lines (Mira, Ottilie, Himeko)
+  Also:  SELECT ITEM grows to 28 slots (7 x 4), with empty sockets for future items.
+
+Beta 1.3.0 contents (agreed 2026-10-13):
+  CORE   the time skip and the knighting, Firebuns breaks out (Mara), the
+         Barrow of Kings (Questlord's Gauntlets), Cinderhold + the Cinder Vault
+         (Ember Rod), the Chapter V journal, music for all of it
+  MAJOR  Knight's Techniques (Great Spin, Down Thrust, Shield Bash; Rowena's yard)
+  MINOR  old-world secrets for the Gauntlets and the Ember Rod
+  SMALL  1 the knighting title scene + Knight Gigglebuns title art
+         2 Pepper all grown up (follows you round Haven, digs up Rupees)
+         3 Cinderfin (hot-spring fish)    4 the Kings' epitaphs (journal page)
+  Not picked: The Undead Night (night raids), Knight's Commissions, Haven Derby.
+  Hooks left for 1.4.0: the black water flooding the marsh's west end (shown
+  from "ch5:returned"; the road to Black Water Ridge should open on
+  "ch5:ridge_open"), the journal's last Chapter V step ("ch5:ridge_reached"),
+  and Mara's model (assets/models/mara.tscn, cutscenes only so far).
+
+Beta 1.4.0 contents (agreed 2026-10-14):
+  CORE   the marsh's west pass, Black Water Ridge, Ridge Keep (Iron Flail, the
+         last heart container), Mara at the top of the falls, the last Chapter V
+         journal step, music (black_water_ridge, ridge_keep, mara_battle)
+  MAJOR  the Ridge War Camps (three undead camps broken with Rowena's knights;
+         each freed camp a safe point, and each weakens Mara's army)
+  MINOR  1 the Parry (fourth Knight's Technique: a Shield Bash timed to the blow)
+         2 Iron Flail secrets in old regions (no heart pieces: the total stays 22)
+         3 the marsh-front camp (knights' outpost, supply tent, reaction lines)
+  TINY   1 Black Water Ridge title scene   4 undead on the ridge +1 tier at night
+         5 a memorial banner for the fallen knights in Castle Town
+  ALSO   QUESTLORD'S GREATSWORD (user request; BUILT 2026-10-14): Aladriel's
+         giant sword, the 5th sword on B (EQUIPMENT row), after OoT's Biggoron's
+         Sword: two hands, 8 damage, swings x1.3 slower, the shield on the back
+         while it is out, R = blade guard (no mirror/fireproof, no Shield Bash).
+         Aladriel gives it in the armory once knighted ("ch5:knight").
+  Not picked: mounted combat on Biscuit, Mara's orders (journal), Inkfin.
+  As built (2026-10-14):
+    The marsh-front camp (marsh.gd CAMP, "ch5:cinder_done"): Rowena, Sir
+    Brannoc, Dame Elsabet, the Quartermaster (once-a-visit resupply), the
+    quintain (Quintain, "front:parry_done"). Rowena teaches the Parry, then
+    the Bun Sword's starlight parts the black water (Story.part_water,
+    "ch5:ridge_open"; the thicket barrier goes, a white causeway shows).
+    Black Water Ridge (black_water_ridge.gd): a switchback canyon; three camps
+    (WarCamp.ridge, "ridge:camp_1..3"; two Ally knights each); all broken ->
+    Story.camps_broken ("ch5:camps_done"); arrival Story.ridge_arrive
+    ("ch5:ridge_reached"). Ridge Keep (ridge_keep.gd): 1F drowned halls
+    (Key 1, Map, Compass), 2F the Jailer -> Iron Flail, Key 2, 3F the
+    flail's pillar bridge and bells -> Boss Key, 4F open roof, Mara at the
+    top of the falls -> Story.mara_falls ("ch5:mara_done").
+    Mara's backstory as built: a knight of the King's Road Guard who drowned
+    holding the Ridge a hundred years ago; no one came for her.
+  Hooks left for 1.5.0: after Mara falls, Firebuns III stands over the falls
+  and steps through a crack in the sky ("The Astral Rift is open"); the crack
+  stays open over the Ridge. Rowena's ridge lines mention it. Next: the
+  Order's last stand (Velloran), Lothelye's Dream, the Astral Rift.
+
+Beta 1.5.0 contents (agreed 2026-10-15). THE LAST CONTENT UPDATE: the game
+is feature complete after it; only fixes follow.
+  CORE   1 the crack over the Ridge -> Velloran's last stand at the Sanctum's
+           ruin in the Fells (VELLORAN boss)
+         2 Lothelye's Dream at Lothelye's spring (dream-light paths, astral
+           platforms)
+         3 THE ASTRAL RIFT (40+ rooms): memory islands of earlier places
+           around the shattered ice prison
+         4 Avalon's scene: she restores hearts and magic and blesses the Bun
+           Sword with the Luminous Blade's starlight (needed to hurt
+           Denangdyn's shadow in phase 3). She does not fight.
+         5 the true final battle, 3 phases (flame / Gauntlet / Denangdyn's
+           shadow); phase 3 weaves Avalon's theme into the main motif
+         6 Serielye snuffs out the remnant; the hero does not raise his sword
+         7 ending: the credits tour of every region at peace, the post-credits
+           hook (riders in the Fells, a scythe)
+  ADDED BY THE USER
+         - GAME OVER (OoT): fade, GAME OVER, Continue / Save & Continue /
+           Save & Quit; Continue = area or dungeon entrance, 3 hearts. A
+           bottled fairy still revives first. Music: game_over.
+         - THE INTRO: the CHAPTER I card -> the prologue in the CINDER VAULT
+           (Firebuns takes the Gauntlet out of Serielye's ice) -> the hero
+           asleep -> PIP, a castle page sent by the King, wakes him. Pip
+           becomes Castle Town's herald and announces each chapter's news.
+         - Markets populated; most houses enterable with residents whose lines
+           change by chapter: Castle Town, Haven Village, Ashwick.
+         - MORE CUTSCENES: nearly every story beat, beginning to end.
+         - Progression told in the world, not the quest page: spoken and
+           repeated directions, landmarks on the horizon (smoke, beacon, the
+           sky crack), OoT camera pans when something unlocks.
+         - After the core: a progression and sequence-break audit.
+         - Post-game: after the credits, wake at home at peace; side content
+           stays open; a star on the file; the tavern band plays Age of
+           Enlightenment.
+  MUSIC  astral_rift (A major on Avalon's motif, B section in F# minor),
+         velloran_battle, true_final_battle, ending_cutscene, game_over,
+         prologue, house interiors.
+  CUT    the Sand Treads.
+  ALSO (user, 2026-10-15)
+         - Astral Rift music: A major on Avalon's motif, B section in F# minor.
+         - Avalon's scene and the end credits are timed to their music (cue
+           timelines, like Lothelye's legend).
+         - Credits: development, music, art: SAOIRSE REDMOND and DARCY SHAW.
+           SPECIAL THANKS: Darcy Shaw, Zabi, Avalon, Trent, John, Zach.
+           MUSIC credit: ANOTHER (SAOIRSE REDMOND) and WATER ON RED.
+           DEDICATION: in loving memory of Marybeth Redmond, 1969-2024.
+  As built (2026-10-15): everything above. Story flags in order:
+    ch5:rift_seen -> ch5:velloran_met -> ch5:velloran_done -> ch5:dream ->
+    ch5:rift_open -> rift:arrived -> astral_rift:lock1..4 -> rift:blessed ->
+    rift:heart_seen -> ch5:firebuns_end -> game_complete (post-game).
+    Code: story_final.gd, story_ending.gd, story_intro.gd, story_beats.gd,
+    guide.gd, gossip.gd, house_data.gd, house_lines.gd, market_lines.gd,
+    regions sanctum_ruin / astral_rift / house_interior, enemies velloran /
+    firebuns_final / shadow_hand / volley_orb, ui/game_over.gd.
+  THE GAME IS FEATURE COMPLETE. Later updates: fixes and polish only.

@@ -1,0 +1,15 @@
+[gd_resource type="ArrayMesh" format=4]
+
+[ext_resource type="Material" path="res://assets/materials/shadow.tres" id="1_wcxkl"]
+
+[resource]
+_surfaces = [{
+"aabb": AABB(-0.46193975, 0, -0.46193975, 0.9238795, 1e-05, 0.9238795),
+"attribute_data": PackedByteArray("AAAAfwAAAAAAAAAAAAAAfwAAAAAAAAAAAAAAfwAAAAAAAAAAAAAAfwAAAAAAAAAAAAAAfwAAAAAAAAAAAAAAfwAAAAAAAAAAAAAAfwAAAAAAAAAAAAAAfwAAAAAAAAAAAAAAfwAAAAAAAAAAAAAAfwAAAAAAAAAAAAAAfwAAAAAAAAAAAAAAfwAAAAAAAAAAAAAAfwAAAAAAAAAAAAAAfwAAAAAAAAAAAAAAfwAAAAAAAAAAAAAAfwAAAAAAAAAAAAAAfwAAAAAAAAAAAAAAfwAAAAAAAAAA"),
+"format": 34359738399,
+"material": ExtResource("1_wcxkl"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 18,
+"vertex_data": PackedByteArray("XoPsPgAAAAAV70O+Fe9DvgAAAABeg+y+Fe9DPgAAAABeg+y+XoPsPgAAAAAV70O+XoPsvgAAAAAV70O+Fe9DvgAAAABeg+y+XoPsPgAAAAAV70O+XoPsvgAAAAAV70M+XoPsvgAAAAAV70O+XoPsPgAAAAAV70O+Fe9DvgAAAABeg+w+XoPsvgAAAAAV70M+XoPsPgAAAAAV70O+Fe9DPgAAAABeg+w+Fe9DvgAAAABeg+w+XoPsPgAAAAAV70O+XoPsPgAAAAAV70M+Fe9DPgAAAABeg+w+/3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+/")
+}]

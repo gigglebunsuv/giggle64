@@ -1,0 +1,63 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/enemies/firebuns.gd" id="1_6vwl6"]
+[ext_resource type="PackedScene" path="res://assets/models/firebuns.tscn" id="2_harg5"]
+[ext_resource type="Script" path="res://scripts/systems/character_model.gd" id="3_0gjnf"]
+[ext_resource type="Script" path="res://scripts/combat/health_component.gd" id="4_bd0c5"]
+[ext_resource type="Script" path="res://scripts/combat/hurtbox.gd" id="5_dx2p2"]
+[ext_resource type="Script" path="res://scripts/combat/hitbox.gd" id="6_yo3pg"]
+[ext_resource type="ArrayMesh" path="res://assets/models/blob_shadow_mesh.tres" id="7_2ercd"]
+[ext_resource type="Script" path="res://scripts/systems/blob_shadow.gd" id="8_hvog2"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_uigtd"]
+radius = 0.45
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_csc6u"]
+radius = 0.6
+height = 2.2
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ccg7l"]
+size = Vector3(1.4, 1.8, 2.6)
+
+[node name="Firebuns" type="CharacterBody3D" unique_id=1601257592]
+collision_layer = 4
+collision_mask = 7
+script = ExtResource("1_6vwl6")
+drop_table = -1
+target_offset = 2.3
+boomerang_stun = 0.0
+
+[node name="Collision" type="CollisionShape3D" parent="." unique_id=267421514]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_uigtd")
+
+[node name="Model" type="Node3D" parent="." unique_id=1267060370 instance=ExtResource("2_harg5")]
+transform = Transform3D(1.12, 0, 0, 0, 1.12, 0, 0, 0, 1.12, 0, 0, 0)
+script = ExtResource("3_0gjnf")
+
+[node name="Health" type="Node" parent="." unique_id=58502784]
+script = ExtResource("4_bd0c5")
+max_health = 40
+
+[node name="Hurtbox" type="Area3D" parent="." unique_id=725214151]
+collision_layer = 16
+collision_mask = 0
+script = ExtResource("5_dx2p2")
+
+[node name="Shape" type="CollisionShape3D" parent="Hurtbox" unique_id=1286419059]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.05, 0)
+shape = SubResource("CapsuleShape3D_csc6u")
+
+[node name="AttackHitbox" type="Area3D" parent="." unique_id=801202113]
+collision_layer = 64
+collision_mask = 8
+script = ExtResource("6_yo3pg")
+
+[node name="Shape" type="CollisionShape3D" parent="AttackHitbox" unique_id=2048749097]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -1.7)
+shape = SubResource("BoxShape3D_ccg7l")
+
+[node name="BlobShadow" type="MeshInstance3D" parent="." unique_id=310169242]
+mesh = ExtResource("7_2ercd")
+script = ExtResource("8_hvog2")
+radius = 0.6

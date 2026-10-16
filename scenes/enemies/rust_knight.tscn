@@ -1,0 +1,66 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/enemies/tide_knight.gd" id="1_fkqk8"]
+[ext_resource type="PackedScene" path="res://assets/models/tide_knight.tscn" id="2_ccr8c"]
+[ext_resource type="Script" path="res://scripts/systems/character_model.gd" id="3_3ljnk"]
+[ext_resource type="Script" path="res://scripts/combat/health_component.gd" id="4_tkdep"]
+[ext_resource type="Script" path="res://scripts/combat/hurtbox.gd" id="5_ao4na"]
+[ext_resource type="Script" path="res://scripts/combat/hitbox.gd" id="6_tmnyc"]
+[ext_resource type="ArrayMesh" path="res://assets/models/blob_shadow_mesh.tres" id="7_durm8"]
+[ext_resource type="Script" path="res://scripts/systems/blob_shadow.gd" id="8_i4sgo"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_5y58c"]
+radius = 0.6
+height = 2.4
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_1c6ak"]
+radius = 0.75
+height = 2.6
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_it5ta"]
+size = Vector3(1, 2.2, 2.6)
+
+[node name="RustKnight" type="CharacterBody3D" unique_id=200370509]
+collision_layer = 4
+collision_mask = 7
+script = ExtResource("1_fkqk8")
+title_name = "RUST KNIGHT"
+title_epithet = "Keeper of the Mill"
+drop_table = 11
+target_offset = 2.7
+boomerang_stun = 0.0
+tint = Color(1, 0.62, 0.45, 1)
+
+[node name="Collision" type="CollisionShape3D" parent="." unique_id=1478281829]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0)
+shape = SubResource("CapsuleShape3D_5y58c")
+
+[node name="Model" type="Node3D" parent="." unique_id=1868561132 instance=ExtResource("2_ccr8c")]
+script = ExtResource("3_3ljnk")
+
+[node name="Health" type="Node" parent="." unique_id=1487033871]
+script = ExtResource("4_tkdep")
+max_health = 16
+
+[node name="Hurtbox" type="Area3D" parent="." unique_id=1612231249]
+collision_layer = 16
+collision_mask = 0
+script = ExtResource("5_ao4na")
+
+[node name="Shape" type="CollisionShape3D" parent="Hurtbox" unique_id=1570379181]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, 0)
+shape = SubResource("CapsuleShape3D_1c6ak")
+
+[node name="AttackHitbox" type="Area3D" parent="." unique_id=486340711]
+collision_layer = 64
+collision_mask = 8
+script = ExtResource("6_tmnyc")
+
+[node name="Shape" type="CollisionShape3D" parent="AttackHitbox" unique_id=1403461112]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -1.9)
+shape = SubResource("BoxShape3D_it5ta")
+
+[node name="BlobShadow" type="MeshInstance3D" parent="." unique_id=1867509631]
+mesh = ExtResource("7_durm8")
+script = ExtResource("8_i4sgo")
+radius = 0.85

@@ -1,0 +1,49 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/systems/main_display.gd" id="1_main"]
+[ext_resource type="PackedScene" path="res://scenes/ui/hud.tscn" id="3_hud"]
+[ext_resource type="PackedScene" path="res://scenes/ui/title_screen.tscn" id="4_title"]
+[ext_resource type="PackedScene" path="res://scenes/ui/pause_menu.tscn" id="5_pause"]
+
+[node name="Main" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_main")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
+[node name="GameView" type="SubViewportContainer" parent="."]
+texture_filter = 2
+layout_mode = 0
+offset_right = 320.0
+offset_bottom = 240.0
+mouse_filter = 2
+
+[node name="GameViewport" type="SubViewport" parent="GameView"]
+own_world_3d = true
+handle_input_locally = false
+snap_2d_transforms_to_pixel = true
+snap_2d_vertices_to_pixel = true
+canvas_item_default_texture_filter = 0
+audio_listener_enable_3d = true
+size = Vector2i(320, 240)
+render_target_update_mode = 4
+
+[node name="HUD" parent="GameView/GameViewport" instance=ExtResource("3_hud")]
+
+[node name="TitleScreen" parent="GameView/GameViewport" instance=ExtResource("4_title")]
+
+[node name="PauseMenu" parent="GameView/GameViewport" instance=ExtResource("5_pause")]

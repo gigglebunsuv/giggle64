@@ -1,0 +1,60 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/enemies/keese.gd" id="1_p6qnx"]
+[ext_resource type="PackedScene" path="res://assets/models/keese.tscn" id="2_ohgex"]
+[ext_resource type="Script" path="res://scripts/systems/character_model.gd" id="3_nyg2o"]
+[ext_resource type="Script" path="res://scripts/combat/health_component.gd" id="4_0x3c2"]
+[ext_resource type="Script" path="res://scripts/combat/hurtbox.gd" id="5_t7kfq"]
+[ext_resource type="Script" path="res://scripts/combat/hitbox.gd" id="6_0ocu3"]
+[ext_resource type="ArrayMesh" path="res://assets/models/blob_shadow_mesh.tres" id="7_k5ebx"]
+[ext_resource type="Script" path="res://scripts/systems/blob_shadow.gd" id="8_4fi6g"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_1ucl8"]
+radius = 0.25
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_jdsqv"]
+radius = 0.4
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_xto7r"]
+size = Vector3(0.7, 0.6, 0.7)
+
+[node name="IceKeese" type="CharacterBody3D" unique_id=1603218655]
+collision_layer = 4
+collision_mask = 7
+motion_mode = 1
+script = ExtResource("1_p6qnx")
+target_offset = 0.3
+boomerang_stun = 4.0
+boomerang_damage = 1
+tint = Color(0.75, 1, 1.5, 1)
+
+[node name="Collision" type="CollisionShape3D" parent="." unique_id=2001258340]
+shape = SubResource("SphereShape3D_1ucl8")
+
+[node name="Model" type="Node3D" parent="." unique_id=157057281 instance=ExtResource("2_ohgex")]
+script = ExtResource("3_nyg2o")
+
+[node name="Health" type="Node" parent="." unique_id=1031419680]
+script = ExtResource("4_0x3c2")
+max_health = 1
+
+[node name="Hurtbox" type="Area3D" parent="." unique_id=1853451967]
+collision_layer = 16
+collision_mask = 0
+script = ExtResource("5_t7kfq")
+
+[node name="Shape" type="CollisionShape3D" parent="Hurtbox" unique_id=1823942464]
+shape = SubResource("SphereShape3D_jdsqv")
+
+[node name="AttackHitbox" type="Area3D" parent="." unique_id=1852868801]
+collision_layer = 64
+collision_mask = 8
+script = ExtResource("6_0ocu3")
+
+[node name="Shape" type="CollisionShape3D" parent="AttackHitbox" unique_id=2097675124]
+shape = SubResource("BoxShape3D_xto7r")
+
+[node name="BlobShadow" type="MeshInstance3D" parent="." unique_id=1764729659]
+mesh = ExtResource("7_k5ebx")
+script = ExtResource("8_4fi6g")
+radius = 0.3

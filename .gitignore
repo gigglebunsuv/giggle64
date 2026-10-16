@@ -1,0 +1,19 @@
+# Godot 4+ cache and platform folders
+.godot/
+/android/
+
+# Exported builds live outside the project ("../Exported Demos")
+*.pck
+/export/
+
+# The OST album folder is rebuilt from assets/music by make_ost.py
+# (OST/tracklist.json is the source); the album ships as a release download.
+/OST/*/
+
+# Editor and OS clutter
+*.tmp
+.~lock.*#
+*~
+Thumbs.db
+desktop.ini
+.DS_Store

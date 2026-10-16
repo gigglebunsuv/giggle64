@@ -1,0 +1,46 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/enemies/straw_archer.gd" id="1_mikro"]
+[ext_resource type="PackedScene" path="res://assets/models/strawman.tscn" id="2_pjpbg"]
+[ext_resource type="Script" path="res://scripts/systems/character_model.gd" id="3_srei0"]
+[ext_resource type="Script" path="res://scripts/combat/health_component.gd" id="4_0cbnc"]
+[ext_resource type="Script" path="res://scripts/combat/hurtbox.gd" id="5_qfd72"]
+[ext_resource type="ArrayMesh" path="res://assets/models/blob_shadow_mesh.tres" id="6_w84xw"]
+[ext_resource type="Script" path="res://scripts/systems/blob_shadow.gd" id="7_haetl"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_5gi6m"]
+radius = 0.35
+height = 1.9
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_71woy"]
+
+[node name="StrawArcher" type="CharacterBody3D" unique_id=1873261922]
+collision_layer = 4
+collision_mask = 7
+script = ExtResource("1_mikro")
+target_offset = 2.1
+tint = Color(1.25, 0.6, 0.55, 1)
+
+[node name="Collision" type="CollisionShape3D" parent="." unique_id=127647174]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.95, 0)
+shape = SubResource("CapsuleShape3D_5gi6m")
+
+[node name="Model" type="Node3D" parent="." unique_id=1856247759 instance=ExtResource("2_pjpbg")]
+script = ExtResource("3_srei0")
+
+[node name="Health" type="Node" parent="." unique_id=263633539]
+script = ExtResource("4_0cbnc")
+max_health = 3
+
+[node name="Hurtbox" type="Area3D" parent="." unique_id=1743233812]
+collision_layer = 16
+collision_mask = 0
+script = ExtResource("5_qfd72")
+
+[node name="Shape" type="CollisionShape3D" parent="Hurtbox" unique_id=1088024615]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0)
+shape = SubResource("CapsuleShape3D_71woy")
+
+[node name="BlobShadow" type="MeshInstance3D" parent="." unique_id=694292753]
+mesh = ExtResource("6_w84xw")
+script = ExtResource("7_haetl")

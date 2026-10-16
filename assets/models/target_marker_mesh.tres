@@ -1,0 +1,15 @@
+[gd_resource type="ArrayMesh" format=4]
+
+[ext_resource type="Material" path="res://assets/materials/glow.tres" id="1_l2yip"]
+
+[resource]
+_surfaces = [{
+"aabb": AABB(-0.16, 0.3, -0.16, 0.32, 1e-05, 0.32),
+"attribute_data": PackedByteArray("/9I6/wAAAAAAAAAA/9I6/wAAAAAAAAAA/9I6/wAAAAAAAAAA/9I6/wAAAAAAAAAA/9I6/wAAAAAAAAAA/9I6/wAAAAAAAAAA"),
+"format": 34359738399,
+"material": ExtResource("1_l2yip"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 6,
+"vertex_data": PackedByteArray("PYoHpJqZmT4K1yO+Urg0I5qZmT4K1yM+CtcjvpqZmT5SuLQjPYoHpJqZmT4K1yO+CtcjPpqZmT4AAAAAUrg0I5qZmT4K1yM+/3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+/")
+}]

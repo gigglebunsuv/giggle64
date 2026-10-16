@@ -1,0 +1,71 @@
+[gd_scene load_steps=13 format=3]
+
+[ext_resource type="Script" path="res://scripts/player/player_controller.gd" id="1_ctrl"]
+[ext_resource type="Script" path="res://scripts/player/player_combat.gd" id="2_combat"]
+[ext_resource type="Script" path="res://scripts/combat/health_component.gd" id="3_health"]
+[ext_resource type="Script" path="res://scripts/combat/hurtbox.gd" id="4_hurt"]
+[ext_resource type="Script" path="res://scripts/combat/hitbox.gd" id="5_hit"]
+[ext_resource type="PackedScene" path="res://assets/models/sir_gigglebuns.tscn" id="6_model"]
+[ext_resource type="Script" path="res://scripts/systems/blob_shadow.gd" id="7_shadow"]
+[ext_resource type="ArrayMesh" path="res://assets/models/blob_shadow_mesh.tres" id="8_shadowmesh"]
+[ext_resource type="ArrayMesh" path="res://assets/models/target_marker_mesh.tres" id="9_marker"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_body"]
+radius = 0.32
+height = 1.8
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_hurt"]
+radius = 0.4
+height = 1.8
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_sword"]
+size = Vector3(1.7, 1.1, 1.35)
+
+[node name="Player" type="CharacterBody3D"]
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("1_ctrl")
+
+[node name="Collision" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
+shape = SubResource("CapsuleShape3D_body")
+
+[node name="Model" parent="." instance=ExtResource("6_model")]
+
+[node name="Health" type="Node" parent="."]
+script = ExtResource("3_health")
+max_health = 10
+
+[node name="Combat" type="Node" parent="." node_paths=PackedStringArray("sword_hitbox")]
+script = ExtResource("2_combat")
+sword_hitbox = NodePath("../SwordHitbox")
+
+[node name="Hurtbox" type="Area3D" parent="." node_paths=PackedStringArray("receiver")]
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("4_hurt")
+receiver = NodePath("..")
+
+[node name="Shape" type="CollisionShape3D" parent="Hurtbox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
+shape = SubResource("CapsuleShape3D_hurt")
+
+[node name="SwordHitbox" type="Area3D" parent="." node_paths=PackedStringArray("attacker")]
+collision_layer = 32
+collision_mask = 16
+script = ExtResource("5_hit")
+attacker = NodePath("..")
+
+[node name="Shape" type="CollisionShape3D" parent="SwordHitbox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0, -0.85)
+shape = SubResource("BoxShape3D_sword")
+
+[node name="BlobShadow" type="MeshInstance3D" parent="."]
+cast_shadow = 0
+mesh = ExtResource("8_shadowmesh")
+script = ExtResource("7_shadow")
+radius = 0.45
+
+[node name="TargetMarker" type="MeshInstance3D" parent="."]
+cast_shadow = 0
+mesh = ExtResource("9_marker")

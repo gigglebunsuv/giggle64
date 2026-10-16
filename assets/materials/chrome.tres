@@ -1,0 +1,10 @@
+[gd_resource type="ShaderMaterial" format=3]
+
+[ext_resource type="Shader" path="res://assets/shaders/chrome.gdshader" id="1_5uxha"]
+[ext_resource type="Texture2D" path="res://assets/textures/chrome_env.png" id="2_1dh4c"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_5uxha")
+shader_parameter/env_tex = ExtResource("2_1dh4c")
+shader_parameter/strength = null

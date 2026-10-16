@@ -1,0 +1,59 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/enemies/incunax.gd" id="1_ki4b2"]
+[ext_resource type="PackedScene" path="res://assets/models/incunax.tscn" id="2_qilij"]
+[ext_resource type="Script" path="res://scripts/systems/character_model.gd" id="3_v3uqt"]
+[ext_resource type="Script" path="res://scripts/combat/health_component.gd" id="4_qelff"]
+[ext_resource type="Script" path="res://scripts/combat/hurtbox.gd" id="5_ib3tt"]
+[ext_resource type="Script" path="res://scripts/combat/hitbox.gd" id="6_jepdi"]
+[ext_resource type="ArrayMesh" path="res://assets/models/blob_shadow_mesh.tres" id="7_1pphd"]
+[ext_resource type="Script" path="res://scripts/systems/blob_shadow.gd" id="8_qhx7i"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_n4qw6"]
+radius = 1.3
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_qlpsg"]
+radius = 1.6
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_36te0"]
+size = Vector3(2.6, 2.6, 2.6)
+
+[node name="Incunax" type="CharacterBody3D" unique_id=408305847]
+collision_layer = 4
+collision_mask = 7
+motion_mode = 1
+script = ExtResource("1_ki4b2")
+drop_table = -1
+target_offset = 0.3
+boomerang_stun = 0.0
+
+[node name="Collision" type="CollisionShape3D" parent="." unique_id=709798494]
+shape = SubResource("SphereShape3D_n4qw6")
+
+[node name="Model" type="Node3D" parent="." unique_id=414771229 instance=ExtResource("2_qilij")]
+script = ExtResource("3_v3uqt")
+
+[node name="Health" type="Node" parent="." unique_id=1425579667]
+script = ExtResource("4_qelff")
+max_health = 14
+
+[node name="Hurtbox" type="Area3D" parent="." unique_id=523881321]
+collision_layer = 16
+collision_mask = 0
+script = ExtResource("5_ib3tt")
+
+[node name="Shape" type="CollisionShape3D" parent="Hurtbox" unique_id=405748726]
+shape = SubResource("SphereShape3D_qlpsg")
+
+[node name="AttackHitbox" type="Area3D" parent="." unique_id=810507429]
+collision_layer = 64
+collision_mask = 8
+script = ExtResource("6_jepdi")
+
+[node name="Shape" type="CollisionShape3D" parent="AttackHitbox" unique_id=1214710537]
+shape = SubResource("BoxShape3D_36te0")
+
+[node name="BlobShadow" type="MeshInstance3D" parent="." unique_id=623009433]
+mesh = ExtResource("7_1pphd")
+script = ExtResource("8_qhx7i")
+radius = 1.8

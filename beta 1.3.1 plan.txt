@@ -1,0 +1,30 @@
+﻿Beta 1.3.1 Patch
+
+Reference all player movement from the Zelda Ocarina of Time decomp, cross reference with movement already added and add the rest of the movement options that seem the most needed, this includes camera, and first person. A lot of the time first person feels awkward to use, and the function to change items during first person makes it feel clunky (in OOT you could be holding the bow, press the hookshot key, and Link would put the bow down and quickly bring the hookshot up, without the camera going back) Speaking of the hookshot, it should be working while targetting an enemy. Again, just reference the decomp, it for sure has the functions we need. Let me know first, which ones you think ARE needed and which ones are not.
+
+Also add all the new ogg files to the OST with the correct metadata.
+
+Along with this, put somewhere that I want the Astral Dimension towards the end of the game, to have a cutscene with Avalon/Val. I also would like her theme to be specific, written in A Major/D Lydian. I left an image of her own motif in the project file. She has a secondary motif, which is the Pachebel Canon chord progression. Avalon has overwhelming beauty, she is deeply kind and sweet. She has short blue hair, brown eyes, and she wears a beautiful white dress.
+
+Make her theme for me.
+
+Update the Waystone selection to be a menu that is easy to use. Have pictures of each area in boxes, on a grid. Have them greyed out with a ??? if it is not discovered yet.
+
+Make my game look like it is being rendered on a Nintendo 64. Base the visual style on the actual characteristics of the N64's Reality Display Processor (RDP) and Reality Signal Processor (RSP), not generic low-poly or PS1 aesthetics. We have done this basically, but I want to go all in on this. You can skip certain things that we have already done, or things that are close enough. In settings have this be a graphics option called “True N64 Mode”
+Key hardware behaviors to emulate:
+    1. Texture memory and filtering (most important)
+The RDP only had 4 KB of Texture Memory (TMEM). Practical color textures were usually 32×32 or 64×64 maximum (smaller with higher color depth or when using palettes/TLUT). Textures were frequently stretched across larger surfaces.
+Crucially, the RDP did not use standard 4-point bilinear filtering. It used 3-point (triangular) bilinear filtering. This creates a distinctive hexagonal/"rupee" sampling pattern instead of the usual diamond pattern. Implement texture sampling that approximates this 3-point triangular interpolation rather than modern bilinear or anisotropic filtering. Also support optional mipmapping/trilinear behavior in the style of the RDP's 2-cycle mode. 
+    2. Resolution and output
+Render at a low internal resolution typical of the N64 (commonly 320×240, sometimes slightly higher). Upscale cleanly to the window without modern sharpening or high-quality upscalers that fight the soft look. The Video Interface (VI) also applied additional processing (including a dither filter / dedither and horizontal blending on many games), which further softened the image. Apply a mild overall softness consistent with this. 
+    3. Color depth and dithering
+The RDP pipeline was 32-bit internally, but the framebuffer was frequently 16-bit (RGBA5551 / 5-5-5-1). This caused color banding that was mitigated by hardware ordered dithering. Simulate quantization to ~15–16-bit color with ordered dithering so gradients have the characteristic subtle noise/pattern of real N64 output rather than clean modern banding or smooth 24-bit gradients. 
+    4. Anti-aliasing and edges
+The RDP had hardware edge anti-aliasing that used coverage bits. Edges were softer than pure aliased polygons but still distinctly low-resolution. Avoid modern MSAA or FXAA that looks too clean; keep a slightly soft, low-res edge quality. 
+    5. Shading, lighting, and fog
+Lighting was primarily Gouraud (per-vertex) shading calculated on the RSP. Use vertex lighting / Gouraud-style shading rather than per-pixel lighting. Support per-pixel fog (the RDP Blender stage computed fog as a function of range). 
+    6. Geometry and overall constraints
+Keep polygon counts low. Characters and objects should feel low-poly. Prefer vertex colors and simple textures over high-detail maps. Perspective-correct texturing is correct (the N64 had it; the PS1 did not), so do not introduce affine warping/wobble. 
+    7. Overall aesthetic
+The combination of low-resolution textures + 3-point triangular bilinear filtering + 16-bit dithered color + low output resolution + edge AA + VI softening produces the classic soft, slightly hazy, "vaseline" N64 look with characteristic texture blur. Aim for that rather than sharp pixel art or PS1-style nearest-neighbor blockiness.
+

@@ -1,0 +1,13 @@
+[gd_resource type="StandardMaterial3D" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/textures/world/ct_21_ground.png" id="1_1o3op"]
+
+[resource]
+shading_mode = 2
+specular_mode = 2
+vertex_color_use_as_albedo = true
+vertex_color_is_srgb = true
+albedo_texture = ExtResource("1_1o3op")
+metallic_specular = 0.0
+texture_filter = 1
+texture_repeat = false

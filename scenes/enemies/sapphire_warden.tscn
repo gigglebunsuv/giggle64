@@ -1,0 +1,67 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/enemies/tide_knight.gd" id="1_4igfe"]
+[ext_resource type="PackedScene" path="res://assets/models/tide_knight.tscn" id="2_bs8sn"]
+[ext_resource type="Script" path="res://scripts/systems/character_model.gd" id="3_a4wsv"]
+[ext_resource type="Script" path="res://scripts/combat/health_component.gd" id="4_hp8ru"]
+[ext_resource type="Script" path="res://scripts/combat/hurtbox.gd" id="5_77sef"]
+[ext_resource type="Script" path="res://scripts/combat/hitbox.gd" id="6_tqh61"]
+[ext_resource type="ArrayMesh" path="res://assets/models/blob_shadow_mesh.tres" id="7_yf0t8"]
+[ext_resource type="Script" path="res://scripts/systems/blob_shadow.gd" id="8_12n41"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_npc87"]
+radius = 0.6
+height = 2.4
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_nahkm"]
+radius = 0.75
+height = 2.6
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_olruk"]
+size = Vector3(1, 2.2, 2.6)
+
+[node name="SapphireWarden" type="CharacterBody3D" unique_id=1378600704]
+collision_layer = 4
+collision_mask = 7
+script = ExtResource("1_4igfe")
+start_rate = 1.3
+title_name = "SAPPHIRE WARDEN"
+title_epithet = "Jailer of the Sapphire Order"
+drop_table = 11
+target_offset = 2.7
+boomerang_stun = 0.0
+tint = Color(0.42, 0.5, 1.2, 1)
+
+[node name="Collision" type="CollisionShape3D" parent="." unique_id=132661311]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0)
+shape = SubResource("CapsuleShape3D_npc87")
+
+[node name="Model" type="Node3D" parent="." unique_id=1868561132 instance=ExtResource("2_bs8sn")]
+script = ExtResource("3_a4wsv")
+
+[node name="Health" type="Node" parent="." unique_id=1202196827]
+script = ExtResource("4_hp8ru")
+max_health = 20
+
+[node name="Hurtbox" type="Area3D" parent="." unique_id=581900940]
+collision_layer = 16
+collision_mask = 0
+script = ExtResource("5_77sef")
+
+[node name="Shape" type="CollisionShape3D" parent="Hurtbox" unique_id=1077312163]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, 0)
+shape = SubResource("CapsuleShape3D_nahkm")
+
+[node name="AttackHitbox" type="Area3D" parent="." unique_id=729404232]
+collision_layer = 64
+collision_mask = 8
+script = ExtResource("6_tqh61")
+
+[node name="Shape" type="CollisionShape3D" parent="AttackHitbox" unique_id=561832682]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -1.9)
+shape = SubResource("BoxShape3D_olruk")
+
+[node name="BlobShadow" type="MeshInstance3D" parent="." unique_id=132243000]
+mesh = ExtResource("7_yf0t8")
+script = ExtResource("8_12n41")
+radius = 0.85

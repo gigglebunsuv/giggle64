@@ -1,0 +1,52 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/enemies/battle_mage.gd" id="1_bngxy"]
+[ext_resource type="PackedScene" path="res://assets/models/sapphire_mage.tscn" id="2_6wrf4"]
+[ext_resource type="Script" path="res://scripts/systems/character_model.gd" id="3_ne5oq"]
+[ext_resource type="Script" path="res://scripts/combat/health_component.gd" id="4_bay8b"]
+[ext_resource type="Script" path="res://scripts/combat/hurtbox.gd" id="5_ijanp"]
+[ext_resource type="ArrayMesh" path="res://assets/models/blob_shadow_mesh.tres" id="6_fs48i"]
+[ext_resource type="Script" path="res://scripts/systems/blob_shadow.gd" id="7_61rwi"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_pf65i"]
+radius = 0.4
+height = 1.8
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_b6n0f"]
+radius = 0.55
+height = 1.9
+
+[node name="BattleMage" type="CharacterBody3D" unique_id=1469342699]
+collision_layer = 4
+collision_mask = 7
+script = ExtResource("1_bngxy")
+drop_table = -1
+target_offset = 1.6
+boomerang_stun = 1.0
+tint = Color(1.15, 0.8, 0.75, 1)
+
+[node name="Collision" type="CollisionShape3D" parent="." unique_id=1160533535]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
+shape = SubResource("CapsuleShape3D_pf65i")
+
+[node name="Model" type="Node3D" parent="." unique_id=2018374616 instance=ExtResource("2_6wrf4")]
+transform = Transform3D(1.04, 0, 0, 0, 1.04, 0, 0, 0, 1.04, 0, 0, 0)
+script = ExtResource("3_ne5oq")
+
+[node name="Health" type="Node" parent="." unique_id=110941646]
+script = ExtResource("4_bay8b")
+max_health = 16
+
+[node name="Hurtbox" type="Area3D" parent="." unique_id=645926646]
+collision_layer = 16
+collision_mask = 0
+script = ExtResource("5_ijanp")
+
+[node name="Shape" type="CollisionShape3D" parent="Hurtbox" unique_id=471776713]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.95, 0)
+shape = SubResource("CapsuleShape3D_b6n0f")
+
+[node name="BlobShadow" type="MeshInstance3D" parent="." unique_id=1444472598]
+mesh = ExtResource("6_fs48i")
+script = ExtResource("7_61rwi")
+radius = 0.6

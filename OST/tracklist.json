@@ -1,0 +1,308 @@
+{
+  "album": "Giggle 64 - The Gauntlet of Fire OST",
+  "artist": "Another",
+  "album_artist": "Another",
+  "composer": "Another",
+  "copyright": "Unknown Vengeance Studios",
+  "label": "Unknown Vengeance Studios",
+  "year": "2026",
+  "genre": "Soundtrack",
+  "_order": "Tracks run in the order a player first hears them. Add a new track by inserting {file, title, where} at its place in the story; the numbers are reassigned on every build.",
+  "tracks": [
+    {
+      "file": "title_theme",
+      "title": "Title Theme",
+      "where": "The title screen"
+    },
+    {
+      "file": "prologue",
+      "title": "Prologue",
+      "where": "Cutscene: the Cinder Vault, where Firebuns III takes the Gauntlet"
+    },
+    {
+      "file": "inside_house",
+      "title": "Inside the House",
+      "where": "The hero's home and every interior without its own track"
+    },
+    {
+      "file": "haven_village",
+      "title": "Haven Village",
+      "where": "Haven Village"
+    },
+    {
+      "file": "bunsriel_field",
+      "title": "Bunsriel Fields",
+      "where": "Bunsriel Fields and the South Road"
+    },
+    {
+      "file": "castle_town",
+      "title": "Old Castle Town",
+      "where": "Old Castle Town, before the fall"
+    },
+    {
+      "file": "tavern",
+      "title": "The Golden Bun",
+      "where": "The Golden Bun, Castle Town's inn"
+    },
+    {
+      "file": "mirror_lake",
+      "title": "Mirror Lake",
+      "where": "Mirror Lake"
+    },
+    {
+      "file": "lake_shrine",
+      "title": "The Lake Shrine",
+      "where": "The Lake Shrine, the first dungeon"
+    },
+    {
+      "file": "boss_battle",
+      "title": "Boss Battle",
+      "where": "Boss fights (Carapax and the others)"
+    },
+    {
+      "file": "game_over",
+      "title": "Game Over",
+      "where": "The game over screen"
+    },
+    {
+      "file": "southern_fields",
+      "title": "The Southern Fields",
+      "where": "The Southern Fields"
+    },
+    {
+      "file": "southern_tower",
+      "title": "The Southern Tower",
+      "where": "The Southern Tower, Alan's bun piece"
+    },
+    {
+      "file": "miniboss",
+      "title": "Mini-Boss Battle",
+      "where": "Mini-boss fights (Corvax, the Mummy Lord and the others)"
+    },
+    {
+      "file": "goddess_spring",
+      "title": "Goddess Spring",
+      "where": "The Goddess Springs and the Springs of Lothelye"
+    },
+    {
+      "file": "ladhellin_desert",
+      "title": "Desert of Ladhellin",
+      "where": "The Desert of Ladhellin"
+    },
+    {
+      "file": "ladhellin_tower",
+      "title": "Ladhellin Tower",
+      "where": "Ladhellin Tower, Serielye's bun piece"
+    },
+    {
+      "file": "the_forest",
+      "title": "The Forest",
+      "where": "The Forest"
+    },
+    {
+      "file": "hidden_forest",
+      "title": "The Hidden Forest",
+      "where": "The Hidden Forest"
+    },
+    {
+      "file": "northeastern_cliffs",
+      "title": "The Northeastern Cliffs",
+      "where": "The Northeastern Cliffs"
+    },
+    {
+      "file": "frostpeak",
+      "title": "Frostpeak",
+      "where": "The snowy summit of Frostpeak"
+    },
+    {
+      "file": "skyreach_spire",
+      "title": "Skyreach Spire",
+      "where": "Skyreach Spire, Aphiel's bun piece"
+    },
+    {
+      "file": "lothelye_legend",
+      "title": "The Legend of Lothelye",
+      "where": "Cutscene: drawing the Bun Sword"
+    },
+    {
+      "file": "west_marshlands",
+      "title": "The West Marshlands",
+      "where": "The West Marshlands"
+    },
+    {
+      "file": "bog_tower",
+      "title": "Bog Tower",
+      "where": "Bog Tower"
+    },
+    {
+      "file": "castle",
+      "title": "Castle of Haven",
+      "where": "The ruined Castle of Haven"
+    },
+    {
+      "file": "final_battle",
+      "title": "Final Battle",
+      "where": "The Chapter I battle with Firebuns III"
+    },
+    {
+      "file": "ending",
+      "title": "To Be Continued",
+      "where": "The endings of Chapter I and Chapter IV"
+    },
+    {
+      "file": "frostpeak_hollow",
+      "title": "Frostpeak Hollow",
+      "where": "Chapter II: Frostpeak Hollow"
+    },
+    {
+      "file": "sun_trial",
+      "title": "The Sun Trial",
+      "where": "Chapter II: the Sun Trial"
+    },
+    {
+      "file": "forest_of_the_dead",
+      "title": "Forest of the Dead",
+      "where": "Chapter III: the Forest of the Dead"
+    },
+    {
+      "file": "batela_fells",
+      "title": "The Batela Fells",
+      "where": "Chapter III: the Batela Fells"
+    },
+    {
+      "file": "ashwick",
+      "title": "Ashwick",
+      "where": "Chapter III: Ashwick, the survivors' camp"
+    },
+    {
+      "file": "firebuns_theme",
+      "title": "Firebuns III",
+      "where": "Chapter III: the duel at Batela Keep"
+    },
+    {
+      "file": "sapphire_sanctum",
+      "title": "The Sapphire Sanctum",
+      "where": "Chapter III: the Sapphire Sanctum"
+    },
+    {
+      "file": "bunsriel_at_war",
+      "title": "Bunsriel at War",
+      "where": "Chapter IV: Bunsriel Fields under the goblin war camps"
+    },
+    {
+      "file": "haven_refuge",
+      "title": "Haven, the Refuge",
+      "where": "Chapter IV: Haven Village as a refuge"
+    },
+    {
+      "file": "siege_of_haven",
+      "title": "The Siege of Haven",
+      "where": "Chapter IV: the night defense of Haven's palisade"
+    },
+    {
+      "file": "westmarch_fortress",
+      "title": "Westmarch Fortress",
+      "where": "Chapter IV: Westmarch Fortress"
+    },
+    {
+      "file": "dark_forest",
+      "title": "The Dark Forest",
+      "where": "Chapter IV: the Dark Forest"
+    },
+    {
+      "file": "temple_of_bun",
+      "title": "The Temple of Bun",
+      "where": "Chapter IV: the Temple of Bun"
+    },
+    {
+      "file": "citadel_assault",
+      "title": "The Burning Citadel",
+      "where": "Chapter IV: the assault on the Burning Citadel"
+    },
+    {
+      "file": "firebuns_sealed",
+      "title": "Firebuns Sealed",
+      "where": "Cutscene: the Astral Seal freezes Firebuns III"
+    },
+    {
+      "file": "haven_restored",
+      "title": "Haven Restored",
+      "where": "Chapter V: Castle Town, rebuilt"
+    },
+    {
+      "file": "firebuns_returns",
+      "title": "Firebuns Returns",
+      "where": "Cutscene: the Astral Seal cracks"
+    },
+    {
+      "file": "barrow_of_kings",
+      "title": "The Barrow of Kings",
+      "where": "Chapter V: the Barrow of Kings"
+    },
+    {
+      "file": "cinderhold",
+      "title": "Cinderhold",
+      "where": "Chapter V: Cinderhold"
+    },
+    {
+      "file": "cinder_vault",
+      "title": "The Cinder Vault",
+      "where": "Chapter V: the Cinder Vault"
+    },
+    {
+      "file": "black_water_ridge",
+      "title": "Black Water Ridge",
+      "where": "Chapter V: Black Water Ridge and the war camps"
+    },
+    {
+      "file": "ridge_keep",
+      "title": "Ridge Keep",
+      "where": "Chapter V: Ridge Keep"
+    },
+    {
+      "file": "mara_battle",
+      "title": "Mara",
+      "where": "Chapter V: the battle with Mara atop Ridge Keep"
+    },
+    {
+      "file": "velloran_battle",
+      "title": "Archmagus Velloran",
+      "where": "Chapter V: the Sapphire Order's last stand"
+    },
+    {
+      "file": "astral_rift",
+      "title": "The Astral Rift",
+      "where": "Chapter V: the Astral Rift, the final dungeon"
+    },
+    {
+      "file": "avalon",
+      "title": "Avalon",
+      "where": "Chapter V: Avalon in the Astral Dimension"
+    },
+    {
+      "file": "true_final_battle",
+      "title": "The Last Flame",
+      "where": "The true final battle with Firebuns III"
+    },
+    {
+      "file": "final_hope",
+      "title": "Final Hope",
+      "where": "The final battle's last phase, with Avalon's starlight"
+    },
+    {
+      "file": "ending_cutscene",
+      "title": "Serielye",
+      "where": "Cutscene: the true ending"
+    },
+    {
+      "file": "credits",
+      "title": "Credits",
+      "where": "The end credits"
+    },
+    {
+      "file": "age_of_enlightenment",
+      "title": "Age of Enlightenment",
+      "where": "Bonus track: a secret orchestral arrangement"
+    }
+  ]
+}

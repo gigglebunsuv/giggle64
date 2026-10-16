@@ -1,0 +1,60 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/enemies/mummy.gd" id="1_1p1p6"]
+[ext_resource type="PackedScene" path="res://assets/models/mummy.tscn" id="2_hlm61"]
+[ext_resource type="Script" path="res://scripts/systems/character_model.gd" id="3_q1lmv"]
+[ext_resource type="Script" path="res://scripts/combat/health_component.gd" id="4_l3ncj"]
+[ext_resource type="Script" path="res://scripts/combat/hurtbox.gd" id="5_o1trq"]
+[ext_resource type="Script" path="res://scripts/combat/hitbox.gd" id="6_o2d6t"]
+[ext_resource type="ArrayMesh" path="res://assets/models/blob_shadow_mesh.tres" id="7_uixqs"]
+[ext_resource type="Script" path="res://scripts/systems/blob_shadow.gd" id="8_q673i"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_oj4sp"]
+radius = 0.38
+height = 1.85
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ui75i"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_pwgr6"]
+size = Vector3(1, 1, 1.2)
+
+[node name="Mummy" type="CharacterBody3D" unique_id=1338211155]
+collision_layer = 4
+collision_mask = 7
+script = ExtResource("1_1p1p6")
+target_offset = 2.0
+boomerang_stun = 1.5
+
+[node name="Collision" type="CollisionShape3D" parent="." unique_id=2093756078]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.93, 0)
+shape = SubResource("CapsuleShape3D_oj4sp")
+
+[node name="Model" type="Node3D" parent="." unique_id=1236343947 instance=ExtResource("2_hlm61")]
+script = ExtResource("3_q1lmv")
+
+[node name="Health" type="Node" parent="." unique_id=1560864994]
+script = ExtResource("4_l3ncj")
+max_health = 5
+
+[node name="Hurtbox" type="Area3D" parent="." unique_id=606549210]
+collision_layer = 16
+collision_mask = 0
+script = ExtResource("5_o1trq")
+
+[node name="Shape" type="CollisionShape3D" parent="Hurtbox" unique_id=229585405]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_ui75i")
+
+[node name="AttackHitbox" type="Area3D" parent="." unique_id=573844352]
+collision_layer = 64
+collision_mask = 8
+script = ExtResource("6_o2d6t")
+
+[node name="Shape" type="CollisionShape3D" parent="AttackHitbox" unique_id=187755182]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3, -0.8)
+shape = SubResource("BoxShape3D_pwgr6")
+
+[node name="BlobShadow" type="MeshInstance3D" parent="." unique_id=1074368350]
+mesh = ExtResource("7_uixqs")
+script = ExtResource("8_q673i")
+radius = 0.5

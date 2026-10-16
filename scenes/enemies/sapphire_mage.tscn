@@ -1,0 +1,49 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/enemies/sapphire_mage.gd" id="1_tunqw"]
+[ext_resource type="PackedScene" path="res://assets/models/sapphire_mage.tscn" id="2_1exs8"]
+[ext_resource type="Script" path="res://scripts/systems/character_model.gd" id="3_nrppc"]
+[ext_resource type="Script" path="res://scripts/combat/health_component.gd" id="4_vcg8t"]
+[ext_resource type="Script" path="res://scripts/combat/hurtbox.gd" id="5_irc6x"]
+[ext_resource type="ArrayMesh" path="res://assets/models/blob_shadow_mesh.tres" id="6_v17py"]
+[ext_resource type="Script" path="res://scripts/systems/blob_shadow.gd" id="7_bo1cb"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_8j6hf"]
+radius = 0.4
+height = 1.8
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_kqwyg"]
+
+[node name="SapphireMage" type="CharacterBody3D" unique_id=1550799675]
+collision_layer = 4
+collision_mask = 7
+motion_mode = 1
+script = ExtResource("1_tunqw")
+drop_table = 2
+target_offset = 2.1
+boomerang_stun = 2.0
+
+[node name="Collision" type="CollisionShape3D" parent="." unique_id=585863312]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.95, 0)
+shape = SubResource("CapsuleShape3D_8j6hf")
+
+[node name="Model" type="Node3D" parent="." unique_id=2018374616 instance=ExtResource("2_1exs8")]
+transform = Transform3D(1.04, 0, 0, 0, 1.04, 0, 0, 0, 1.04, 0, 0, 0)
+script = ExtResource("3_nrppc")
+
+[node name="Health" type="Node" parent="." unique_id=656786922]
+script = ExtResource("4_vcg8t")
+max_health = 4
+
+[node name="Hurtbox" type="Area3D" parent="." unique_id=782062385]
+collision_layer = 16
+collision_mask = 0
+script = ExtResource("5_irc6x")
+
+[node name="Shape" type="CollisionShape3D" parent="Hurtbox" unique_id=2047745705]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_kqwyg")
+
+[node name="BlobShadow" type="MeshInstance3D" parent="." unique_id=1299113890]
+mesh = ExtResource("6_v17py")
+script = ExtResource("7_bo1cb")

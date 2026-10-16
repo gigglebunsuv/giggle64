@@ -1,0 +1,66 @@
+[gd_scene load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://scripts/camera/adventure_camera.gd" id="1_cam"]
+[ext_resource type="PackedScene" path="res://scenes/environment/test_environment.tscn" id="2_env"]
+[ext_resource type="PackedScene" path="res://scenes/player/player.tscn" id="3_player"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/basic_enemy.tscn" id="4_enemy"]
+
+[sub_resource type="Environment" id="Environment_dusk"]
+background_mode = 1
+background_color = Color(0.6, 0.36, 0.4, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.5, 0.43, 0.56, 1)
+ambient_light_energy = 1.0
+tonemap_mode = 0
+fog_enabled = true
+fog_mode = 1
+fog_light_color = Color(0.64, 0.4, 0.44, 1)
+fog_light_energy = 1.0
+fog_sun_scatter = 0.0
+fog_depth_curve = 1.0
+fog_depth_begin = 16.0
+fog_depth_end = 65.0
+fog_sky_affect = 0.0
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributes_plain"]
+
+[node name="TestArea" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_dusk")
+camera_attributes = SubResource("CameraAttributes_plain")
+
+[node name="Sun" type="DirectionalLight3D" parent="."]
+rotation = Vector3(-0.75, 2.2, 0)
+light_color = Color(1, 0.84, 0.68, 1)
+light_energy = 1.05
+shadow_enabled = false
+
+[node name="TestEnvironment" parent="." instance=ExtResource("2_env")]
+
+[node name="Player" parent="." node_paths=PackedStringArray("camera_rig") instance=ExtResource("3_player")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 20)
+camera_rig = NodePath("../CameraRig")
+
+[node name="CameraRig" type="Node3D" parent="." node_paths=PackedStringArray("target")]
+script = ExtResource("1_cam")
+target = NodePath("../Player")
+
+[node name="Camera3D" type="Camera3D" parent="CameraRig"]
+current = true
+fov = 60.0
+near = 0.1
+far = 300.0
+
+[node name="Enemies" type="Node3D" parent="."]
+
+[node name="CinderGoblin1" parent="Enemies" instance=ExtResource("4_enemy")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -6, 0.6, 1)
+
+[node name="CinderGoblin2" parent="Enemies" instance=ExtResource("4_enemy")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 7, 0.6, -6)
+tint = Color(1.15, 0.85, 0.55, 1)
+
+[node name="CinderGoblin3" parent="Enemies" instance=ExtResource("4_enemy")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -1, 0.6, -14)
+tint = Color(0.7, 0.75, 0.9, 1)

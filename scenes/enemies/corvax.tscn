@@ -1,0 +1,59 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/enemies/corvax.gd" id="1_o75wu"]
+[ext_resource type="PackedScene" path="res://assets/models/corvax.tscn" id="2_hp5v5"]
+[ext_resource type="Script" path="res://scripts/systems/character_model.gd" id="3_sgegn"]
+[ext_resource type="Script" path="res://scripts/combat/health_component.gd" id="4_n5074"]
+[ext_resource type="Script" path="res://scripts/combat/hurtbox.gd" id="5_tw2dr"]
+[ext_resource type="Script" path="res://scripts/combat/hitbox.gd" id="6_tf0e2"]
+[ext_resource type="ArrayMesh" path="res://assets/models/blob_shadow_mesh.tres" id="7_ho1xv"]
+[ext_resource type="Script" path="res://scripts/systems/blob_shadow.gd" id="8_6qvvq"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_qk2hl"]
+radius = 1.1
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_s50p4"]
+radius = 1.5
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_fhukr"]
+size = Vector3(3, 1.6, 3)
+
+[node name="Corvax" type="CharacterBody3D" unique_id=33311194]
+collision_layer = 4
+collision_mask = 7
+motion_mode = 1
+script = ExtResource("1_o75wu")
+drop_table = -1
+target_offset = 0.6
+boomerang_stun = 0.0
+
+[node name="Collision" type="CollisionShape3D" parent="." unique_id=1346672937]
+shape = SubResource("SphereShape3D_qk2hl")
+
+[node name="Model" type="Node3D" parent="." unique_id=1461466319 instance=ExtResource("2_hp5v5")]
+script = ExtResource("3_sgegn")
+
+[node name="Health" type="Node" parent="." unique_id=631510116]
+script = ExtResource("4_n5074")
+
+[node name="Hurtbox" type="Area3D" parent="." unique_id=1468478581]
+collision_layer = 16
+collision_mask = 0
+script = ExtResource("5_tw2dr")
+
+[node name="Shape" type="CollisionShape3D" parent="Hurtbox" unique_id=2080290451]
+shape = SubResource("SphereShape3D_s50p4")
+
+[node name="AttackHitbox" type="Area3D" parent="." unique_id=47095627]
+collision_layer = 64
+collision_mask = 8
+script = ExtResource("6_tf0e2")
+
+[node name="Shape" type="CollisionShape3D" parent="AttackHitbox" unique_id=2017845353]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.6, -0.5)
+shape = SubResource("BoxShape3D_fhukr")
+
+[node name="BlobShadow" type="MeshInstance3D" parent="." unique_id=2047640696]
+mesh = ExtResource("7_ho1xv")
+script = ExtResource("8_6qvvq")
+radius = 2.0
