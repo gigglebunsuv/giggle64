@@ -389,6 +389,7 @@ func _ready() -> void:
 		"test_magmaw_frost",
 		"test_castle_town_restored",
 		"test_old_world_secrets",
+		"test_bug_report",
 	]
 	# --tests=a,b runs only those (handy while working on one feature).
 	for a in OS.get_cmdline_user_args():
@@ -8133,7 +8134,7 @@ func test_file_select_completion() -> void:
 ## Beta 1.0.0 on the title screen, and the fallen Castle Town among its scenes.
 func test_beta_title() -> void:
 	var src := (load("res://scripts/ui/title_screen.gd") as GDScript).source_code
-	check(src.contains("BETA 1.6.1"), "the title says BETA 1.6.1")
+	check(src.contains("GameManager.VERSION") and GameManager.VERSION == "BETA 1.7.0", "the title says BETA 1.7.0")
 	var scene := TitleFallen.new()
 	check(scene.area() == "castle_town_fallen", "a title scene in the fallen town")
 	scene.free()
@@ -8174,7 +8175,7 @@ func test_credits_roll() -> void:
 	Story.credits_roll()
 	await _seconds(2.0)
 	check(Cutscene.active and Cutscene.scene_id == "credits" and not Story._overlay.credits.is_empty(), "the credits roll")
-	check(Story.CREDITS.has("BETA 1.6.1") and Story.CREDITS.has("LORD BUBBLES AS HIMSELF") and Story.CREDITS.has("MARYBETH REDMOND"), "with the Beta's names")
+	check(Story.CREDITS.has(GameManager.VERSION) and Story.CREDITS.has("LORD BUBBLES AS HIMSELF") and Story.CREDITS.has("MARYBETH REDMOND"), "with the Beta's names")
 	for i in int(Story.CREDITS.size() * 0.75) + 10:
 		await _seconds(1.0)
 		if not Cutscene.active:
@@ -10765,3 +10766,21 @@ func test_catch_ups_after_peace() -> void:
 	check(CatchUp.posy().is_empty(), "once")
 	for n: Npc in [rowena, pink, posy]:
 		n.free()
+
+
+## F8 writes a bug report folder: the state as a save, a readable report and
+## the log (Beta 1.7.0). The debug menu is there in debug builds.
+func test_bug_report() -> void:
+	var rep: BugReport = _main.find_child("BugReport", true, false)
+	check(rep != null, "the bug report catcher is in the game")
+	check(DebugMenu.allowed() and _main.find_child("DebugMenu", true, false) != null, "the debug menu exists in a debug build")
+	Progress.set_flag("bug:test_flag")
+	var dir: String = await rep.save_report()
+	check(dir != "" and DirAccess.dir_exists_absolute(dir), "a report folder (%s)" % dir)
+	var txt := FileAccess.get_file_as_string(dir.path_join("report.txt"))
+	check(txt.contains(GameManager.VERSION) and txt.contains("area " + World.area_id) and txt.contains("bug:test_flag"), "the report names the version, the area and the flags")
+	var data = JSON.parse_string(FileAccess.get_file_as_string(dir.path_join("save.json")))
+	check(data is Dictionary and data.get("flags", {}).has("bug:test_flag") and data.get("area") == World.area_id, "save.json holds the game state")
+	for f in DirAccess.get_files_at(dir):
+		DirAccess.remove_absolute(dir.path_join(f))
+	DirAccess.remove_absolute(dir)

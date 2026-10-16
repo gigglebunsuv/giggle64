@@ -388,7 +388,7 @@ func _draw() -> void:
 		draw_texture(LOGO, Vector2.ZERO, tint)
 		if phase == Phase.TITLE and fmod(_time, 1.0) < 0.65:
 			Glyphs.draw_hint(self, 160, 176, "PRESS {START}" if GameManager.using_gamepad else "PRESS ENTER", tint)
-		PixelFont.draw_centered(self, 160, 218, "BETA 1.6.1 - PAGES TURNED", Color(0.75, 0.7, 0.8, _logo_alpha))
+		PixelFont.draw_centered(self, 160, 218, GameManager.VERSION + " - " + GameManager.TAGLINE, Color(0.75, 0.7, 0.8, _logo_alpha))
 		_beta_stamp(tint)
 	if _restart_fade > 0.0:
 		draw_rect(GameManager.screen_rect(), Color(0, 0, 0, _restart_fade))

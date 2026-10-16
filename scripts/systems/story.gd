@@ -1692,7 +1692,7 @@ func pages_on_cues(pages: Array) -> void:
 
 ## The credits (OPTIONS > CREDITS for now; the game's true ending will roll them).
 const CREDITS := [
-	"GIGGLE 64", "THE GAUNTLET OF FIRE", "BETA 1.6.1", "",
+	"GIGGLE 64", "THE GAUNTLET OF FIRE", "BETA 1.7.0", "",
 	"DEVELOPED BY", "SAOIRSE REDMOND", "DARCY SHAW", "",
 	"STORY AND THE WORLD OF BUNSRIEL", "SAOIRSE REDMOND", "",
 	"ART AND CHARACTER DESIGN", "SAOIRSE REDMOND", "DARCY SHAW", "",

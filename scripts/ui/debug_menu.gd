@@ -161,6 +161,12 @@ func _process(delta: float) -> void:
 	queue_redraw()
 
 
+## The menu exists in the editor, in debug builds, and in exports whose preset
+## lists the "g64_debug" feature (the beta presets do; a 1.0 release would not).
+static func allowed() -> bool:
+	return OS.is_debug_build() or OS.has_feature("g64_debug")
+
+
 ## F1, or START pressed while BACK is held (once per frame: it tracks F1's edge).
 static func toggle_pressed() -> bool:
 	var f1 := Input.is_key_pressed(KEY_F1)

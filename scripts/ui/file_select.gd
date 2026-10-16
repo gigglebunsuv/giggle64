@@ -158,7 +158,7 @@ func _main_input(delta: float) -> void:
 		var d := _stick(delta)
 		if d != 0:
 			Sfx.play("menu_move")
-			file_index = wrapi(file_index + d, 0, DEBUG_INDEX + 1)
+			file_index = wrapi(file_index + d, 0, DEBUG_INDEX + (1 if DebugMenu.allowed() else 0))
 
 
 func _select_input(delta: float) -> void:
@@ -287,7 +287,7 @@ func _draw() -> void:
 		_draw_completion(summaries[file_index], Rect2(x0 + 14, w.position.y + 116, 236, 58), a)
 	# The DEBUG button, under the files.
 	var da := a * (1.0 - k)
-	if da > 0.0:
+	if da > 0.0 and DebugMenu.allowed():
 		var dbtn := Rect2(DEBUG_BTN.position + Vector2(x0, w.position.y), DEBUG_BTN.size)
 		_box(dbtn, Color(Color8(120, 70, 160), da * 0.9), 2.0)
 		if mode == Mode.MAIN and file_index == DEBUG_INDEX:

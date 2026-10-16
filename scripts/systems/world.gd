@@ -114,9 +114,14 @@ func boot(viewport: SubViewport) -> void:
 	debug_layer.name = "DebugLayer"
 	debug_layer.layer = 15
 	debug_layer.process_mode = Node.PROCESS_MODE_ALWAYS
-	var debug := DebugMenu.new()
-	debug.name = "DebugMenu"
-	debug_layer.add_child(debug)
+	if DebugMenu.allowed():
+		var debug := DebugMenu.new()
+		debug.name = "DebugMenu"
+		debug_layer.add_child(debug)
+	# Loaded by path: a class reference here would make World and BugReport depend on each other.
+	var report: Control = load("res://scripts/systems/bug_report.gd").new()
+	report.name = "BugReport"
+	debug_layer.add_child(report)
 	viewport.add_child(debug_layer)
 	_spawn(area_id, entrance_id)
 	if GameManager.skip_title:

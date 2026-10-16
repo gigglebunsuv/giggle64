@@ -8,6 +8,10 @@ signal settings_changed
 
 enum GameState { TITLE, PLAYING, PAUSED }
 
+## The version on the title screen (and in bug reports), and its tagline.
+const VERSION := "BETA 1.7.0"
+const TAGLINE := "SEAL OF QUALITY"
+
 ## Selectable frame rates. 21 is the "OoT" option: Ocarina of Time's game logic
 ## runs at 20 Hz on NTSC hardware and its frame rate hovers around 20-21 fps, so
 ## at 21 both the simulation and the picture tick at that rate (choppy, on purpose).
