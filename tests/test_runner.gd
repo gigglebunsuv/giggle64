@@ -391,6 +391,7 @@ func _ready() -> void:
 		"test_old_world_secrets",
 		"test_bug_report",
 		"test_older_dungeon_secrets",
+		"test_audio_mix_levels",
 	]
 	# --tests=a,b runs only those (handy while working on one feature).
 	for a in OS.get_cmdline_user_args():
@@ -10814,3 +10815,21 @@ func test_older_dungeon_secrets() -> void:
 	for area in ["ladhellin_tower", "bog_tower"]:
 		var src := FileAccess.get_file_as_string("res://scenes/areas/%s.tscn" % area)
 		check(src.contains("%s:stake_c" % area) and src.contains("%s:chest_stakes" % area), "Mallet pegs in %s" % area)
+
+
+## Beta 1.7.0 mix pass: every area's music and ambience exists, the tracks
+## play at their measured level (AudioLevels), and hot sounds are trimmed.
+func test_audio_mix_levels() -> void:
+	var missing: Array = []
+	for area: String in WorldData.AREAS:
+		var info: Dictionary = WorldData.AREAS[area]
+		if info.has("music") and not FileAccess.file_exists(WorldData.MUSIC_DIR + String(info.music) + ".ogg"):
+			missing.append(info.music)
+		if info.has("ambience") and not FileAccess.file_exists(Sfx.AUDIO_DIR + String(info.ambience) + ".wav"):
+			missing.append(info.ambience)
+	check(missing.is_empty(), "every area's music and ambience exists (%s)" % [missing])
+	check(AudioLevels.music("boss_battle") < 0.0 and AudioLevels.music("inside_house") > 0.0, "loud tracks come down, quiet ones up")
+	World._start_track("boss_battle")
+	check(is_equal_approx(World._music.volume_db, World.MUSIC_DB + AudioLevels.music("boss_battle")), "a track plays at its level (%.1f dB)" % World._music.volume_db)
+	World._start_track("")
+	check(Sfx.TRIM.get("fire_whoosh", 0.0) < 0.0, "the fire whoosh is trimmed")

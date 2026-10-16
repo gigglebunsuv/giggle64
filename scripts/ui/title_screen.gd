@@ -321,7 +321,7 @@ func _play_music() -> void:
 			elif "loop" in stream:
 				stream.set("loop", false)
 			_music.stream = stream
-			_music.volume_db = MUSIC_DB
+			_music.volume_db = MUSIC_DB + AudioLevels.music("title_theme")
 			_music.play()
 			return
 

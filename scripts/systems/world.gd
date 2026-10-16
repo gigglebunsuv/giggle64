@@ -394,7 +394,7 @@ func _start_track(track: String) -> void:
 			elif "loop" in stream:
 				stream.set("loop", true)
 			_music.stream = stream
-			_music.volume_db = MUSIC_DB
+			_music.volume_db = MUSIC_DB + AudioLevels.music(track)
 			_music.play()
 			return
 	# An optional track nobody has supplied yet (see assets/music/README.txt):
@@ -425,7 +425,7 @@ func _play_ambience(area: String) -> void:
 	_ambience.play()
 	_ambience_tween = create_tween()
 	_ambience_tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
-	_ambience_tween.tween_property(_ambience, "volume_db", AMBIENCE_DB, FADE_IN)
+	_ambience_tween.tween_property(_ambience, "volume_db", AMBIENCE_DB + AudioLevels.ambience(track), FADE_IN)
 
 
 ## Stops the ambience (the title screen, the file select).
@@ -470,7 +470,7 @@ func play_score(track: String) -> bool:
 			elif "loop" in stream:
 				stream.set("loop", false)
 			_score.stream = stream
-			_score.volume_db = MUSIC_DB
+			_score.volume_db = MUSIC_DB + AudioLevels.music(track)
 			_score.play()
 			score_track = track
 			return true

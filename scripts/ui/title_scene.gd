@@ -443,6 +443,9 @@ func _loop(player: AudioStreamPlayer, path: String, db: float, time: float) -> v
 	player.stream = stream
 	player.volume_db = -60.0
 	player.play()
+	# The track's own level (AudioLevels, the Beta 1.7.0 mix pass) on top.
+	var id := path.get_file().get_basename()
+	db += AudioLevels.music(id) if player.bus == "Music" else AudioLevels.ambience(id)
 	_tween().tween_property(player, "volume_db", db, time)
 
 
