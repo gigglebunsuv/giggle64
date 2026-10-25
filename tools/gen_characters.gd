@@ -555,6 +555,9 @@ func _finish_character(root: Node3D, lib: AnimationLibrary) -> void:
 # boots, broad chest tapering to the belt, and a flared tunic hem.
 
 func _build_gigglebuns() -> void:
+	if FileAccess.file_exists(HERO_PARTS):
+		_build_gigglebuns_parts()
+		return
 	# Matched to the painted face (assets/textures/face_gigglebuns.png).
 	var SKIN := _c("d38c58")
 	var SKIN_D := _c("b4703f")
@@ -660,27 +663,6 @@ func _build_gigglebuns() -> void:
 			k.loft([[0.0, 0.02, 0.02, GLOVE], [0.04, 0.017, 0.017, SKIN], [0.055, 0.0, 0.0, SKIN]], 5)
 			k.pop()
 		)
-		if side > 0:
-			_attach(_root.get_node(_paths["hand_r"]), "Sword", Vector3(0, -0.06, 0), func(p: Parts) -> void:
-				_sword_parts(p, "squire")
-			, "sword")
-			# Scabbard across the back on the shoulder strap, hilt over the right
-			# shoulder; the sheathed hilt shows only while the sword is put away.
-			var back := _attach(torso, "SwordBack", Vector3(0.07, 0.16, 0.17), func(p: Parts) -> void:
-				_scabbard_parts(p, "squire")
-			)
-			back.basis = Basis(Vector3.BACK, deg_to_rad(-29))
-			_attach(back, "SheathedSword", Vector3(0, 0.26, 0), func(p: Parts) -> void:
-				_sheathed_parts(p, "squire")
-			)
-		else:
-			_attach(elbow, "Shield", Vector3(-0.065, -0.13, 0), func(p: Parts) -> void:
-				_shield_parts(p, "wooden", SHIELD_ARM)
-			, "shield")
-			# The bow in the left fist (shown while it is out). Its limbs arc in the
-			# hand's Y-Z plane, so with the arm held out the bow stands upright and
-			# the tips bend back toward the archer (+Y) with the string between them.
-			_attach(_root.get_node(_paths["hand_l"]), "Bow", Vector3(0, -0.07, 0), _bow_parts_unstrung)
 		var leg := _joint(hips, "leg" + sfx, "Leg" + nsfx, Vector3(0.09 * side, -0.03, 0), func(p: Parts) -> void:
 			p.k().loft([
 				[0.06, 0.0, 0.0, PANTS], [0.04, 0.075, 0.08, PANTS], [-0.05, 0.088, 0.094, PANTS],
@@ -707,16 +689,131 @@ func _build_gigglebuns() -> void:
 			k.pop()
 		)
 
-	# The shield slung on the back while the bow is out (hidden otherwise).
-	_attach(torso, "ShieldBack", Vector3(-0.02, 0.2, 0.2), func(p: Parts) -> void:
-		_shield_parts(p, "wooden", SHIELD_BACK)
-	)
+	_hero_gear_nodes(torso)
 
 	var lib := AnimationLibrary.new()
 	var rest := {"hips": Vector3(0, 0.92, 0)}
 	_gigglebuns_anims(lib, rest)
 	_finish_character(root, lib)
 	_save_scene(root, "sir_gigglebuns.tscn")
+
+
+## The hero's sword (right fist), scabbard and sheathed hilt (back), shield
+## (left forearm), bow (left fist) and the shield slung on the back.
+func _hero_gear_nodes(torso: Node3D) -> void:
+	_attach(_root.get_node(_paths["hand_r"]), "Sword", Vector3(0, -0.06, 0), func(p: Parts) -> void:
+		_sword_parts(p, "squire")
+	, "sword")
+	# Scabbard across the back on the shoulder strap, hilt over the right
+	# shoulder; the sheathed hilt shows only while the sword is put away.
+	var back := _attach(torso, "SwordBack", Vector3(0.07, 0.16, 0.17), func(p: Parts) -> void:
+		_scabbard_parts(p, "squire")
+	)
+	back.basis = Basis(Vector3.BACK, deg_to_rad(-29))
+	_attach(back, "SheathedSword", Vector3(0, 0.26, 0), func(p: Parts) -> void:
+		_sheathed_parts(p, "squire")
+	)
+	_attach(_root.get_node(_paths["elbow_l"]), "Shield", Vector3(-0.065, -0.13, 0), func(p: Parts) -> void:
+		_shield_parts(p, "wooden", SHIELD_ARM)
+	, "shield")
+	# The bow in the left fist (shown while it is out). Its limbs arc in the
+	# hand's Y-Z plane, so with the arm held out the bow stands upright and
+	# the tips bend back toward the archer (+Y) with the string between them.
+	_attach(_root.get_node(_paths["hand_l"]), "Bow", Vector3(0, -0.07, 0), _bow_parts_unstrung)
+	# The shield slung on the back while the bow is out (hidden otherwise).
+	_attach(torso, "ShieldBack", Vector3(-0.02, 0.2, 0.2), func(p: Parts) -> void:
+		_shield_parts(p, "wooden", SHIELD_BACK)
+	)
+
+
+# --- Sir Gigglebuns from modeled parts ----------------------------------------------
+#
+# A model made outside the generators (Meshy, then _giggle64_work/meshy/blender/
+# prepare_parts.py): one rigid mesh per joint, already in that joint's frame and
+# rest pose, the joint offsets in a JSON beside it, and one painted texture.
+# When the parts are there, the hero is built from them instead of the lofts.
+
+const HERO_PARTS := "res://assets/models/src/sir_gigglebuns_parts.glb"
+const HERO_RIG := "res://assets/models/src/sir_gigglebuns_rig.json"
+## One small texture per part (64 x 64 head and torso, 32 x 32 the rest), as N64
+## texture memory allowed: <dir>/sir_gigglebuns_<Joint>.png.
+const HERO_TEX := "res://assets/textures/hero/sir_gigglebuns_%s.png"
+const MAT_DIR := "res://assets/materials/"
+const HERO_JOINTS := [
+	["Hips", "hips"], ["Torso", "torso"], ["Head", "head"],
+	["ShoulderR", "shoulder_r"], ["ElbowR", "elbow_r"], ["HandR", "hand_r"],
+	["ShoulderL", "shoulder_l"], ["ElbowL", "elbow_l"], ["HandL", "hand_l"],
+	["LegR", "leg_r"], ["KneeR", "knee_r"], ["FootR", "foot_r"],
+	["LegL", "leg_l"], ["KneeL", "knee_l"], ["FootL", "foot_l"],
+]
+## The hip height tools/hero_anims.gd animates around.
+const ANIM_HIPS_Y := 0.92
+
+
+func _build_gigglebuns_parts() -> void:
+	var rig: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(HERO_RIG))
+	var meshes := _glb_meshes(HERO_PARTS)
+
+	_root = Node3D.new()
+	_root.name = "SirGigglebunsModel"
+	_paths = {}
+	var nodes := {}
+	for jk: Array in HERO_JOINTS:
+		var j: String = jk[0]
+		var o: Array = rig.offsets[j]
+		var parent = rig.parents[j]
+		var at: Node3D = _root if parent == null else nodes[parent]
+		nodes[j] = _joint(at, jk[1], j, Vector3(o[0], o[1], o[2]))
+		if meshes.has(j):
+			var m: ArrayMesh = meshes[j]
+			var mat := _hero_part_material(j)
+			for si in m.get_surface_count():
+				m.surface_set_material(si, mat)
+			_mesh_child(nodes[j], j + "Mesh", m)
+	_hero_gear_nodes(nodes.Torso)
+
+	var hips_y: float = rig.offsets.Hips[1]
+	var lib := AnimationLibrary.new()
+	_gigglebuns_anims(lib, {"hips": Vector3(0, ANIM_HIPS_Y, 0)})
+	# The clips place the hips for the lofted hero; lift them to these legs.
+	var lift := Vector3(0, hips_y - ANIM_HIPS_Y, 0)
+	for anim_name in lib.get_animation_list():
+		var a := lib.get_animation(anim_name)
+		for t in a.get_track_count():
+			if a.track_get_type(t) == Animation.TYPE_POSITION_3D and String(a.track_get_path(t)) == _paths.hips:
+				for k in a.track_get_key_count(t):
+					a.track_set_key_value(t, k, a.track_get_key_value(t, k) + lift)
+	_finish_character(_root, lib)
+	_save_scene(_root, "sir_gigglebuns.tscn")
+
+
+func _hero_part_material(joint: String) -> StandardMaterial3D:
+	var mat := StandardMaterial3D.new()
+	mat.shading_mode = BaseMaterial3D.SHADING_MODE_PER_VERTEX
+	mat.specular_mode = BaseMaterial3D.SPECULAR_DISABLED
+	mat.roughness = 1.0
+	mat.metallic_specular = 0.0
+	mat.albedo_texture = load(HERO_TEX % joint)
+	mat.texture_filter = BaseMaterial3D.TEXTURE_FILTER_LINEAR
+	mat.texture_repeat = false
+	var path := MAT_DIR + "hero/sir_gigglebuns_%s.tres" % joint
+	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(path.get_base_dir()))
+	ResourceSaver.save(mat, path)
+	return load(path)
+
+
+## Meshes of a glTF file by node name (the materials are replaced by the caller).
+func _glb_meshes(path: String) -> Dictionary:
+	var doc := GLTFDocument.new()
+	var state := GLTFState.new()
+	if doc.append_from_file(ProjectSettings.globalize_path(path), state) != OK:
+		push_error("Could not read %s" % path)
+		return {}
+	var out := {}
+	for n: GLTFNode in state.nodes:
+		if n.mesh >= 0:
+			out[n.resource_name] = (state.meshes[n.mesh] as GLTFMesh).mesh.get_mesh()
+	return out
 
 
 ## The hero's bald, bearded head. The painted face (128 x 128) is projected
