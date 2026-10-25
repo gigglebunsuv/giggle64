@@ -4,6 +4,11 @@ extends RefCounted
 
 const Layout := preload("res://tools/level_layout.gd")
 const TEX_DIR := "res://assets/textures/"
+## Painted remaster textures (installed from prototypes/ by
+## _giggle64_work/remaster/install_textures.py): their PNGs are left alone.
+const REMASTERED := "res://tools/remastered_textures.txt"
+
+var _remastered := {}
 
 
 func run() -> void:
@@ -14,6 +19,11 @@ func run() -> void:
 # --- Textures -----------------------------------------------------------------
 
 func _textures() -> void:
+	if FileAccess.file_exists(REMASTERED):
+		for line in FileAccess.get_file_as_string(REMASTERED).split("
+"):
+			if line.strip_edges() != "" and not line.begins_with("#"):
+				_remastered[line.strip_edges()] = true
 	# One stretched texture covers the whole terrain, with the path painted in.
 	_save(Layout.paint_terrain_texture(), "terrain")
 	_save(_noise(32, ["55514c", "65605a", "746e67", "847d74"], 4, 0.5, 14), "rock")
@@ -1161,7 +1171,7 @@ func _planks(img: Image) -> Image:
 
 func _save(img: Image, tex_name: String) -> void:
 	var path := TEX_DIR + tex_name + ".png"
-	var err := img.save_png(path)
+	var err := OK if _remastered.has(tex_name) else img.save_png(path)
 	if err != OK:
 		push_error("Failed to save texture %s: %s" % [tex_name, err])
 		return

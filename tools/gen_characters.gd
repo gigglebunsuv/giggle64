@@ -555,8 +555,9 @@ func _finish_character(root: Node3D, lib: AnimationLibrary) -> void:
 # boots, broad chest tapering to the belt, and a flared tunic hem.
 
 func _build_gigglebuns() -> void:
-	var SKIN := _c("e3b08a")
-	var SKIN_D := _c("c9946e")
+	# Matched to the painted face (assets/textures/face_gigglebuns.png).
+	var SKIN := _c("d38c58")
+	var SKIN_D := _c("b4703f")
 	var TUNIC := _c("8c1d17")
 	var TUNIC_L := _c("a3261d")
 	var TUNIC_D := _c("6a140f")
@@ -571,6 +572,7 @@ func _build_gigglebuns() -> void:
 	var BRASS := _c("c9a64e")
 	var STRAP := _c("6b4529")
 	var BAG := _c("2b2b30")
+	var UNDER := _c("3a3634")
 	var WHITE := Color.WHITE
 
 	_root = Node3D.new()
@@ -584,9 +586,12 @@ func _build_gigglebuns() -> void:
 		k.loft([[-0.14, 0.11, 0.09, PANTS], [-0.06, 0.15, 0.11, PANTS], [0.06, 0.155, 0.11, PANTS]], 8)
 		# Tunic hem flaring over the hips, darker at the bottom edge.
 		k.loft([
-			[-0.16, 0.20, 0.155, TUNIC_D, Vector2(0, 0.005)], [-0.10, 0.195, 0.15, TUNIC],
+			[-0.145, 0.20, 0.155, TUNIC_D, Vector2(0, 0.005)], [-0.09, 0.195, 0.15, TUNIC],
 			[0.0, 0.175, 0.13, TUNIC], [0.07, 0.165, 0.12, TUNIC],
 		], 10)
+		# A small notch cut in the front of the hem.
+		k.tri_vc([Vector3(-0.035, -0.146, -0.152), Vector3(0.035, -0.146, -0.152), Vector3(0, -0.095, -0.148)],
+			[PANTS_D, PANTS_D, PANTS], [Vector2.ZERO, Vector2.ZERO, Vector2.ZERO], Vector3(0, -0.1, 0))
 		# Belt and brass buckle.
 		k.loft([[0.06, 0.172, 0.127, BELT], [0.115, 0.17, 0.125, BELT]], 10)
 		var h := p.k("hard")
@@ -605,13 +610,16 @@ func _build_gigglebuns() -> void:
 			[0.20, 0.19, 0.128, TUNIC_L, Vector2(0, -0.012)], [0.28, 0.205, 0.126, TUNIC, Vector2(0, -0.01)],
 			[0.34, 0.17, 0.112, TUNIC], [0.39, 0.095, 0.08, TUNIC_D], [0.41, 0.07, 0.065, TUNIC_D],
 		], 10)
-		# V-neck opening showing the throat.
-		k.tri_vc([Vector3(-0.055, 0.375, -0.098), Vector3(0.055, 0.375, -0.098), Vector3(0, 0.28, -0.142)],
-			[SKIN, SKIN, SKIN_D], [Vector2.ZERO, Vector2.ZERO, Vector2.ZERO], Vector3(0, 0.3, 0))
+		# Plain, low V collar over a dark undershirt.
+		k.tri_vc([Vector3(-0.06, 0.375, -0.098), Vector3(0.06, 0.375, -0.098), Vector3(0, 0.26, -0.146)],
+			[UNDER, UNDER, UNDER], [Vector2.ZERO, Vector2.ZERO, Vector2.ZERO], Vector3(0, 0.3, 0))
 		# Shoulder strap running from the right shoulder to the left hip, front and back.
 		var h := p.k("hard")
 		h.push(Transform3D(Basis(Vector3.BACK, deg_to_rad(-36)), Vector3(0.0, 0.2, -0.128)))
 		h.box(Vector3.ZERO, Vector3(0.045, 0.5, 0.015), STRAP)
+		# Two brass rivets on the chest.
+		for y in [0.07, 0.13]:
+			h.box(Vector3(0, y, -0.009), Vector3(0.016, 0.016, 0.008), BRASS)
 		h.pop()
 		h.push(Transform3D(Basis(Vector3.BACK, deg_to_rad(36)), Vector3(0.0, 0.2, 0.125)))
 		h.box(Vector3.ZERO, Vector3(0.045, 0.5, 0.015), STRAP)
@@ -620,48 +628,25 @@ func _build_gigglebuns() -> void:
 		h.box(Vector3.ZERO, Vector3(0.05, 0.02, 0.27), STRAP)
 		h.pop()
 	)
-	_joint(torso, "head", "Head", Vector3(0, 0.45, 0), func(p: Parts) -> void:
-		var k := p.k()
-		k.loft([[-0.09, 0.06, 0.058, SKIN_D], [0.0, 0.062, 0.06, SKIN_D], [0.05, 0.065, 0.065, SKIN]], 6, false)
-		# Head wrap: rings every 5 cm from under the beard to the crown, so the
-		# painted face texture lands on the right features (see gen_media.gd).
-		var f := p.k("face_gigglebuns")
-		f.loft([
-			[-0.03, 0.065, 0.06, WHITE, Vector2(0, -0.075)],
-			[0.02, 0.105, 0.095, WHITE, Vector2(0, -0.05)],
-			[0.07, 0.125, 0.115, WHITE, Vector2(0, -0.03)],
-			[0.12, 0.13, 0.125, WHITE, Vector2(0, -0.016)],
-			[0.17, 0.132, 0.13, WHITE, Vector2(0, -0.006)],
-			[0.22, 0.132, 0.135, WHITE, Vector2(0, 0.0)],
-			[0.27, 0.125, 0.135, WHITE, Vector2(0, 0.006)],
-			[0.32, 0.1, 0.112, WHITE, Vector2(0, 0.012)],
-			[0.37, 0.0, 0.0, WHITE, Vector2(0, 0.016)],
-		], 10)
-		# Nose and ears.
-		k.tri_vc([Vector3(-0.024, 0.15, -0.135), Vector3(0.024, 0.15, -0.135), Vector3(0, 0.155, -0.172)], [SKIN_D, SKIN_D, SKIN], [Vector2.ZERO, Vector2.ZERO, Vector2.ZERO], Vector3(0, 0.18, -0.1))
-		k.tri_vc([Vector3(-0.024, 0.15, -0.135), Vector3(0, 0.155, -0.172), Vector3(0, 0.215, -0.14)], [SKIN_D, SKIN, SKIN], [Vector2.ZERO, Vector2.ZERO, Vector2.ZERO], Vector3(0, 0.18, -0.1))
-		k.tri_vc([Vector3(0.024, 0.15, -0.135), Vector3(0, 0.215, -0.14), Vector3(0, 0.155, -0.172)], [SKIN_D, SKIN, SKIN], [Vector2.ZERO, Vector2.ZERO, Vector2.ZERO], Vector3(0, 0.18, -0.1))
-		for sx in [-1.0, 1.0]:
-			k.push(_aim(Vector3(sx, 0.15, 0.25), Vector3(0.115 * sx, 0.19, 0.02)))
-			k.loft([[0.0, 0.025, 0.045, SKIN_D], [0.035, 0.022, 0.04, SKIN], [0.05, 0.0, 0.0, SKIN]], 5)
-			k.pop()
-	)
+	_joint(torso, "head", "Head", Vector3(0, 0.45, 0), _gigglebuns_head.bind(SKIN, SKIN_D))
 	for side in [1.0, -1.0]:
 		var sfx := "_r" if side > 0 else "_l"
 		var nsfx := "R" if side > 0 else "L"
 		var shoulder := _joint(torso, "shoulder" + sfx, "Shoulder" + nsfx, Vector3(0.2 * side, 0.33, 0), func(p: Parts) -> void:
-			# Short red sleeve over a rounded shoulder, then the bare upper arm.
+			# Short red sleeve over a rounded shoulder, then the grey undershirt.
 			p.k().loft([
 				[0.075, 0.0, 0.0, TUNIC], [0.055, 0.065, 0.068, TUNIC], [0.0, 0.088, 0.084, TUNIC_L],
-				[-0.1, 0.076, 0.074, TUNIC_D], [-0.104, 0.056, 0.056, SKIN], [-0.2, 0.052, 0.05, SKIN],
-				[-0.27, 0.046, 0.046, SKIN_D], [-0.3, 0.0, 0.0, SKIN_D],
+				[-0.1, 0.076, 0.074, TUNIC_D], [-0.104, 0.056, 0.056, PANTS], [-0.2, 0.052, 0.05, PANTS],
+				[-0.27, 0.046, 0.046, PANTS_D], [-0.3, 0.0, 0.0, PANTS_D],
 			], 7)
 		)
 		var elbow := _joint(shoulder, "elbow" + sfx, "Elbow" + nsfx, Vector3(0, -0.27, 0), func(p: Parts) -> void:
-			# Forearm with a fingerless leather glove cuff.
+			# Undershirt sleeve into a long leather bracer, laced in two places.
 			p.k().loft([
-				[0.035, 0.0, 0.0, SKIN_D], [0.01, 0.045, 0.045, SKIN], [-0.07, 0.05, 0.052, SKIN],
-				[-0.1, 0.06, 0.062, GLOVE], [-0.2, 0.052, 0.054, GLOVE_D], [-0.235, 0.0, 0.0, GLOVE_D],
+				[0.035, 0.0, 0.0, PANTS_D], [0.01, 0.045, 0.045, PANTS], [-0.05, 0.05, 0.052, PANTS],
+				[-0.06, 0.06, 0.062, GLOVE], [-0.1, 0.059, 0.061, GLOVE], [-0.11, 0.058, 0.06, GLOVE_D],
+				[-0.12, 0.057, 0.059, GLOVE], [-0.16, 0.055, 0.057, GLOVE], [-0.17, 0.054, 0.056, GLOVE_D],
+				[-0.18, 0.053, 0.055, GLOVE], [-0.2, 0.052, 0.054, GLOVE_D], [-0.235, 0.0, 0.0, GLOVE_D],
 			], 7)
 		)
 		_joint(elbow, "hand" + sfx, "Hand" + nsfx, Vector3(0, -0.23, 0), func(p: Parts) -> void:
@@ -732,6 +717,63 @@ func _build_gigglebuns() -> void:
 	_gigglebuns_anims(lib, rest)
 	_finish_character(root, lib)
 	_save_scene(root, "sir_gigglebuns.tscn")
+
+
+## The hero's bald, bearded head. The painted face (128 x 128) is projected
+## straight on, at the same scale across and down, so the eyes, nose and beard
+## keep the painting's proportions; the back of the skull takes the plain skin
+## at the painting's sides. Rings are (height, half width, half depth, z
+## offset); the face looks down -Z.
+const HERO_HEAD := [
+	[-0.02, 0.054, 0.072, -0.014], [0.014, 0.086, 0.105, -0.017], [0.061, 0.114, 0.13, -0.007],
+	[0.121, 0.125, 0.14, 0.002], [0.185, 0.13, 0.145, 0.007], [0.251, 0.129, 0.147, 0.016],
+	[0.304, 0.118, 0.135, 0.022], [0.343, 0.074, 0.09, 0.025], [0.36, 0.0, 0.0, 0.025],
+]
+const HERO_HEAD_COLS := 12
+
+
+func _gigglebuns_head(p: Parts, skin: Color, skin_d: Color) -> void:
+	var k := p.k()
+	k.loft([[-0.09, 0.06, 0.058, skin_d], [0.0, 0.062, 0.06, skin_d], [0.05, 0.065, 0.065, skin]], 6, false)
+	var f := p.k("face_gigglebuns")
+	var bottom: float = HERO_HEAD[0][0]
+	var top: float = HERO_HEAD[-1][0]
+	var span := top - bottom
+	var front_uv := func(v: Vector3) -> Vector2:
+		return Vector2(0.5 + v.x / span, (top - v.y) / span)
+	var vert := func(i: int, j: int) -> Vector3:
+		var r: Array = HERO_HEAD[i]
+		var a := (float(j) / HERO_HEAD_COLS - 0.5) * TAU
+		return Vector3(sin(a) * r[1], r[0], -cos(a) * r[2] + r[3])
+	var uv_at := func(i: int, j: int) -> Vector2:
+		var uv: Vector2 = front_uv.call(vert.call(i, j))
+		# The back of the skull: the painting's plain side margins.
+		if j < 3 or j > 9:
+			var side := float(3 - j if j < 3 else j - 9) / 3.0
+			uv.x = uv.x * (1.0 - side) if j < 3 else uv.x + (1.0 - uv.x) * side
+			uv.y = minf(uv.y, 0.3)
+		return uv
+	var center := Vector3(0, 0.17, 0.01)
+	var white := [Color.WHITE, Color.WHITE, Color.WHITE]
+	for i in HERO_HEAD.size() - 1:
+		for j in HERO_HEAD_COLS:
+			for tri in [[[i, j], [i, j + 1], [i + 1, j + 1]], [[i, j], [i + 1, j + 1], [i + 1, j]]]:
+				var pts := []
+				var uvs := []
+				for c: Array in tri:
+					pts.append(vert.call(c[0], c[1]))
+					uvs.append(uv_at.call(c[0], c[1]))
+				f.tri_vc(pts, white, uvs, center)
+	# A modeled nose, painted by the same projection.
+	var nose := [Vector3(-0.02, 0.15, -0.14), Vector3(0.02, 0.15, -0.14), Vector3(0, 0.156, -0.176), Vector3(0, 0.201, -0.141)]
+	for t in [[0, 2, 3], [2, 1, 3], [1, 2, 0]]:
+		var pts := [nose[t[0]], nose[t[1]], nose[t[2]]]
+		f.tri_vc(pts, white, [front_uv.call(pts[0]), front_uv.call(pts[1]), front_uv.call(pts[2])], Vector3(0, 0.19, -0.1))
+	# Ears.
+	for sx in [-1.0, 1.0]:
+		k.push(_aim(Vector3(sx, 0.15, 0.25), Vector3(0.122 * sx, 0.19, 0.02)))
+		k.loft([[0.0, 0.022, 0.04, skin_d], [0.03, 0.02, 0.036, skin], [0.045, 0.0, 0.0, skin]], 5)
+		k.pop()
 
 
 # --- Swords and shields ----------------------------------------------------------

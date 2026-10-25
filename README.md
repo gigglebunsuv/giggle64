@@ -183,7 +183,9 @@ Optional launch flags go after `--`:
 - **Generated assets.** Models, animations, textures, sounds and the world are built by the generators in
   [`tools/`](tools). Edit the generators, not the generated `.tscn` and `.tres` files, then rebuild with
   `tools/build_assets.ps1 -Godot <path to Godot>`. Sound effects are recordings (listed in
-  [`tools/recorded_sfx.txt`](tools/recorded_sfx.txt)), which `tools/gen_sfx.gd` leaves alone.
+  [`tools/recorded_sfx.txt`](tools/recorded_sfx.txt)), which `tools/gen_sfx.gd` leaves alone. Painted surface, HUD
+  and face textures are listed in [`tools/remastered_textures.txt`](tools/remastered_textures.txt) and kept the same
+  way; [`tools/remaster_items.gd`](tools/remaster_items.gd) paints the item and gear meshes after they are built.
 - **Tests.** Run `Godot --headless --path . --fixed-fps 60 res://tests/test_runner.tscn` (add `-- --tests=a,b` for a
   subset). Visual capture scenes and the geometry audit are described in [`tests/README.md`](tests/README.md).
 - **Debug menu.** Press **F1** (or **View + Menu**) in a development build.

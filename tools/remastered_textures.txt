@@ -1,0 +1,32 @@
+# Painted remaster textures (prototypes/oot_textures, prototypes/oot_assets_02, installed by
+# _giggle64_work/remaster/install_textures.py); tools/gen_media.gd leaves these alone.
+bark
+chrome_env
+cliff
+cliff_rock
+cobble
+coral
+door
+face_gigglebuns
+hud_button
+hud_heart_empty
+hud_heart_full
+hud_heart_half
+ice
+item_atlas
+leaves
+pine
+plaster
+rock
+roof_tiles
+sandstone
+seal
+shrine_wall
+snow
+sparkle
+stone_brick
+terrain
+thatch
+timber
+water
+wood

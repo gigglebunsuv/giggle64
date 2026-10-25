@@ -1,0 +1,9 @@
+[gd_resource type="ShaderMaterial" format=3]
+
+[ext_resource type="Shader" path="res://assets/shaders/item.gdshader" id="1_3b8ad"]
+[ext_resource type="Texture2D" path="res://assets/textures/item_atlas.png" id="2_yy3x3"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_3b8ad")
+shader_parameter/atlas = ExtResource("2_yy3x3")
