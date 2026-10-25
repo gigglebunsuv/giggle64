@@ -9,8 +9,8 @@ signal settings_changed
 enum GameState { TITLE, PLAYING, PAUSED }
 
 ## The version on the title screen (and in bug reports), and its tagline.
-const VERSION := "BETA 1.7.0"
-const TAGLINE := "SEAL OF QUALITY"
+const VERSION := "BETA 1.9.0"
+const TAGLINE := "FELLOWSHIP"
 
 ## Selectable frame rates. 21 is the "OoT" option: Ocarina of Time's game logic
 ## runs at 20 Hz on NTSC hardware and its frame rate hovers around 20-21 fps, so
@@ -106,6 +106,10 @@ var enemies_alive := 0
 var skip_title := false
 ## Automation mode (--automation): never capture the mouse or auto-pause.
 var automation := false
+## Handheld mode (--handheld, passed by the PortMaster launcher): a new install
+## starts at 30 fps, prompts use the handheld's button names, and the mouse is
+## never captured or the game paused on focus loss (there is no desktop).
+var handheld := false
 
 
 ## Each remappable action's bindings as the project set them (reset_controls).
@@ -119,6 +123,16 @@ func _ready() -> void:
 	var args := OS.get_cmdline_user_args()
 	skip_title = "--skip-title" in args
 	automation = "--automation" in args or DisplayServer.get_name() == "headless"
+	handheld = "--handheld" in args
+	if handheld:
+		frame_rate = 30
+		var saver: Node = load("res://scripts/systems/handheld.gd").new()
+		saver.name = "Handheld"
+		add_child(saver)
+	if handheld or "--perf" in args or Array(args).any(func(a: String) -> bool: return a.begins_with("--perf-area=")):
+		var probe: Node = load("res://scripts/systems/perf_probe.gd").new()
+		probe.name = "PerfProbe"
+		add_child(probe)
 	# Automated runs keep the default settings so results do not depend on the
 	# player's saved options.
 	if not automation:
@@ -659,7 +673,7 @@ func toggle_fullscreen() -> void:
 func _set_state(new_state: GameState) -> void:
 	state = new_state
 	get_tree().paused = new_state != GameState.PLAYING
-	if not automation:
+	if not automation and not handheld:
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED if new_state == GameState.PLAYING else Input.MOUSE_MODE_VISIBLE
 	state_changed.emit(new_state)
 
@@ -673,5 +687,5 @@ func _process(_delta: float) -> void:
 
 
 func _notification(what: int) -> void:
-	if what == NOTIFICATION_APPLICATION_FOCUS_OUT and not automation:
+	if what == NOTIFICATION_APPLICATION_FOCUS_OUT and not automation and not handheld:
 		pause_game()

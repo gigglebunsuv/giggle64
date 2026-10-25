@@ -252,6 +252,10 @@ func _rig(area: Node3D) -> void:
 			# Its own copy: the scene's Environment is shared with the next load.
 			we.environment = we.environment.duplicate()
 			var env := we.environment
+			# Handheld mode: the fog closes in, so less is drawn (Handheld culls behind it).
+			if GameManager.handheld:
+				env.fog_depth_begin *= Handheld.FOG_SCALE
+				env.fog_depth_end *= Handheld.FOG_SCALE
 			_base["env"] = env
 			_base["ambient"] = env.ambient_light_color
 			_base["fog"] = env.fog_light_color

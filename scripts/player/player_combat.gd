@@ -198,6 +198,24 @@ func wants_attack() -> bool:
 		and not spinning and not bashing and not thrusting
 
 
+## The blade is cutting (SwordTrail draws behind it): a cut's live frames and
+## a moment either side, the jump slash, the Great Spin, the thrusts.
+func trail_wanted() -> bool:
+	if spinning or thrusting or stabbing or jumpslash:
+		return true
+	return attack_index > 0 and attack_time >= hit_start - 0.05 and attack_time <= hit_end + 0.08
+
+
+## B was pressed and not yet used, whatever is under way.
+func buffered() -> bool:
+	return _attack_buffer > 0.0
+
+
+## The Shield Bash cut short (a riposte follows the parry at once).
+func end_bash() -> void:
+	bashing = false
+
+
 ## Forgets a buffered B press (B also skips text, so a conversation clears it).
 func clear_buffer() -> void:
 	_attack_buffer = 0.0
@@ -524,6 +542,8 @@ func thrust_land() -> void:
 		if Vector2(to.x, to.z).length() < float(node.call("thrust_reach")) and to.y > -1.2 and to.y < 0.6:
 			node.call("thrust_hit", p)
 	Sfx.play("down_thrust", 0.0, 0.03)
+	if not hit.is_empty():
+		Impact.hit(Impact.HEAVY)
 	SpellEffect.make(p.get_parent(), "quake", at + Vector3.UP * 0.05)
 	Fragments.burst(p.get_parent(), load("res://assets/models/rock_chip_mesh.tres"), at + Vector3.UP * 0.1, 10, 3.0, 3.5, 0.5, 0.6, Color(0.6, 0.56, 0.5))
 	GameManager.rumble(0.9, 0.3)
@@ -583,6 +603,7 @@ func _bash_blow() -> void:
 			node.call("bash_hit", p)
 			landed = true
 	if landed:
+		Impact.hit(Impact.LIGHT)
 		Sfx.play("shield_block", 0.0, 0.05, 0.8)
 		GameManager.rumble(0.6, 0.15)
 		if p.camera_rig:
@@ -686,3 +707,9 @@ func _on_sword_hit(_hurtbox: Hurtbox, result: int) -> void:
 	if result == Hurtbox.Result.HIT:
 		Sfx.play("sword_hit")
 		GameManager.rumble(0.35, 0.1)
+		# The impact frames (Impact): a held beat as the blade bites, longer
+		# and with a flash for a finisher, the Great Spin or a jump slash.
+		var heavy := is_finisher() or spinning or _player.state == PlayerController.State.JUMPSLASH
+		Impact.hit(Impact.HEAVY if heavy else Impact.LIGHT)
+		if heavy and _player.camera_rig:
+			_player.camera_rig.shake(0.05, 0.12)

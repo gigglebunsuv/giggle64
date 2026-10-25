@@ -91,6 +91,8 @@ func _ready() -> void:
 		_bow.visible = false
 	if _back_shield:
 		_back_shield.visible = false
+	if _bow and _bow.get_node_or_null("BowMesh"):
+		_string_bow()
 	anim.callback_mode_process = AnimationMixer.ANIMATION_CALLBACK_MODE_PROCESS_MANUAL
 
 
@@ -128,7 +130,7 @@ func animation_finished() -> bool:
 func set_sword_drawn(drawn: bool) -> void:
 	_drawn = drawn
 	if _hand_sword:
-		_hand_sword.visible = drawn
+		_hand_sword.visible = drawn and not _sword_hidden
 	if _back_sword:
 		_back_sword.visible = not drawn
 	_place_shield()
@@ -140,16 +142,26 @@ func set_sword_drawn(drawn: bool) -> void:
 func set_gear(sword_id: String, shield_id: String) -> void:
 	if sword_id != gear_sword:
 		gear_sword = sword_id
-		_swap_mesh(_hand_sword, "SwordMesh", Equipment.sword_mesh(sword_id))
-		_swap_mesh(_back_sword, "SheathedSwordMesh", Equipment.sword_hilt_mesh(sword_id))
-		_swap_mesh(find_child("SwordBack", true, false) as Node3D, "SwordBackMesh", Equipment.scabbard_mesh(sword_id))
+		_swap_mesh(_hand_sword, "SwordMesh", _styled(Equipment.sword_mesh(sword_id)))
+		_swap_mesh(_back_sword, "SheathedSwordMesh", _styled(Equipment.sword_hilt_mesh(sword_id)))
+		_swap_mesh(find_child("SwordBack", true, false) as Node3D, "SwordBackMesh", _styled(Equipment.scabbard_mesh(sword_id)))
 		_set_magic(Equipment.sword(sword_id).get("beam", false))
 		two_hand = Equipment.two_handed(sword_id)
 		_place_shield()
 	if shield_id != gear_shield:
 		gear_shield = shield_id
-		_swap_mesh(_arm_shield, "ShieldMesh", Equipment.shield_mesh(shield_id))
-		_swap_mesh(_back_shield, "ShieldBackMesh", Equipment.shield_back_mesh(shield_id))
+		_swap_mesh(_arm_shield, "ShieldMesh", _styled(Equipment.shield_mesh(shield_id)))
+		_swap_mesh(_back_shield, "ShieldBackMesh", _styled(Equipment.shield_back_mesh(shield_id)))
+
+
+## A co-op companion carries her own version of each piece (meta "gear_style":
+## sword_squire_pink_mesh.tres for sword_squire_mesh.tres), when there is one.
+func _styled(path: String) -> String:
+	var style := String(get_meta("gear_style", ""))
+	if style == "":
+		return path
+	var own := path.trim_suffix("_mesh.tres") + "_%s_mesh.tres" % style
+	return own if ResourceLoader.exists(own) else path
 
 
 ## Pink's gold leaf on the shields (the lost garrison's last reward,
@@ -236,7 +248,7 @@ func set_outfit(tunic_id: String, vanity_id := "") -> void:
 	if _meshes.is_empty():
 		_collect_meshes(self)
 	var look: Dictionary = Equipment.vanity(vanity_id) if vanity_id != "" else Equipment.tunic(tunic_id)
-	var palette: Dictionary = look.get("palette", {})
+	var palette: Dictionary = _garment_palette(look.get("palette", {}))
 	var key := vanity_id if vanity_id != "" else tunic_id
 	for mi in _meshes:
 		if not is_instance_valid(mi) or mi.get_meta("no_tint", false) or not _body_mesh(mi):
@@ -284,6 +296,23 @@ static func _recoloured(base: Mesh, key: String, palette: Dictionary) -> ArrayMe
 		out.add_surface_from_arrays(base.surface_get_primitive_type(si), arrays)
 		out.surface_set_material(si, base.surface_get_material(si))
 	_outfit_cache[ck] = out
+	return out
+
+
+## A co-op companion wears each tunic in her own cut: the hero's tunic colors
+## (its red, lit and shaded) go onto her main garment and his trousers'
+## onto her second (meta "garment", five colors), whatever she wears.
+const HERO_GARMENT := ["8c1d17", "a3261d", "6a140f", "9b9ea3", "80838a"]
+
+
+func _garment_palette(palette: Dictionary) -> Dictionary:
+	if not has_meta("garment") or palette.is_empty():
+		return palette
+	var own: Array = get_meta("garment")
+	var out := {}
+	for i in HERO_GARMENT.size():
+		if palette.has(HERO_GARMENT[i]) and i < own.size():
+			out[String(own[i])] = palette[HERO_GARMENT[i]]
 	return out
 
 
@@ -432,6 +461,103 @@ func set_bow_out(out: bool) -> void:
 	_place_shield()
 
 
+## The bow's string (Beta 1.8.0), strung at run time between the limb tips:
+## while an arrow is nocked it runs to the right fist, wherever the animation
+## takes it (OoT stretches gLinkAdultBowStringDL out to the drawing hand,
+## Player_PostLimbDrawGameplay), and the arrow lies from the fist across the
+## bow hand. Loosed, the string snaps back and quivers. Frames are the Bow
+## node's: limbs along Z, the string BOW_STRING behind the grip.
+const BOW_TIP := 0.56
+const BOW_STRING := 0.13
+## Where the arrow crosses the bow: on the fist, just above the grip.
+const ARROW_REST := Vector3(0, -0.005, 0.07)
+const ARROW_SCALE := 0.8
+## The arrow mesh's nock end (gen_characters: shaft along -Z, nock at +0.42).
+const ARROW_NOCK := 0.42
+const TWANG_TIME := 0.3
+var bow_nocked := false
+var _strings: Array[MeshInstance3D] = []
+var _nocked_arrow: MeshInstance3D
+var _arrow_kind := "-"
+var _twang := 0.0
+var _was_nocked := false
+
+
+func _string_bow() -> void:
+	var mat := StandardMaterial3D.new()
+	mat.albedo_color = Color("d8d2c2")
+	mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	var box := BoxMesh.new()
+	box.size = Vector3(0.006, 0.006, 1.0)
+	box.material = mat
+	for i in 2:
+		var mi := MeshInstance3D.new()
+		mi.name = "BowString%d" % i
+		mi.mesh = box
+		mi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+		mi.set_meta("no_tint", true)
+		_bow.add_child(mi)
+		_strings.append(mi)
+		_meshes.append(mi)
+	_nocked_arrow = MeshInstance3D.new()
+	_nocked_arrow.name = "NockedArrow"
+	_nocked_arrow.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	_nocked_arrow.set_meta("no_tint", true)
+	_nocked_arrow.visible = false
+	_bow.add_child(_nocked_arrow)
+	_meshes.append(_nocked_arrow)
+	set_nocked_arrow("")
+
+
+## The arrow on the string: "" (plain), "sun", "frost" or "starfall".
+func set_nocked_arrow(kind: String) -> void:
+	if kind == _arrow_kind or _nocked_arrow == null:
+		return
+	_arrow_kind = kind
+	var path := "res://assets/models/%s.tres" % ("arrow_mesh" if kind == "" else kind + "_arrow_mesh")
+	if not ResourceLoader.exists(path):
+		path = "res://assets/models/arrow_mesh.tres"
+	_nocked_arrow.mesh = load(path)
+
+
+func _update_bow_string(delta: float) -> void:
+	if _strings.is_empty() or not _bow.visible:
+		_was_nocked = false
+		return
+	var top := Vector3(0, BOW_STRING, BOW_TIP)
+	var bottom := Vector3(0, BOW_STRING, -BOW_TIP)
+	var mid := Vector3(0, BOW_STRING, 0)
+	var hand := get_node_or_null("Hips/Torso/ShoulderR/ElbowR/HandR") as Node3D
+	var nocked := bow_nocked and hand != null
+	if nocked:
+		mid = _bow.global_transform.affine_inverse() * (hand.global_transform * Vector3(0, -0.06, 0))
+		# The string never passes in front of the bow.
+		mid.y = maxf(mid.y, BOW_STRING)
+	elif _was_nocked:
+		_twang = TWANG_TIME
+	_was_nocked = nocked
+	if _twang > 0.0:
+		_twang = maxf(_twang - delta, 0.0)
+		var k := _twang / TWANG_TIME
+		mid.y += sin((TWANG_TIME - _twang) * 95.0) * 0.035 * k * k
+	_span(_strings[0], top, mid)
+	_span(_strings[1], mid, bottom)
+	_nocked_arrow.visible = nocked
+	if nocked:
+		var dir := (ARROW_REST - mid).normalized()
+		var up := Vector3.RIGHT if absf(dir.dot(Vector3.RIGHT)) < 0.9 else Vector3.UP
+		_nocked_arrow.transform = Transform3D(Basis.looking_at(dir, up).scaled_local(Vector3.ONE * ARROW_SCALE),
+			mid + dir * ARROW_NOCK * ARROW_SCALE)
+
+
+## Stretches a string piece (a unit-long box along Z) from `a` to `b`.
+static func _span(mi: MeshInstance3D, a: Vector3, b: Vector3) -> void:
+	var d := b - a
+	var length := maxf(d.length(), 0.001)
+	var up := Vector3.RIGHT if absf((d / length).dot(Vector3.RIGHT)) < 0.9 else Vector3.UP
+	mi.transform = Transform3D(Basis.looking_at(d / length, up).scaled_local(Vector3(1, 1, length)), (a + b) * 0.5)
+
+
 ## Midway between the palms (a carried object rests here). Zero if the model
 ## has no hands.
 func palms_position() -> Vector3:
@@ -512,6 +638,43 @@ static func _set_global_rotation(j: Node3D, q: Quaternion) -> void:
 	var parent := j.get_parent() as Node3D
 	var pq := parent.global_basis.get_rotation_quaternion() if parent else Quaternion.IDENTITY
 	j.quaternion = (pq.inverse() * q).normalized()
+
+
+## Something else in the right fist (the Hookshot, the Bloom Rod): the drawn
+## sword is hidden meanwhile, as OoT's hand holds one thing at a time.
+var _sword_hidden := false
+
+
+func hide_hand_sword(hidden: bool) -> void:
+	_sword_hidden = hidden
+	if _hand_sword:
+		_hand_sword.visible = _drawn and not hidden
+
+
+## A prop in the right fist for `seconds` (a bottle while it is swung, drunk
+## from or emptied), placed by `grip` in the hand's frame; "" takes it away.
+var _prop: MeshInstance3D
+var _prop_left := 0.0
+
+
+func show_prop(path: String, seconds: float, grip := Transform3D.IDENTITY) -> void:
+	var hand := get_node_or_null("Hips/Torso/ShoulderR/ElbowR/HandR") as Node3D
+	if hand == null:
+		return
+	if _prop == null:
+		if path == "":
+			return
+		_prop = MeshInstance3D.new()
+		_prop.name = "HandProp"
+		_prop.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+		_prop.set_meta("no_tint", true)
+		hand.add_child(_prop)
+	_prop_left = seconds if path != "" else 0.0
+	_prop.visible = path != "" and ResourceLoader.exists(path)
+	if _prop.visible:
+		_prop.mesh = load(path)
+		_prop.transform = grip
+	hide_hand_sword(_prop.visible)
 
 
 ## The boomerang held in the right hand while it is readied (the hero's own
@@ -624,12 +787,91 @@ func _apply_upper_anim(delta: float) -> void:
 
 
 func set_upper_pose(pose: Dictionary) -> void:
+	_begin_upper_fade(UPPER_SWAP)
+	_uclip = null
+	_uclip_name = &""
 	upper_pose.clear()
 	for path: String in pose:
 		var j := get_node_or_null(path) as Node3D
 		if j:
 			var e: Vector3 = pose[path]
 			upper_pose[j] = Quaternion.from_euler(Vector3(deg_to_rad(e.x), deg_to_rad(e.y), deg_to_rad(e.z)))
+
+
+## The upper body's clip (Beta 1.8.0): in place of a still `upper_pose`, an
+## animation on some joints over whatever the legs do, as OoT runs its upper
+## skeleton through bow_bow_ready, bow_bow_wait, bow_bow_shoot_next... while
+## the legs stand or walk. A clip holds its last frame or loops; a new pose or
+## clip eases in from what the layer showed over UPPER_SWAP (OoT morphs the
+## upper skeleton the same way), and `upper_weight` still fades the layer.
+const UPPER_SWAP := 0.08
+var _uclip: Animation
+var _uclip_name := &""
+var _uclip_t := 0.0
+var _uclip_loop := false
+var _uclip_speed := 1.0
+var _uclip_tracks: Array = []
+## What the layer showed last frame, and when it changed (joint -> Quaternion).
+var _upper_shown := {}
+var _upper_from := {}
+var _upper_fade := 0.0
+var _upper_fade_t := 0.0
+
+
+## Plays `anim_name` on the joints at `paths` as the upper layer, from `start`
+## seconds in. Asking again for the clip already playing only sets its speed.
+func set_upper_clip(anim_name: StringName, paths: Array, loop := false, speed := 1.0, start := 0.0) -> void:
+	if anim_name == _uclip_name and _uclip != null:
+		_uclip_speed = speed
+		return
+	if not anim.has_animation(anim_name):
+		return
+	_begin_upper_fade(UPPER_SWAP)
+	upper_pose.clear()
+	_uclip = anim.get_animation(anim_name)
+	_uclip_name = anim_name
+	_uclip_t = start
+	_uclip_loop = loop
+	_uclip_speed = speed
+	_uclip_tracks.clear()
+	for i in _uclip.get_track_count():
+		if _uclip.track_get_type(i) != Animation.TYPE_ROTATION_3D:
+			continue
+		var p := String(_uclip.track_get_path(i))
+		if p in paths:
+			var j := get_node_or_null(p) as Node3D
+			if j:
+				_uclip_tracks.append([i, j])
+
+
+func upper_clip() -> StringName:
+	return _uclip_name
+
+
+## How far the upper clip has played (seconds).
+func upper_clip_time() -> float:
+	return _uclip_t
+
+
+func _begin_upper_fade(time: float) -> void:
+	_upper_from = _upper_shown.duplicate()
+	_upper_fade = time
+	_upper_fade_t = 0.0
+
+
+## The rotations the upper layer shows this frame (joint -> Quaternion).
+func _upper_targets(delta: float) -> Dictionary:
+	var out := {}
+	if _uclip != null:
+		_uclip_t += delta * _uclip_speed
+		var length := _uclip.length
+		var t := fposmod(_uclip_t, length) if _uclip_loop else minf(_uclip_t, length)
+		for tr: Array in _uclip_tracks:
+			out[tr[1]] = _uclip.rotation_track_interpolate(tr[0], t)
+	else:
+		for j: Node3D in upper_pose:
+			out[j] = upper_pose[j]
+	return out
 
 
 ## Multiplies every tintable surface by `color` (used for enemy color variants).
@@ -668,10 +910,17 @@ func _process(delta: float) -> void:
 		_head_offset = Quaternion(Vector3.RIGHT, lean.x * 0.5) * Quaternion(Vector3.BACK, -lean.y * 0.5) 			* Quaternion(Vector3.UP, look.x) * Quaternion(Vector3.RIGHT, look.y)
 		_torso.quaternion = _torso.quaternion * _torso_offset
 		_head.quaternion = _head.quaternion * _head_offset
-	if upper_weight > 0.0:
-		for j: Node3D in upper_pose:
+	var targets := _upper_targets(delta)
+	_upper_fade_t += delta
+	var k := 1.0 if _upper_fade <= 0.0 else smoothstep(0.0, 1.0, _upper_fade_t / _upper_fade)
+	for j: Node3D in targets:
+		var q: Quaternion = targets[j]
+		if k < 1.0 and _upper_from.has(j):
+			q = (_upper_from[j] as Quaternion).slerp(q, k)
+		_upper_shown[j] = q
+		if upper_weight > 0.0:
 			_pose_restore[j] = j.quaternion
-			j.quaternion = j.quaternion.slerp(upper_pose[j], upper_weight)
+			j.quaternion = j.quaternion.slerp(q, upper_weight)
 	_apply_upper_anim(delta)
 	if _torso and (aim_pitch != 0.0 or aim_kick > 0.0):
 		if not _pose_restore.has(_torso):
@@ -680,6 +929,11 @@ func _process(delta: float) -> void:
 		aim_kick = maxf(aim_kick - delta / 0.18, 0.0)
 	if two_hand and _drawn and _hand_sword and _hand_sword.visible:
 		_two_hand_reach()
+	_update_bow_string(delta)
+	if _prop_left > 0.0:
+		_prop_left -= delta
+		if _prop_left <= 0.0:
+			show_prop("", 0.0)
 	if _magic_light and _magic_light.visible:
 		_magic_time += delta
 		_magic_light.light_energy = 0.55 + 0.2 * sin(_magic_time * 4.0)

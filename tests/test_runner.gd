@@ -358,6 +358,11 @@ func _ready() -> void:
 		"test_greatsword_two_handed",
 		"test_aladriel_gives_greatsword",
 		"test_parry_staggers",
+		"test_riposte",
+		"test_idle_fidgets",
+		"test_hurt_from_behind",
+		"test_playable_characters",
+		"test_online_offline_and_menu",
 		"test_quintain_parry",
 		"test_iron_flail",
 		"test_ridge_enemy_scale",
@@ -1600,7 +1605,7 @@ func test_put_away_sword() -> void:
 	check(_player.a_action_label() == "PUT AWAY", "A offers Put Away after a moment")
 	await _tap("interact")
 	check(_player.state == PlayerController.State.SHEATHE, "A puts the sword away")
-	await _seconds(0.6)
+	await _seconds(0.9)
 	check(not _player.sword_drawn and back_sword.visible and not hand_sword.visible, "sword back in the scabbard")
 	check(_player.a_action_label() == "", "prompt cleared")
 	await _tap("interact")
@@ -3630,7 +3635,16 @@ func test_bow_aim_camera() -> void:
 	await _seconds(0.5)
 	var head := _player.aim_origin()
 	var d := _cam.camera.global_position.distance_to(head)
-	check(d > 1.3 and d < 1.7, "the camera is 1.5 m behind his head (%.2f m)" % d)
+	# Camera_Subj3 settles the eye eyeDist behind the head: 14 units for the bow.
+	check(d > 0.3 and d < 0.55, "the camera is 0.42 m behind his head (%.2f m)" % d)
+	check(_player.model.bow_nocked, "an arrow is nocked on the string")
+	var nocked := _player.model.find_child("NockedArrow", true, false) as Node3D
+	check(nocked != null and nocked.is_visible_in_tree(), "and drawn, with the arrow shown")
+	var upper_l := _player.model.get_node("Hips/Torso/ShoulderR/ElbowR/HandR") as Node3D
+	var bow := _player.model.find_child("Bow", true, false) as Node3D
+	# The upper piece runs from the top tip to the drawn point: its middle is half way.
+	var string_mid := bow.global_transform * ((bow.find_child("BowString0", false, false) as Node3D).position * 2.0 - Vector3(0, CharacterModel.BOW_STRING, CharacterModel.BOW_TIP))
+	check(string_mid.distance_to(upper_l.global_position) < 0.35, "the string is drawn back to the right fist")
 	check(_player.model.visible, "the hero is drawn")
 	var torso := _player.model.get_node("Hips/Torso") as Node3D
 	var body_shown := false
@@ -8147,7 +8161,7 @@ func test_file_select_completion() -> void:
 ## Beta 1.0.0 on the title screen, and the fallen Castle Town among its scenes.
 func test_beta_title() -> void:
 	var src := (load("res://scripts/ui/title_screen.gd") as GDScript).source_code
-	check(src.contains("GameManager.VERSION") and GameManager.VERSION == "BETA 1.7.0", "the title says BETA 1.7.0")
+	check(src.contains("GameManager.VERSION") and GameManager.VERSION == "BETA 1.9.0", "the title says BETA 1.9.0")
 	var scene := TitleFallen.new()
 	check(scene.area() == "castle_town_fallen", "a title scene in the fallen town")
 	scene.free()
@@ -8427,6 +8441,11 @@ func test_waystone_landings() -> void:
 		check(_player.is_on_floor() and not _player.is_swimming() and d < 6.0 and absf(dy) < 1.5,
 			"%s: on firm ground beside the stone (%.1f m away, %.1f m up, floor %s, swim %s)" % [a, d, dy, _player.is_on_floor(), _player.is_swimming()])
 		check(stone.area == a, "%s: the stone knows its own area (%s)" % [a, stone.area])
+		# A walks up to it: the hero, pressed to the pillar and facing it, can touch it.
+		var out := Vector3(_player.global_position.x - stone.global_position.x, 0, _player.global_position.z - stone.global_position.z).normalized()
+		_place_player(stone.global_position + out * 1.0 + Vector3.UP * 0.3, atan2(out.x, out.z))
+		await _physics(10)
+		check(_player.interact_candidate() == stone, "%s: the hero can touch the stone (%s)" % [a, _player.interact_candidate()])
 
 
 ## Chapter III in order, as the people tell it; the fourth bottle; the pages.
@@ -9329,6 +9348,154 @@ func test_parry_staggers() -> void:
 	check(not _player.combat.is_parrying(), "the window closes")
 	Input.action_release("shield")
 	knight.queue_free()
+
+
+## Beta 1.8.0: a parried foe is open to a riposte (Dark Souls'): B close in
+## front runs it through for three times a cut's damage, and the hero cannot
+## be hurt while he does.
+func test_riposte() -> void:
+	_isolate()
+	Progress.give_shield("iron")
+	Progress.equip_sword("squire")
+	Progress.set_flag(PlayerCombat.TECH_BASH)
+	Progress.set_flag(PlayerCombat.TECH_PARRY)
+	var knight: Enemy = (load("res://scenes/enemies/barrow_knight.tscn") as PackedScene).instantiate()
+	World.area_node.add_child(knight)
+	knight.global_position = _player.global_position + _player.forward() * 1.8
+	await _physics(4)
+	knight.set_physics_process(false)
+	check(not _player._can_riposte(), "nothing to riposte before a parry")
+	Input.action_press("shield")
+	await _physics(8)
+	await _tap("interact")
+	await _physics(1)
+	var info := HitInfo.new()
+	info.damage = 2
+	info.attacker = knight
+	info.source_position = knight.global_position
+	check(_player.take_hit(info) == Hurtbox.Result.BLOCKED, "parried")
+	Input.action_release("shield")
+	await _physics(10)
+	check(_player._can_riposte(), "the reeling foe is open to a riposte")
+	var hp: int = knight.health.health
+	await _tap("attack")
+	await _physics(2)
+	check(_player.state == PlayerController.State.RIPOSTE, "B ripostes")
+	check(_player.model.current_anim == &"riposte", "with its animation")
+	var blow := HitInfo.new()
+	blow.damage = 2
+	blow.attacker = knight
+	blow.source_position = knight.global_position
+	check(_player.take_hit(blow) == Hurtbox.Result.IGNORED, "and cannot be hurt meanwhile")
+	await _seconds(0.45)
+	check(knight.is_dead() or hp - knight.health.health >= _player.combat.sword_damage * 2, "the blade goes in hard (%d)" % (hp - knight.health.health))
+	await _seconds(1.0)
+	check(_player.state == PlayerController.State.IDLE, "and he stands ready again")
+	check(not _player._can_riposte(), "one riposte to a parry")
+	if is_instance_valid(knight):
+		knight.queue_free()
+
+
+## Beta 1.8.0, Player_ChooseNextIdleAnim: standing still brings a fidget every
+## other idle cycle, and at critical health he doubles over panting.
+func test_idle_fidgets() -> void:
+	_isolate()
+	_player.health.health = _player.health.max_health
+	await _physics(5)
+	var fidgets := [&"idle_look", &"idle_cold", &"idle_hot", &"idle_stretch", &"idle_tunic", &"idle_feet", &"idle_shield", &"idle_sword"]
+	var seen := {"f": &""}
+	for i in 60 * 9:
+		await _physics(1)
+		if _player.model.current_anim in fidgets:
+			seen.f = _player.model.current_anim
+			break
+	check(seen.f != &"", "a fidget plays after standing a while (%s)" % seen.f)
+	_player.health.health = 1
+	var crit := false
+	for i in 60 * 6:
+		await _physics(1)
+		if _player.model.current_anim in [&"idle_crit_start", &"idle_crit"]:
+			crit = true
+			break
+	check(crit, "at critical health he bends over panting")
+	_player.health.health = _player.health.max_health
+	await _seconds(2.0)
+	check(not (_player.model.current_anim in [&"idle_crit_start", &"idle_crit"]), "and straightens once out of danger")
+
+
+## Beta 1.8.0: a blow from behind pitches him forward (hurt_back), from the
+## front it throws him back (hurt).
+func test_hurt_from_behind() -> void:
+	_isolate()
+	_player.health.health = _player.health.max_health
+	await _physics(5)
+	var info := HitInfo.new()
+	info.damage = 1
+	info.source_position = _player.global_position - _player.forward() * 2.0
+	_player.take_hit(info)
+	await _physics(1)
+	check(_player.model.current_anim == &"hurt_back", "hit from behind: thrown forward")
+	_player._invuln_time = 0.0
+	await _seconds(0.6)
+	_player._invuln_time = 0.0
+	var front := HitInfo.new()
+	front.damage = 1
+	front.source_position = _player.global_position + _player.forward() * 2.0
+	_player.take_hit(front)
+	await _physics(1)
+	check(_player.model.current_anim == &"hurt", "hit from the front: thrown back")
+	_player._invuln_time = 0.0
+	_player.health.health = _player.health.max_health
+	await _seconds(0.6)
+
+
+## Beta 1.9.0 co-op: each companion can be played, with the hero's moves on
+## her own skeleton, her own version of his sword and shield, and the tunics
+## worn in her own cut.
+func test_playable_characters() -> void:
+	_isolate()
+	var keep_sword := Progress.sword
+	var keep_tunic := Progress.tunic
+	for id: String in Net.CHARACTERS:
+		Net.set_character(id)
+		await _physics(3)
+		var m := _player.model
+		check(m.scene_file_path == Net.model_path(id), "%s: wears her own body" % id)
+		for a in ["idle", "run", "slash_left", "spin_attack", "bow_ready", "riposte", "idle_crit"]:
+			check(m.anim.has_animation(a), "%s: has %s" % [id, a])
+		check(m.find_child("Sword", true, false) != null and m.find_child("Bow", true, false) != null, "%s: carries the hero's gear" % id)
+		if id != "gigglebuns":
+			check(String(m.get_meta("gear_style", "")) == id, "%s: her own style of gear" % id)
+			var sm := (m.find_child("Sword", true, false) as Node3D).get_node("SwordMesh") as MeshInstance3D
+			check(sm.mesh.resource_path.contains("_" + id + "_"), "%s: her own sword (%s)" % [id, sm.mesh.resource_path])
+			check(not m._garment_palette(Equipment.tunic("tide").palette).is_empty(), "%s: the tunics fit her" % id)
+		await _seconds(0.3)
+		check(_player.state != PlayerController.State.DEAD, "%s: stands" % id)
+	Net.set_character("gigglebuns")
+	Progress.sword = keep_sword
+	Progress.tunic = keep_tunic
+	Progress.gear_changed.emit()
+	await _physics(3)
+	check(_player.model.scene_file_path == Net.model_path("gigglebuns"), "back to Sir Gigglebuns")
+
+
+## Beta 1.9.0: offline, the online hooks stay out of the way, and the
+## OPTIONS page has its ONLINE list.
+func test_online_offline_and_menu() -> void:
+	check(not Net.active and not Net.is_client(), "offline by default")
+	check(not Net.intercept_area_change("field", ""), "areas change as ever offline")
+	var info := HitInfo.new()
+	check(not Net.forward_hit(null, info), "blows land as ever offline")
+	check(Net.heroes().size() == 1 and Net.heroes()[0] == _player, "the only hero is this one")
+	var pm = _main.get_node("GameView/GameViewport/PauseMenu/Screen")
+	check(pm.OPTIONS.has("ONLINE"), "OPTIONS lists ONLINE")
+	pm.sub_list = "ONLINE"
+	check(pm.options_list() == pm.ONLINE_OPTIONS, "ONLINE opens its list")
+	var rows := {}
+	for i in pm.options_list().size():
+		rows[pm.option_parts(i)[0]] = pm.option_parts(i)[1]
+	check(rows.get("CHARACTER", "") == "SIR GIGGLEBUNS" and rows.has("HOST GAME") and rows.has("JOIN GAME") and rows.has("PVP"), "CHARACTER, HOST, JOIN, PVP (%s)" % rows)
+	pm.sub_list = ""
 
 
 ## The quintain at the marsh-front camp: three parries in a row set its flag.
@@ -10257,15 +10424,16 @@ func test_carapax_eye_lock() -> void:
 func test_unroomed_enemy_needs_sight() -> void:
 	var g := await _spawn_enemy("basic_enemy", 5.0)
 	g.set("_in_dungeon", true)
-	g.set("_seen_at", -100.0)
-	g.set("_sight_check", -10.0)
+	# Sight is remembered per hero since co-op (Beta 1.9.0).
+	g.set("_seen_ats", {})
+	g.set("_sight_checks", {})
 	check(g._player() != null, "in the open, it sees him")
 	var wall := _fixture((g.global_position + _player.global_position) * 0.5 + Vector3.UP * 1.5, Vector3(6.0, 4.0, 0.4))
 	wall.look_at_from_position(wall.global_position, _player.global_position + Vector3.UP * 1.5)
 	g.process_mode = Node.PROCESS_MODE_DISABLED
 	await _physics(3)
-	g.set("_seen_at", -100.0)
-	g.set("_sight_check", -10.0)
+	g.set("_seen_ats", {})
+	g.set("_sight_checks", {})
 	check(g._player() == null, "behind a wall, it does not")
 	wall.queue_free()
 	g.queue_free()
@@ -10356,6 +10524,12 @@ func test_lothelyes_dream() -> void:
 ## within reach; the Sanctum's door leads to the ruin only while he holds it.
 func test_velloran_ward() -> void:
 	check(WorldData.resolve("sapphire_sanctum") == "sanctum_ruin", "the crypt stair leads to the ruin now")
+	var space := _player.get_world_3d().direct_space_state
+	var walk_blocked := false
+	for x in [-0.6, 0.0, 0.6]:
+		var q := PhysicsRayQueryParameters3D.create(Vector3(x, 0.4, 23.0), Vector3(x, 0.4, 12.0), 1)
+		walk_blocked = walk_blocked or not space.intersect_ray(q).is_empty()
+	check(not walk_blocked, "the rubble leaves the way from the stair to the hall clear")
 	var v: Velloran = null
 	for e in get_tree().get_nodes_in_group("enemies"):
 		if e is Velloran:

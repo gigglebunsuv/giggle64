@@ -120,11 +120,15 @@ func populate(k) -> void:
 	k.npc("Tansy", "res://assets/models/tansy.tscn", "res://scripts/npc/tansy_lines.gd", behind.x, behind.y, k.yaw_of(to_square), INF, {"show": "rebuild:market"})
 	_market(k, "rebuild:market")
 	# Back with the homes: Posy and Pepper.
-	k.npc("Posy", "res://assets/models/posy.tscn", "res://scripts/npc/rebuild_lines.gd", 8.0, 30.0, -PI * 0.5, INF, {"show": "rebuild:homes"})
-	k.npc("Haven Folk", "res://assets/models/haven_soldier.tscn", "res://scripts/npc/rebuild_lines.gd", -8.0, -24.0, PI * 0.5, INF, {"show": "rebuild:homes"})
+	# On the street before the homes (the houses run from |x| 5 to 12).
+	k.npc("Posy", "res://assets/models/posy.tscn", "res://scripts/npc/rebuild_lines.gd", 3.0, 28.4, PI * 0.5, INF, {"show": "rebuild:homes"})
+	k.npc("Haven Folk", "res://assets/models/haven_soldier.tscn", "res://scripts/npc/rebuild_lines.gd", -3.0, -25.5, -PI * 0.5, INF, {"show": "rebuild:homes"})
 	# Pink's Armory: open again once it is rebuilt.
 	var fx := -42.0 + 7.0
 	var gy: float = k.h(fx + 0.5, -21.0)
 	k.door_link(Vector3(fx + 0.06, gy, -21.0), PI * 1.5, 1.4, 2.4, "armory", "from_castle_town", Color(1, 1, 1), "rebuild:armory", "",
 		"The armory is boarded up while it is rebuilt.\nA note in Pink's writing:\n*BACK SOON! BIGGER! WITH A DOOR THAT LOCKS!*")
 	k.entrance("from_armory", fx + 1.8, -21.0, -PI * 0.5)
+	# The scaffolding stands over the door itself: the note hangs on its front.
+	var note: Node3D = k.examine(Vector3(fx + 0.85, gy, -21.0), k.yaw_of(Vector2(1, 0)), [{"text": "The armory is boarded up while it is rebuilt.\nA note in Pink's writing:\n*BACK SOON! BIGGER! WITH A DOOR THAT LOCKS!*", "instant": true}])
+	note.set("hide_flag", "rebuild:armory")

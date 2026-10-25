@@ -118,6 +118,12 @@ func _ready() -> void:
 		await _fall_probes()
 		get_tree().quit(0)
 		return
+	if only == "sight":
+		for area: String in areas:
+			await _sight(area)
+		print("== AUDIT DONE: %d problems" % _problems)
+		get_tree().quit(1 if _problems > 0 else 0)
+		return
 	if only == "climb":
 		await _climb_probes()
 		print("== AUDIT DONE: %d problems" % _problems)
@@ -672,6 +678,114 @@ func _doors(area: String) -> void:
 			if not World.transitioning:
 				break
 			await get_tree().process_frame
+
+
+## SIGHT (--only=sight): every interactable that can be used right now has
+## some free floor within its reach, at about the hero's height, from which
+## the hero's line of sight (PlayerController._can_see_interactable) gets to
+## it. Catches things whose own solid is baked into the area's collision.
+func _sight(area: String) -> void:
+	await _load(area, "")
+	await _frames(30)
+	var p: PlayerController = GameManager.player
+	if p == null:
+		return
+	var count := 0
+	for n in get_tree().get_nodes_in_group("interactable"):
+		var node := n as Node3D
+		if node == null or not node.has_method("interact") or not node.is_visible_in_tree():
+			continue
+		if node.has_method("can_interact") and not node.can_interact(p):
+			continue
+		count += 1
+		var reach: float = node.interact_reach() if node.has_method("interact_reach") else p.interact_range
+		var c := node.global_position
+		var seen := false
+		var stood := false
+		for r: float in [reach * 0.9, reach * 0.65, reach * 0.4]:
+			for i in 16:
+				var a := TAU * i / 16.0
+				var floor_at := _stand_near(c + Vector3(cos(a), 0, sin(a)) * r, c.y)
+				if floor_at == Vector3.INF:
+					continue
+				var dy := c.y - floor_at.y
+				if dy < PlayerController.INTERACT_BELOW or dy > PlayerController.INTERACT_ABOVE:
+					continue
+				stood = true
+				p.global_position = floor_at + Vector3.UP * 0.05
+				if p._can_see_interactable(node):
+					seen = true
+					break
+			if seen:
+				break
+		if not seen:
+			_report(area, "%s at %s: %s" % [node.name, _v(c),
+				"no line of sight from any spot within reach" if stood else "no free floor within reach"])
+			if OS.get_environment("AUDIT_SIGHT_WHY") != "":
+				_sight_why(p, node, reach * 0.65)
+	print("== %s: %d interactables" % [area, count])
+
+
+## Like _floor_near, but a walkable slope counts too (the capsule set a
+## little higher, so its foot clears the uphill side).
+func _stand_near(at: Vector3, y: float) -> Vector3:
+	var f := _floor_near(at, y)
+	if f != Vector3.INF:
+		return f
+	var q := PhysicsRayQueryParameters3D.create(Vector3(at.x, y + 2.0, at.z), Vector3(at.x, y - 3.0, at.z), 1)
+	q.exclude = _exclude
+	var hit := _space.intersect_ray(q)
+	if hit.is_empty() or (hit.normal as Vector3).y < 0.7:
+		return Vector3.INF
+	var lifted: Vector3 = hit.position + Vector3.UP * 0.35
+	return hit.position if _fits(lifted) else Vector3.INF
+
+
+func _points_box(s: Shape3D) -> String:
+	if not s is ConvexPolygonShape3D or (s as ConvexPolygonShape3D).points.is_empty():
+		return ""
+	var pts := (s as ConvexPolygonShape3D).points
+	var b := AABB(pts[0], Vector3.ZERO)
+	for v in pts:
+		b = b.expand(v)
+	return "box %s..%s" % [_v(b.position), _v(b.end)]
+
+
+## Why a SIGHT problem: per direction, the floor the ray finds, whether the
+## hero fits there, and what the line of sight meets.
+func _sight_why(p: PlayerController, node: Node3D, r: float) -> void:
+	var c := node.global_position
+	for i in 8:
+		var a := TAU * i / 8.0
+		var at := c + Vector3(cos(a), 0, sin(a)) * r
+		var q := PhysicsRayQueryParameters3D.create(Vector3(at.x, c.y + 2.0, at.z), Vector3(at.x, c.y - 3.0, at.z), 1)
+		q.exclude = _exclude
+		var hit := _space.intersect_ray(q)
+		if hit.is_empty():
+			print("      dir %d: no floor" % i)
+			continue
+		var f: Vector3 = hit.position
+		var blocker := ""
+		var sq := PhysicsShapeQueryParameters3D.new()
+		sq.shape = _capsule
+		sq.transform = Transform3D(Basis(), f + Vector3.UP * (HERO_H * 0.5 + 0.18))
+		sq.collision_mask = 1
+		sq.exclude = _exclude
+		for h in _space.intersect_shape(sq, 4):
+			blocker += " %s#%d" % [(h.collider as Node).name, h.shape]
+			var co := h.collider as CollisionObject3D
+			var owner_node := co.shape_owner_get_owner(co.shape_find_owner(h.shape)) as Node3D if co else null
+			if owner_node:
+				var s: Shape3D = co.shape_owner_get_shape(co.shape_find_owner(h.shape), 0)
+				blocker += "(%s at %s %s)" % [s.get_class(), _v(owner_node.global_position),
+					str(s.size) if s is BoxShape3D else (str(s.radius) if "radius" in s else _points_box(s))]
+		p.global_position = f + Vector3.UP * 0.05
+		var from := p.global_position + Vector3.UP * 1.5
+		var sr := PhysicsRayQueryParameters3D.create(from, Vector3(c.x, from.y, c.z), 1)
+		sr.exclude = [p.get_rid()]
+		var sh := _space.intersect_ray(sr)
+		var seen := "clear" if sh.is_empty() else "%s at %s" % [(sh.collider as Node).name, _v(sh.position)]
+		print("      dir %d: floor %s (on %s), capsule hits [%s], sight -> %s" % [i, _v(f), (hit.collider as Node).name, blocker, seen])
 
 
 ## ENEMIES: in a dungeon, every creature starts with floor under it, not

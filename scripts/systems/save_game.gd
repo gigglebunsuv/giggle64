@@ -41,6 +41,9 @@ static func exists(slot: int) -> bool:
 
 ## Writes the current game to `slot`. Returns true on success.
 static func save(slot: int) -> bool:
+	# Online, the game is the host's: only the host's file keeps it.
+	if Net.is_client():
+		return false
 	var data := Progress.to_dict()
 	data["version"] = VERSION
 	data["area"] = World.save_area()

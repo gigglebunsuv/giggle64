@@ -44,6 +44,275 @@ var _paths := {}
 var _seed := 100
 
 
+# --- The companions' own gear (Beta 1.9.0) ------------------------------------------
+#
+# Every sword and shield the hero can carry, redone in each companion's own
+# style while keeping the piece's colors (the tier still reads at a glance):
+#   pink      a smith's heavy falchion and a riveted round buckler;
+#   aladriel  a Questlord's long blade with drooping quillons, a tall kite;
+#   idrith    a curved scimitar and a round targe with a crescent;
+#   mira      a slim rapier with a ring guard and her red ribbon on the
+#             pommel, a small round shield with ripples like the lake;
+#   himeko    a curved blade with a round guard and a long wrapped grip,
+#             an oval shield with a five-petal flower.
+# The pieces are built in the same frames as the hero's, so they hang on the
+# same nodes; CharacterModel.set_gear picks sword_<id>_<style>_mesh.tres.
+
+## [blade length, width] scales against the hero's, per style.
+const STYLE_SHAPE := {"pink": [0.92, 1.25], "aladriel": [1.1, 0.9], "idrith": [0.95, 1.1], "mira": [1.05, 0.55], "himeko": [1.0, 0.75]}
+
+
+## A blade from a list of [y, half width, edge offset] points along it, the
+## hand's frame as _sword_parts (built along +Y, thin across X, turned to -Z).
+func _blade_strip(b: MeshKit, pts: Array, base: Color, tip: Color) -> void:
+	b.push(Transform3D(Basis(Vector3.RIGHT, -PI / 2.0) * Basis.from_scale(Vector3(0.26, 1, 1)), Vector3.ZERO))
+	for i in pts.size() - 1:
+		var a := Vector3(0, float(pts[i][0]), float(pts[i][2]))
+		var c := Vector3(0, float(pts[i + 1][0]), float(pts[i + 1][2]))
+		var t := float(i) / maxf(pts.size() - 2, 1.0)
+		b.push(_aim(c - a, a))
+		b.prism(Vector3.ZERO, float(pts[i][1]), Vector3(0, (c - a).length(), 0), float(pts[i + 1][1]), 4, base.lerp(tip, t))
+		b.pop()
+	b.pop()
+
+
+func _styled_sword(p: Parts, id: String, style: String) -> void:
+	var s: Dictionary = SWORD_SPECS[id]
+	var b := p.k("chrome" if s.chrome else "hard")
+	var shape: Array = STYLE_SHAPE[style]
+	var tip: float = s.len * float(shape[0])
+	var w: float = s.w * float(shape[1])
+	var c0 := _c(s.blade[0])
+	var c1 := _c(s.blade[1])
+	var pts: Array = []
+	match style:
+		"pink":
+			# Widening toward the point, then clipped off at an angle.
+			pts = [[0.08, 0.05 * w, 0.0], [tip * 0.45, 0.06 * w, 0.0], [tip - 0.12, 0.085 * w, 0.01], [tip, 0.0, 0.05 * w]]
+		"aladriel":
+			pts = [[0.08, 0.05 * w, 0.0], [tip * 0.5, 0.05 * w, 0.0], [tip - 0.2, 0.048 * w, 0.0], [tip, 0.0, 0.0]]
+		"idrith":
+			# Sweeping back toward the spine, broadest near the point.
+			for i in 7:
+				var f := i / 6.0
+				pts.append([0.08 + (tip - 0.08) * f, (0.045 + 0.02 * f * f) * w * (1.0 - pow(f, 6.0)), 0.13 * f * f])
+		"mira":
+			pts = [[0.08, 0.05 * w, 0.0], [tip * 0.6, 0.042 * w, 0.0], [tip, 0.0, 0.0]]
+		"himeko":
+			for i in 7:
+				var f := i / 6.0
+				pts.append([0.08 + (tip - 0.08) * f, 0.05 * w * (0.4 if i == 6 else 1.0), 0.05 * f * f])
+	_blade_strip(b, pts, c0, c1)
+	_styled_hilt(p.k("hard"), Transform3D(Basis(Vector3.RIGHT, -PI / 2.0), Vector3.ZERO), id, style)
+
+
+## Guard, grip and pommel in the style's shape and the tier's colors.
+func _styled_hilt(h: MeshKit, t: Transform3D, id: String, style: String) -> void:
+	var s: Dictionary = SWORD_SPECS[id]
+	var guard := _c(s.hilt[0])
+	var grip := _c(s.hilt[1])
+	var pommel := _c(s.hilt[2])
+	var span: float = 0.22 * (1.0 + (s.w - 1.0) * 0.6)
+	var low: float = 0.05 - 0.12 * float(s.get("grip", 1.0)) * (1.4 if style == "himeko" else 1.0)
+	h.push(t)
+	h.prism(Vector3(0, low, 0), 0.02, Vector3(0, 0.05, 0), 0.022, 5, grip)
+	var gy := low + 0.03
+	while gy < 0.03:
+		h.prism(Vector3(0, gy, 0), 0.0235, Vector3(0, gy + 0.012, 0), 0.0235, 5, grip.darkened(0.3))
+		gy += 0.03 if style != "himeko" else 0.022
+	match style:
+		"pink":
+			h.box(Vector3(0, 0.075, 0), Vector3(0.05, 0.05, span * 1.15), guard)
+			h.prism(Vector3(0, low - 0.06, 0), 0.04, Vector3(0, low, 0), 0.026, 8, pommel)
+		"aladriel":
+			h.box(Vector3(0, 0.075, 0), Vector3(0.035, 0.035, span * 1.1), guard)
+			for sz in [-1.0, 1.0]:
+				h.prism(Vector3(0, 0.075, span * 0.55 * sz), 0.022, Vector3(0, 0.0, (span * 0.62) * sz), 0.012, 4, guard)
+			h.prism(Vector3(0.02, 0.075, 0), 0.018, Vector3(0.028, 0.075, 0), 0.01, 6, _c(s.get("gem", "4aa8e0")))
+			h.prism(Vector3(-0.02, 0.075, 0), 0.018, Vector3(-0.028, 0.075, 0), 0.01, 6, _c(s.get("gem", "4aa8e0")))
+			h.prism(Vector3(0, low - 0.05, 0), 0.03, Vector3(0, low, 0), 0.022, 6, pommel)
+		"idrith":
+			h.box(Vector3(0, 0.075, 0), Vector3(0.03, 0.035, span * 0.7), guard)
+			for sz in [-1.0, 1.0]:
+				h.prism(Vector3(0, 0.075, span * 0.35 * sz), 0.016, Vector3(0, 0.12, span * 0.45 * sz), 0.008, 4, guard)
+			# The grip's end curls forward like a bird's head.
+			h.prism(Vector3(0, low - 0.02, 0), 0.026, Vector3(0, low - 0.05, -0.03), 0.014, 5, pommel)
+		"mira":
+			h.prism(Vector3(0, 0.06, 0), 0.03, Vector3(0, 0.085, 0), 0.03, 8, guard)
+			# The knuckle ring, guard to pommel along the edge.
+			var ring := [Vector3(0, 0.075, 0.03), Vector3(0, 0.06, 0.07), Vector3(0, 0.0, 0.08), Vector3(0, -0.06, 0.07), Vector3(0, low, 0.03)]
+			for i in ring.size() - 1:
+				h.push(_aim(ring[i + 1] - ring[i], ring[i]))
+				h.prism(Vector3.ZERO, 0.009, Vector3(0, (ring[i + 1] - ring[i]).length(), 0), 0.009, 4, guard)
+				h.pop()
+			h.prism(Vector3(0, low - 0.035, 0), 0.025, Vector3(0, low, 0), 0.02, 6, pommel)
+			# Her red ribbon, tied on at the pommel.
+			for sx in [-1.0, 1.0]:
+				h.push(Transform3D(Basis(Vector3.BACK, 0.5 * sx), Vector3(0, low - 0.04, 0)))
+				h.box(Vector3(0.03 * sx, -0.03, 0), Vector3(0.02, 0.07, 0.006), _c("e0405a"))
+				h.pop()
+		"himeko":
+			# A round guard, flat across the blade.
+			h.prism(Vector3(0, 0.06, 0), 0.055, Vector3(0, 0.075, 0), 0.055, 10, guard)
+			h.prism(Vector3(0, low - 0.02, 0), 0.024, Vector3(0, low, 0), 0.024, 6, pommel)
+	if s.has("gem") and style != "aladriel":
+		h.prism(Vector3(0, low - 0.075, 0), 0.016, Vector3(0, low - 0.06, 0), 0.02, 6, _c(s.gem))
+	h.pop()
+
+
+## A shield in a companion's style, in the tier's colors, in the frame `t`.
+const SHIELD_TIERS := {
+	"wooden": {"rim": "4b4b53", "face": "7c5331", "band": "5e3d22", "accent": "8c1d17", "boss": "a6a6b0"},
+	"iron": {"rim": "3a3c44", "face": "8c9098", "band": "4c4e56", "accent": "d0d4dc", "boss": "b8bcc4"},
+	"mirror": {"rim": "b02028", "face": "e8eef8", "band": "d8b040", "accent": "c82830", "boss": "e84850", "chrome": true},
+	"questlord": {"rim": "d8b040", "face": "2a3a6a", "band": "c8ccd8", "accent": "e8eeff", "boss": "d8b040"},
+}
+
+
+func _styled_shield(p: Parts, id: String, t: Transform3D, style: String) -> void:
+	var c: Dictionary = SHIELD_TIERS.get(id, SHIELD_TIERS.wooden)
+	var h := p.k("hard")
+	var f := p.k("chrome") if c.get("chrome", false) else h
+	var rim := _c(c.rim)
+	var face := _c(c.face)
+	var band := _c(c.band)
+	var accent := _c(c.accent)
+	var boss := _c(c.boss)
+	h.push(t)
+	if f != h:
+		f.push(t)
+	match style:
+		"pink":
+			# A round smith's buckler: a broad rim, a big domed boss, rivets.
+			h.prism(Vector3.ZERO, 0.25, Vector3(0, 0.035, 0), 0.25, 12, rim)
+			f.prism(Vector3(0, 0.035, 0), 0.22, Vector3(0, 0.05, 0), 0.21, 12, face)
+			h.prism(Vector3(0, 0.05, 0), 0.11, Vector3(0, 0.1, 0), 0.07, 10, boss)
+			h.prism(Vector3(0, 0.1, 0), 0.07, Vector3(0, 0.12, 0), 0.0, 10, boss.lightened(0.2))
+			for i in 10:
+				var a := TAU * i / 10.0
+				h.prism(Vector3(cos(a) * 0.19, 0.045, sin(a) * 0.19), 0.014, Vector3(cos(a) * 0.19, 0.065, sin(a) * 0.19), 0.006, 5, band.lightened(0.3))
+		"aladriel":
+			# A tall kite: long and pointed below, a band down the middle.
+			h.push(Transform3D(Basis.from_scale(Vector3(0.8, 1, 1.3)), Vector3.ZERO))
+			h.prism(Vector3.ZERO, 0.3, Vector3(0, 0.035, 0), 0.3, 6, rim, PI / 6.0)
+			h.pop()
+			if f != h:
+				f.push(Transform3D(Basis.from_scale(Vector3(0.8, 1, 1.3)), Vector3.ZERO))
+				f.prism(Vector3(0, 0.035, 0), 0.27, Vector3(0, 0.055, 0), 0.26, 6, face, PI / 6.0)
+				f.pop()
+			else:
+				h.push(Transform3D(Basis.from_scale(Vector3(0.8, 1, 1.3)), Vector3.ZERO))
+				h.prism(Vector3(0, 0.035, 0), 0.27, Vector3(0, 0.055, 0), 0.26, 6, face, PI / 6.0)
+				h.pop()
+			h.prism(Vector3(0, 0.0, 0.38), 0.11, Vector3(0, 0.035, 0.38), 0.06, 3, rim, PI / 2.0)
+			h.box(Vector3(0, 0.06, 0.03), Vector3(0.06, 0.01, 0.62), band)
+			h.box(Vector3(0, 0.062, -0.12), Vector3(0.26, 0.01, 0.05), band)
+			h.prism(Vector3(0, 0.06, -0.12), 0.03, Vector3(0, 0.075, -0.12), 0.0, 6, accent)
+		"idrith":
+			# A round targe with a crescent moon.
+			h.prism(Vector3.ZERO, 0.28, Vector3(0, 0.035, 0), 0.28, 12, rim)
+			f.prism(Vector3(0, 0.035, 0), 0.25, Vector3(0, 0.055, 0), 0.24, 12, face)
+			for i in 7:
+				var a := -1.1 + i * 0.37
+				var r := 0.14
+				h.push(Transform3D(Basis(Vector3.UP, -a), Vector3(cos(a) * r, 0.06, sin(a) * r)))
+				h.box(Vector3.ZERO, Vector3(0.035, 0.01, 0.06 - absf(i - 3) * 0.012), accent)
+				h.pop()
+			h.prism(Vector3(0, 0.055, 0), 0.04, Vector3(0, 0.08, 0), 0.0, 8, boss)
+		"mira":
+			# A small round shield with ripples, like the lake.
+			h.prism(Vector3.ZERO, 0.24, Vector3(0, 0.035, 0), 0.24, 10, rim)
+			f.prism(Vector3(0, 0.035, 0), 0.21, Vector3(0, 0.05, 0), 0.2, 10, face)
+			for r in [0.16, 0.1]:
+				h.prism(Vector3(0, 0.05, 0), r, Vector3(0, 0.058, 0), r, 12, band)
+				h.prism(Vector3(0, 0.058, 0), r - 0.02, Vector3(0, 0.06, 0), r - 0.02, 12, face.lightened(0.1))
+			h.prism(Vector3(0, 0.06, 0), 0.04, Vector3(0, 0.085, 0), 0.02, 8, accent)
+		"himeko":
+			# An oval with a five-petal flower.
+			h.push(Transform3D(Basis.from_scale(Vector3(0.85, 1, 1.15)), Vector3.ZERO))
+			h.prism(Vector3.ZERO, 0.29, Vector3(0, 0.035, 0), 0.29, 12, rim)
+			h.pop()
+			if f != h:
+				f.push(Transform3D(Basis.from_scale(Vector3(0.85, 1, 1.15)), Vector3.ZERO))
+				f.prism(Vector3(0, 0.035, 0), 0.26, Vector3(0, 0.052, 0), 0.25, 12, face)
+				f.pop()
+			else:
+				h.push(Transform3D(Basis.from_scale(Vector3(0.85, 1, 1.15)), Vector3.ZERO))
+				h.prism(Vector3(0, 0.035, 0), 0.26, Vector3(0, 0.052, 0), 0.25, 12, face)
+				h.pop()
+			for i in 5:
+				var a := TAU * i / 5.0
+				h.push(Transform3D(Basis(Vector3.UP, -a), Vector3(cos(a) * 0.075, 0.06, sin(a) * 0.075)))
+				h.box(Vector3.ZERO, Vector3(0.085, 0.01, 0.06), accent)
+				h.pop()
+			h.prism(Vector3(0, 0.06, 0), 0.035, Vector3(0, 0.075, 0), 0.03, 8, band)
+	if f != h:
+		f.pop()
+	h.pop()
+
+
+## The companions made playable (Beta 1.9.0, co-op): each one's own model with
+## the hero's gear on her and his whole animation set re-solved for her
+## skeleton, saved as playable_<id>.tscn (build_assets "playable").
+const PLAYABLE := ["pink", "aladriel", "idrith", "mira", "himeko"]
+var _playable := ""
+
+
+func run_playable(materials: Dictionary) -> void:
+	_mats = materials
+	for id: String in PLAYABLE:
+		_playable = id
+		call("_build_" + id)
+	_playable = ""
+
+
+## The hero's sword, scabbard, shield and bow on a companion (the nodes and
+## animation keys CharacterModel and the hero's animations expect), sized to
+## her smaller fist.
+func _add_hero_gear() -> void:
+	var hand_r := _root.get_node(_paths["hand_r"]) as Node3D
+	var hand_l := _root.get_node(_paths["hand_l"]) as Node3D
+	var elbow_l := _root.get_node(_paths["elbow_l"]) as Node3D
+	var torso := _root.get_node(_paths["torso"]) as Node3D
+	var style := _playable
+	_attach(hand_r, "Sword", Vector3(0, -0.05, 0), func(p: Parts) -> void: _sword_parts(p, "squire", style), "sword")
+	var back := _attach(torso, "SwordBack", Vector3(0.06, 0.15, 0.15), func(p: Parts) -> void: _scabbard_parts(p, "squire", style))
+	back.basis = Basis(Vector3.BACK, deg_to_rad(-29))
+	_attach(back, "SheathedSword", Vector3(0, 0.26, 0), func(p: Parts) -> void: _sheathed_parts(p, "squire", style))
+	_attach(elbow_l, "Shield", Vector3(-0.055, -0.12, 0), func(p: Parts) -> void: _shield_parts(p, "wooden", SHIELD_ARM, style), "shield")
+	_attach(hand_l, "Bow", Vector3(0, -0.06, 0), _bow_parts_unstrung)
+	_attach(torso, "ShieldBack", Vector3(-0.02, 0.18, 0.17), func(p: Parts) -> void: _shield_parts(p, "wooden", SHIELD_BACK, style))
+
+
+## Each companion's own clothes, for the tunics to recolor (CharacterModel.set_outfit
+## maps the hero's tunic colors onto the first three, his trousers' onto the last two).
+const GARMENTS := {
+	"pink": ["f2c832", "ffd84a", "d0a420", "5a3a24", "4a2e1c"],
+	"aladriel": ["3e6a3a", "4e7e48", "2c4e2a", "3c3c40", "2c2c30"],
+	"idrith": ["9a8aa8", "ae9ebc", "7e6e8e", "4a4a8c", "34346a"],
+	"mira": ["2e7d7a", "3a9894", "235f5d", "ece2c8", "d4c8a8"],
+	"himeko": ["b8182a", "d02a3a", "8a1020", "e0b84a", "b08a2a"],
+}
+
+
+func _finish_playable(root: Node3D, rest: Dictionary) -> void:
+	_add_hero_gear()
+	root.set_meta("gear_style", _playable)
+	root.set_meta("garment", GARMENTS[_playable])
+	var lib := AnimationLibrary.new()
+	_anim(lib, "RESET", 0.1, false, {}, rest)
+	preload("res://tools/hero_anims.gd").new(self, lib, rest).lady().build()
+	_finish_character(root, lib)
+	_save_scene(root, "playable_%s.tscn" % _playable)
+
+
+## Just the hero and his gear (build_assets "hero"), while working on his animations.
+func run_hero(materials: Dictionary) -> void:
+	_mats = materials
+	_build_gigglebuns()
+	_build_gear()
+
+
 func run(materials: Dictionary) -> void:
 	_mats = materials
 	_build_gigglebuns()
@@ -426,7 +695,7 @@ func _build_gigglebuns() -> void:
 			# The bow in the left fist (shown while it is out). Its limbs arc in the
 			# hand's Y-Z plane, so with the arm held out the bow stands upright and
 			# the tips bend back toward the archer (+Y) with the string between them.
-			_attach(_root.get_node(_paths["hand_l"]), "Bow", Vector3(0, -0.07, 0), _bow_parts)
+			_attach(_root.get_node(_paths["hand_l"]), "Bow", Vector3(0, -0.07, 0), _bow_parts_unstrung)
 		var leg := _joint(hips, "leg" + sfx, "Leg" + nsfx, Vector3(0.09 * side, -0.03, 0), func(p: Parts) -> void:
 			p.k().loft([
 				[0.06, 0.0, 0.0, PANTS], [0.04, 0.075, 0.08, PANTS], [-0.05, 0.088, 0.094, PANTS],
@@ -503,7 +772,10 @@ var SWORD_SPECS := {
 ## The sword in the fist: built along +Y, then rotated so the blade points
 ## down the hand's -Z axis. The blade is thin across the hand's X, so its flat
 ## faces stand vertical with the edges up and down, the way OoT's hero holds his sword.
-func _sword_parts(p: Parts, id: String) -> void:
+func _sword_parts(p: Parts, id: String, style := "") -> void:
+	if style != "":
+		_styled_sword(p, id, style)
+		return
 	var s: Dictionary = SWORD_SPECS[id]
 	var b := p.k("chrome" if s.chrome else "hard")
 	var w: float = s.w
@@ -518,18 +790,22 @@ func _sword_parts(p: Parts, id: String) -> void:
 
 ## The hilt showing over the shoulder while the sword is put away: upside down
 ## (blade into the scabbard) and turned so the guard lies flat across the back.
-func _sheathed_parts(p: Parts, id: String) -> void:
+func _sheathed_parts(p: Parts, id: String, style := "") -> void:
+	if style != "":
+		_styled_hilt(p.k("hard"), Transform3D(Basis(Vector3.UP, PI / 2.0) * Basis(Vector3.RIGHT, PI), Vector3.ZERO), id, style)
+		return
 	_hilt(p.k("hard"), Transform3D(Basis(Vector3.UP, PI / 2.0) * Basis(Vector3.RIGHT, PI), Vector3.ZERO), id)
 
 
 ## The scabbard across the back, longer for longer blades.
-func _scabbard_parts(p: Parts, id: String) -> void:
+func _scabbard_parts(p: Parts, id: String, style := "") -> void:
 	var s: Dictionary = SWORD_SPECS[id]
+	var shape: Array = STYLE_SHAPE.get(style, [1.0, 1.0])
 	var h := p.k("hard")
 	var leather := _c(s.sheath[0])
 	var fit := _c(s.sheath[1])
-	var bottom: float = -0.45 - (s.len - 0.86)
-	var wide: float = 1.0 + (s.w - 1.0) * 0.6
+	var bottom: float = -0.45 - (s.len * float(shape[0]) - 0.86)
+	var wide: float = 1.0 + (s.w * float(shape[1]) - 1.0) * 0.6
 	h.push(Transform3D(Basis.from_scale(Vector3(wide, 1, 0.3)), Vector3.ZERO))
 	h.prism(Vector3(0, bottom, 0), 0.05, Vector3(0, 0.15, 0), 0.075, 4, leather, 0.0, fit)
 	h.pop()
@@ -580,7 +856,10 @@ func _hilt(h: MeshKit, t: Transform3D, id: String) -> void:
 
 
 ## A shield in the frame `t` (see SHIELD_ARM / SHIELD_BACK).
-func _shield_parts(p: Parts, id: String, t: Transform3D) -> void:
+func _shield_parts(p: Parts, id: String, t: Transform3D, style := "") -> void:
+	if style != "":
+		_styled_shield(p, id, t, style)
+		return
 	var h := p.k("hard")
 	h.push(t)
 	match id:
@@ -652,8 +931,11 @@ func _shield_parts(p: Parts, id: String, t: Transform3D) -> void:
 	h.pop()
 
 
-## The bow, held in the left fist (see the hero's Bow node).
-func _bow_parts(p: Parts) -> void:
+## The bow, held in the left fist (see the hero's Bow node). The hero's own
+## bow is built without its string: CharacterModel strings it at run time, so
+## the string can be drawn back to his fist (OoT stretches gLinkAdultBowStringDL
+## to the drawing hand the same way).
+func _bow_parts(p: Parts, strung := true) -> void:
 	var WOOD := _c("7c5331")
 	var WOOD_D := _c("5e3d22")
 	var GRIP := _c("5a3a22")
@@ -671,10 +953,16 @@ func _bow_parts(p: Parts) -> void:
 		h.prism(Vector3.ZERO, r0, Vector3(0, (b - a).length(), 0), r1, 5, WOOD if i % 7 != 0 else WOOD_D)
 		h.pop()
 	h.box(Vector3(0, 0.0, 0), Vector3(0.05, 0.05, 0.11), GRIP)
+	if not strung:
+		return
 	var s := pts[8] - pts[0]
 	h.push(_aim(s, pts[0]))
 	h.prism(Vector3.ZERO, 0.004, Vector3(0, s.length(), 0), 0.004, 3, _c("e8e4d8"))
 	h.pop()
+
+
+func _bow_parts_unstrung(p: Parts) -> void:
+	_bow_parts(p, false)
 
 
 ## One standalone mesh from a Parts build (glow parts left out).
@@ -705,728 +993,21 @@ func _build_gear() -> void:
 		_save_res(_parts_mesh(func(p: Parts) -> void: _shield_parts(p, id, Transform3D.IDENTITY)), "shield_%s_flat_mesh.tres" % id)
 	# The bow on its own (icons), built as in the hero's left fist.
 	_save_res(_parts_mesh(_bow_parts), "bow_mesh.tres")
+	# Each companion's own version of every piece (co-op).
+	for style: String in PLAYABLE:
+		for id: String in SWORD_SPECS:
+			_save_res(_parts_mesh(func(p: Parts) -> void: _sword_parts(p, id, style)), "sword_%s_%s_mesh.tres" % [id, style])
+			_save_res(_parts_mesh(func(p: Parts) -> void: _sheathed_parts(p, id, style)), "sword_%s_hilt_%s_mesh.tres" % [id, style])
+			_save_res(_parts_mesh(func(p: Parts) -> void: _scabbard_parts(p, id, style)), "scabbard_%s_%s_mesh.tres" % [id, style])
+		for id: String in ["wooden", "iron", "mirror", "questlord"]:
+			_save_res(_parts_mesh(func(p: Parts) -> void: _shield_parts(p, id, SHIELD_ARM, style)), "shield_%s_%s_mesh.tres" % [id, style])
+			_save_res(_parts_mesh(func(p: Parts) -> void: _shield_parts(p, id, SHIELD_BACK, style)), "shield_%s_back_%s_mesh.tres" % [id, style])
 
 
 func _gigglebuns_anims(lib: AnimationLibrary, rest: Dictionary) -> void:
-	var V := func(x: float, y: float, z: float) -> Vector3: return Vector3(x, y, z)
-	# Shared "ready stance" values: sword low at the right side, shield arm bent.
-	var arm_r := Vector3(10, 0, 8)
-	var elbow_r := Vector3(35, 0, 0)
-	var hand_r := Vector3(-20, 0, 0)
-	var arm_l := Vector3(5, 0, -10)
-	var elbow_l := Vector3(20, 0, 0)
-
 	_anim(lib, "RESET", 0.1, false, {}, rest)
-
-	# Standing: breathing, and the weight drifting slowly from foot to foot
-	# (OoT's link_normal_wait sways the same way), the arms easing with it.
-	_anim(lib, "idle", 2.4, true, {
-		"hips@pos": [[0.0, V.call(0, 0.92, 0)], [0.6, V.call(0.012, 0.912, 0)], [1.2, V.call(0, 0.906, 0)], [1.8, V.call(-0.012, 0.912, 0)]],
-		"hips": [[0.0, V.call(0, 0, 0)], [0.6, V.call(0, 2, 1.6)], [1.2, V.call(0, 0, 0)], [1.8, V.call(0, -2, -1.6)]],
-		"torso": [[0.0, V.call(0, 0, 0)], [0.6, V.call(-2, -1.5, -1.6)], [1.2, V.call(-3, 0, 0)], [1.8, V.call(-2, 1.5, 1.6)]],
-		"head": [[0.0, V.call(0, 0, 0)], [0.6, V.call(2, 3, 0)], [1.2, V.call(3, 0, 0)], [1.8, V.call(2, -4, 0)]],
-		"shoulder_r": [[0.0, arm_r], [0.6, arm_r + V.call(2, 0, 1)], [1.2, arm_r + V.call(4, 0, 2)], [1.8, arm_r + V.call(2, 0, 1)]],
-		"elbow_r": [[0.0, elbow_r], [1.2, elbow_r + V.call(7, 0, 0)]],
-		"hand_r": [[0.0, hand_r], [1.2, hand_r + V.call(-4, 0, 0)]],
-		"shoulder_l": [[0.0, arm_l], [0.6, arm_l + V.call(2, 0, -1)], [1.2, arm_l + V.call(4, 0, -2)], [1.8, arm_l + V.call(2, 0, -1)]],
-		"elbow_l": [[0.0, elbow_l], [1.2, elbow_l + V.call(5, 0, 0)]],
-		"leg_r": [[0.0, V.call(0, 0, 3)], [0.6, V.call(-1, 0, 1.5)], [1.2, V.call(0, 0, 3)], [1.8, V.call(1, 0, 4.5)]],
-		"leg_l": [[0.0, V.call(0, 0, -3)], [0.6, V.call(1, 0, -4.5)], [1.2, V.call(0, 0, -3)], [1.8, V.call(-1, 0, -1.5)]],
-		"knee_r": [[0.0, V.call(-2, 0, 0)], [0.6, V.call(-1, 0, 0)], [1.2, V.call(-5, 0, 0)], [1.8, V.call(-7, 0, 0)]],
-		"knee_l": [[0.0, V.call(-2, 0, 0)], [0.6, V.call(-7, 0, 0)], [1.2, V.call(-5, 0, 0)], [1.8, V.call(-1, 0, 0)]],
-		"foot_r": [[0.0, V.call(0, 0, -3)], [0.6, V.call(1, 0, -1.5)], [1.2, V.call(3, 0, -3)], [1.8, V.call(4, 0, -4.5)]],
-		"foot_l": [[0.0, V.call(0, 0, 3)], [0.6, V.call(4, 0, 4.5)], [1.2, V.call(3, 0, 3)], [1.8, V.call(1, 0, 1.5)]],
-	}, rest)
-
-	# Walk and run cycles. Each is one full stride (two steps); the controller sets
-	# the playback rate from ground speed, the way OoT advances its 29-frame walk
-	# cycle by a speed-dependent amount each frame. The right foot strikes at the
-	# start and the left halfway (the footstep sounds key off those two points).
-	# Eight poses a stride: strike, load, mid-stance, push-off, then the swing
-	# with the knee folding up and reaching through. The run leans into it,
-	# pumps the arms with the elbows bent, and leaves the ground between steps
-	# (the hips ride highest in the flight); the walk rolls over a straight leg
-	# (highest at mid-stance).
-	var gait := func(n: String, L: float, run: bool, sword := false) -> void:
-		var ph := [0.0, 0.125, 0.25, 0.375, 0.5, 0.625, 0.75, 0.875]
-		var hip: Array = [30, 18, -2, -28, -36, -6, 42, 40] if run else [22, 14, 2, -12, -20, -8, 12, 22]
-		var knee: Array = [-14, -38, -26, -18, -42, -108, -84, -32] if run else [-4, -14, -6, -8, -25, -56, -30, -6]
-		var foot: Array = [-8, 6, 10, 26, 34, 20, 0, -10] if run else [-12, 0, 2, 10, 22, 10, -4, -12]
-		var hy: Array = [0.885, 0.855, 0.875, 0.915, 0.885, 0.855, 0.875, 0.915] if run else [0.895, 0.905, 0.918, 0.905, 0.895, 0.905, 0.918, 0.905]
-		var data := {"hips@pos": [], "hips": [], "torso": [], "head": [], "leg_r": [], "knee_r": [], "foot_r": [],
-			"leg_l": [], "knee_l": [], "foot_l": [], "shoulder_r": [], "elbow_r": [], "shoulder_l": [], "elbow_l": [],
-			"hand_r": [[0.0, V.call(-36, 0, 0) if sword else hand_r]]}
-		for i in 8:
-			var t: float = ph[i] * L
-			var o := (i + 4) % 8
-			# The swing of the cycle: +1 with the right leg forward, -1 with the left.
-			var c := cos(ph[i] * TAU)
-			data["hips@pos"].append([t, V.call(0, hy[i], 0)])
-			data["hips"].append([t, V.call(0, 7.0 * c if run else 5.0 * c, (2.0 if run else 3.0) * sin(ph[i] * TAU))])
-			data["torso"].append([t, V.call(-8.0 if run else -3.0, (-13.0 if run else -7.0) * c, 0)])
-			data["head"].append([t, V.call(6.0 if run else 2.0, (5.0 if run else 3.0) * c, 0)])
-			data["leg_r"].append([t, V.call(hip[i], 0, 3)])
-			data["knee_r"].append([t, V.call(knee[i], 0, 0)])
-			data["foot_r"].append([t, V.call(foot[i], 0, 0)])
-			data["leg_l"].append([t, V.call(hip[o], 0, -3)])
-			data["knee_l"].append([t, V.call(knee[o], 0, 0)])
-			data["foot_l"].append([t, V.call(foot[o], 0, 0)])
-			# Each arm swings against its leg, a touch behind it.
-			var ac := cos(ph[i] * TAU - 0.35)
-			if sword:
-				# The blade held low and level at his side, swinging a little.
-				data["shoulder_r"].append([t, V.call(14 - 14 * ac, 0, 14)])
-				data["elbow_r"].append([t, V.call(30 + 6 * ac, 0, 0)])
-				data["shoulder_l"].append([t, V.call(5 + 42 * ac, 0, -12)])
-				data["elbow_l"].append([t, V.call(82 - 16 * ac, 0, 0)])
-			elif run:
-				data["shoulder_r"].append([t, V.call(5 - 42 * ac, 0, 12)])
-				data["elbow_r"].append([t, V.call(82 + 16 * ac, 0, 0)])
-				data["shoulder_l"].append([t, V.call(5 + 42 * ac, 0, -12)])
-				data["elbow_l"].append([t, V.call(82 - 16 * ac, 0, 0)])
-			else:
-				data["shoulder_r"].append([t, V.call(2 - 22 * ac, 0, 9)])
-				data["elbow_r"].append([t, V.call(28 - 10 * ac, 0, 0)])
-				data["shoulder_l"].append([t, V.call(2 + 22 * ac, 0, -9)])
-				data["elbow_l"].append([t, V.call(28 + 10 * ac, 0, 0)])
-		_anim(lib, n, L, true, data, rest)
-	gait.call("run", 0.56, true)
-	# OoT runs differently with the sword out (the blade would otherwise pump
-	# up past his face); the controller picks this one while it is drawn.
-	gait.call("run_sword", 0.56, true, true)
-	gait.call("walk", 0.84, false)
-
-	# Sidestep cycle for strafing while locked on. Played forward it steps to the
-	# right, backward it steps to the left.
-	var side := {"hips@pos": [], "hips": [], "torso": [[0.0, V.call(-6, 4, 0)]], "head": [[0.0, V.call(4, -4, 0)]],
-		"leg_r": [], "knee_r": [], "foot_r": [], "leg_l": [], "knee_l": [], "foot_l": [],
-		"shoulder_r": [], "elbow_r": [[0.0, V.call(42, 0, 0)]], "hand_r": [[0.0, V.call(-42, 0, 0)]],
-		"shoulder_l": [[0.0, V.call(35, -20, -15)]], "elbow_l": [[0.0, V.call(70, 0, 0)]]}
-	for i in 8:
-		var ph := i / 8.0
-		var t := ph * 0.6
-		var sn := sin(ph * TAU)
-		# The right foot reaches out (first half), the left closes in after it.
-		var reach := maxf(sn, 0.0)
-		var close := maxf(-sn, 0.0)
-		side["hips@pos"].append([t, V.call(0, 0.885 + 0.028 * absf(sn), 0)])
-		side["hips"].append([t, V.call(0, 0, 4 * sn)])
-		side["leg_r"].append([t, V.call(8 + 8 * reach, 0, 4 + 18 * reach)])
-		side["knee_r"].append([t, V.call(-18 - 24 * reach, 0, 0)])
-		side["foot_r"].append([t, V.call(10 + 10 * reach, 0, -4 - 10 * reach)])
-		side["leg_l"].append([t, V.call(8 + 8 * close, 0, -4 + 16 * close)])
-		side["knee_l"].append([t, V.call(-18 - 24 * close, 0, 0)])
-		side["foot_l"].append([t, V.call(10 + 10 * close, 0, 4 - 8 * close)])
-		side["shoulder_r"].append([t, V.call(22 + 3 * sn, 0, 14)])
-	_anim(lib, "sidestep", 0.6, true, side, rest)
-
-	_anim(lib, "turn", 0.4, true, {
-		"hips@pos": [[0.0, V.call(0, 0.91, 0)], [0.1, V.call(0, 0.93, 0)], [0.2, V.call(0, 0.91, 0)], [0.3, V.call(0, 0.93, 0)]],
-		"leg_r": [[0.0, V.call(0, 0, 3)], [0.1, V.call(20, 0, 6)], [0.2, V.call(0, 0, 3)]],
-		"knee_r": [[0.0, V.call(0, 0, 0)], [0.1, V.call(-35, 0, 0)], [0.2, V.call(0, 0, 0)]],
-		"leg_l": [[0.0, V.call(0, 0, -3)], [0.2, V.call(0, 0, -3)], [0.3, V.call(20, 0, -6)]],
-		"knee_l": [[0.0, V.call(0, 0, 0)], [0.2, V.call(0, 0, 0)], [0.3, V.call(-35, 0, 0)]],
-		"shoulder_r": [[0.0, arm_r]], "elbow_r": [[0.0, elbow_r]], "hand_r": [[0.0, hand_r]],
-		"shoulder_l": [[0.0, arm_l]], "elbow_l": [[0.0, elbow_l]],
-	}, rest)
-
-	_anim(lib, "jump", 0.3, false, {
-		"hips@pos": [[0.0, V.call(0, 0.84, 0)], [0.1, V.call(0, 0.94, 0)], [0.3, V.call(0, 0.92, 0)]],
-		"torso": [[0.0, V.call(-15, 0, 0)], [0.1, V.call(-4, 0, 0)]],
-		"head": [[0.0, V.call(8, 0, 0)], [0.1, V.call(0, 0, 0)]],
-		"leg_r": [[0.0, V.call(35, 0, 0)], [0.1, V.call(10, 0, 0)], [0.3, V.call(45, 0, 0)]],
-		"knee_r": [[0.0, V.call(-65, 0, 0)], [0.1, V.call(-10, 0, 0)], [0.3, V.call(-80, 0, 0)]],
-		"foot_r": [[0.0, V.call(30, 0, 0)], [0.1, V.call(20, 0, 0)]],
-		"leg_l": [[0.0, V.call(35, 0, 0)], [0.1, V.call(0, 0, 0)], [0.3, V.call(10, 0, 0)]],
-		"knee_l": [[0.0, V.call(-65, 0, 0)], [0.1, V.call(-5, 0, 0)], [0.3, V.call(-35, 0, 0)]],
-		"foot_l": [[0.0, V.call(30, 0, 0)], [0.1, V.call(25, 0, 0)]],
-		"shoulder_r": [[0.0, V.call(-25, 0, 15)], [0.1, V.call(45, 0, 25)]],
-		"elbow_r": [[0.0, V.call(30, 0, 0)], [0.1, V.call(40, 0, 0)]],
-		"hand_r": [[0.0, hand_r]],
-		"shoulder_l": [[0.0, V.call(-25, 0, -15)], [0.1, V.call(45, 0, -25)]],
-		"elbow_l": [[0.0, V.call(30, 0, 0)], [0.1, V.call(40, 0, 0)]],
-	}, rest)
-
-	_anim(lib, "fall", 0.6, true, {
-		"hips@pos": [[0.0, V.call(0, 0.92, 0)]],
-		"torso": [[0.0, V.call(4, 0, 0)]],
-		"leg_r": [[0.0, V.call(25, 0, 4)], [0.3, V.call(15, 0, 4)]],
-		"knee_r": [[0.0, V.call(-40, 0, 0)], [0.3, V.call(-25, 0, 0)]],
-		"leg_l": [[0.0, V.call(5, 0, -4)], [0.3, V.call(15, 0, -4)]],
-		"knee_l": [[0.0, V.call(-20, 0, 0)], [0.3, V.call(-35, 0, 0)]],
-		"foot_r": [[0.0, V.call(25, 0, 0)]], "foot_l": [[0.0, V.call(25, 0, 0)]],
-		"shoulder_r": [[0.0, V.call(25, 0, 45)], [0.3, V.call(25, 0, 55)]],
-		"elbow_r": [[0.0, V.call(30, 0, 0)]], "hand_r": [[0.0, hand_r]],
-		"shoulder_l": [[0.0, V.call(25, 0, -45)], [0.3, V.call(25, 0, -55)]],
-		"elbow_l": [[0.0, V.call(30, 0, 0)]],
-	}, rest)
-
-	_anim(lib, "land", 0.2, false, {
-		"hips@pos": [[0.0, V.call(0, 0.76, 0)], [0.2, V.call(0, 0.92, 0)]],
-		"torso": [[0.0, V.call(-18, 0, 0)], [0.2, V.call(0, 0, 0)]],
-		"head": [[0.0, V.call(10, 0, 0)], [0.2, V.call(0, 0, 0)]],
-		"leg_r": [[0.0, V.call(50, 0, 3)], [0.2, V.call(0, 0, 3)]],
-		"knee_r": [[0.0, V.call(-90, 0, 0)], [0.2, V.call(0, 0, 0)]],
-		"foot_r": [[0.0, V.call(40, 0, 0)], [0.2, V.call(0, 0, 0)]],
-		"leg_l": [[0.0, V.call(50, 0, -3)], [0.2, V.call(0, 0, -3)]],
-		"knee_l": [[0.0, V.call(-90, 0, 0)], [0.2, V.call(0, 0, 0)]],
-		"foot_l": [[0.0, V.call(40, 0, 0)], [0.2, V.call(0, 0, 0)]],
-		"shoulder_r": [[0.0, V.call(-10, 0, 25)], [0.2, arm_r]], "elbow_r": [[0.0, elbow_r]], "hand_r": [[0.0, hand_r]],
-		"shoulder_l": [[0.0, V.call(-10, 0, -25)], [0.2, arm_l]], "elbow_l": [[0.0, elbow_l]],
-	}, rest)
-
-	# A hard landing from a great height (func_80843E64, landing_damage): down on
-	# one knee with a hand to the ground, held, then up again.
-	_anim(lib, "land_hard", 0.9, false, {
-		"hips@pos": [[0.0, V.call(0, 0.58, 0.02)], [0.6, V.call(0, 0.6, 0.02)], [0.9, V.call(0, 0.92, 0)]],
-		"torso": [[0.0, V.call(-38, 0, 0)], [0.6, V.call(-30, 0, 0)], [0.9, V.call(0, 0, 0)]],
-		"head": [[0.0, V.call(30, 0, 0)], [0.6, V.call(20, 0, 0)], [0.9, V.call(0, 0, 0)]],
-		"leg_r": [[0.0, V.call(95, 0, 4)], [0.6, V.call(90, 0, 4)], [0.9, V.call(0, 0, 3)]],
-		"knee_r": [[0.0, V.call(-130, 0, 0)], [0.6, V.call(-125, 0, 0)], [0.9, V.call(0, 0, 0)]],
-		"foot_r": [[0.0, V.call(35, 0, 0)], [0.9, V.call(0, 0, 0)]],
-		"leg_l": [[0.0, V.call(20, 0, -6)], [0.6, V.call(20, 0, -6)], [0.9, V.call(0, 0, -3)]],
-		"knee_l": [[0.0, V.call(-110, 0, 0)], [0.6, V.call(-105, 0, 0)], [0.9, V.call(0, 0, 0)]],
-		"foot_l": [[0.0, V.call(-20, 0, 0)], [0.9, V.call(0, 0, 0)]],
-		"shoulder_r": [[0.0, V.call(-40, 0, 20)], [0.6, V.call(-35, 0, 20)], [0.9, arm_r]], "elbow_r": [[0.0, V.call(10, 0, 0)], [0.9, elbow_r]], "hand_r": [[0.0, hand_r]],
-		"shoulder_l": [[0.0, V.call(40, 0, -25)], [0.6, V.call(35, 0, -25)], [0.9, arm_l]], "elbow_l": [[0.0, V.call(5, 0, 0)], [0.9, elbow_l]],
-	}, rest)
-
-	# Sliding down a slippery slope facing downhill (down_slope_slip): crouched,
-	# leaning back, arms out for balance.
-	_anim(lib, "slope_slip", 0.6, true, {
-		"hips@pos": [[0.0, V.call(0, 0.74, -0.05)], [0.3, V.call(0, 0.72, -0.05)], [0.6, V.call(0, 0.74, -0.05)]],
-		"torso": [[0.0, V.call(10, 0, 3)], [0.3, V.call(10, 0, -3)], [0.6, V.call(10, 0, 3)]],
-		"head": [[0.0, V.call(12, 0, 0)]],
-		"leg_r": [[0.0, V.call(55, 0, 8)]], "knee_r": [[0.0, V.call(-80, 0, 0)]], "foot_r": [[0.0, V.call(30, 0, 0)]],
-		"leg_l": [[0.0, V.call(30, 0, -8)]], "knee_l": [[0.0, V.call(-60, 0, 0)]], "foot_l": [[0.0, V.call(25, 0, 0)]],
-		"shoulder_r": [[0.0, V.call(-15, 0, 70)], [0.3, V.call(-10, 0, 62)], [0.6, V.call(-15, 0, 70)]], "elbow_r": [[0.0, V.call(15, 0, 0)]], "hand_r": [[0.0, hand_r]],
-		"shoulder_l": [[0.0, V.call(-15, 0, -62)], [0.3, V.call(-10, 0, -70)], [0.6, V.call(-15, 0, -62)]], "elbow_l": [[0.0, V.call(15, 0, 0)]],
-	}, rest)
-
-	# Sliding backward down a slope, facing uphill (up_slope_slip): bent over,
-	# hands reaching for the slope.
-	_anim(lib, "slope_slip_up", 0.6, true, {
-		"hips@pos": [[0.0, V.call(0, 0.76, 0.06)], [0.3, V.call(0, 0.74, 0.06)], [0.6, V.call(0, 0.76, 0.06)]],
-		"torso": [[0.0, V.call(-45, 0, 0)], [0.3, V.call(-42, 0, 0)], [0.6, V.call(-45, 0, 0)]],
-		"head": [[0.0, V.call(-25, 0, 0)]],
-		"leg_r": [[0.0, V.call(40, 0, 6)]], "knee_r": [[0.0, V.call(-50, 0, 0)]], "foot_r": [[0.0, V.call(10, 0, 0)]],
-		"leg_l": [[0.0, V.call(45, 0, -6)]], "knee_l": [[0.0, V.call(-55, 0, 0)]], "foot_l": [[0.0, V.call(10, 0, 0)]],
-		"shoulder_r": [[0.0, V.call(-80, 0, 15)], [0.3, V.call(-70, 0, 15)], [0.6, V.call(-80, 0, 15)]], "elbow_r": [[0.0, V.call(10, 0, 0)]], "hand_r": [[0.0, hand_r]],
-		"shoulder_l": [[0.0, V.call(-70, 0, -15)], [0.3, V.call(-80, 0, -15)], [0.6, V.call(-70, 0, -15)]], "elbow_l": [[0.0, V.call(10, 0, 0)]],
-	}, rest)
-
-	# Forward roll (OoT: 20 frames at 1.25x speed = 0.53 s). The hips joint spins
-	# a full turn forward while the body tucks into a ball.
-	var tuck := {
-		"torso": V.call(-45, 0, 0), "head": V.call(-25, 0, 0),
-		"leg_r": V.call(115, 0, 6), "knee_r": V.call(-140, 0, 0), "foot_r": V.call(30, 0, 0),
-		"leg_l": V.call(115, 0, -6), "knee_l": V.call(-140, 0, 0), "foot_l": V.call(30, 0, 0),
-		"shoulder_r": V.call(70, 0, 15), "elbow_r": V.call(80, 0, 0), "hand_r": V.call(-30, 0, 0),
-		"shoulder_l": V.call(70, 0, -15), "elbow_l": V.call(80, 0, 0),
-	}
-	var roll := {
-		"hips@pos": [[0.0, V.call(0, 0.85, 0)], [0.08, V.call(0, 0.42, 0)], [0.42, V.call(0, 0.42, 0)], [0.53, V.call(0, 0.92, 0)]],
-		"hips": [[0.0, V.call(0, 0, 0)], [0.1, V.call(-90, 0, 0)], [0.2, V.call(-180, 0, 0)], [0.3, V.call(-270, 0, 0)], [0.42, V.call(-360, 0, 0)]],
-	}
-	for key in tuck:
-		roll[key] = [[0.0, Vector3.ZERO], [0.08, tuck[key]], [0.4, tuck[key]], [0.53, Vector3.ZERO]]
-	roll["shoulder_r"][3] = [0.53, arm_r]
-	roll["elbow_r"][3] = [0.53, elbow_r]
-	_anim(lib, "roll", 0.53, false, roll, rest)
-
-	# Backflip while locked on: a full backward turn of the hips in the air.
-	var flip := {
-		"hips@pos": [[0.0, V.call(0, 0.84, 0)], [0.06, V.call(0, 0.7, 0)], [0.36, V.call(0, 0.7, 0)], [0.48, V.call(0, 0.92, 0)]],
-		"hips": [[0.0, V.call(0, 0, 0)], [0.1, V.call(90, 0, 0)], [0.19, V.call(180, 0, 0)], [0.28, V.call(270, 0, 0)], [0.38, V.call(360, 0, 0)]],
-	}
-	var flip_tuck := tuck.duplicate()
-	flip_tuck["torso"] = V.call(-25, 0, 0)
-	flip_tuck["leg_r"] = V.call(80, 0, 6)
-	flip_tuck["leg_l"] = V.call(80, 0, -6)
-	flip_tuck["knee_r"] = V.call(-110, 0, 0)
-	flip_tuck["knee_l"] = V.call(-110, 0, 0)
-	for key in flip_tuck:
-		flip[key] = [[0.0, Vector3.ZERO], [0.07, flip_tuck[key]], [0.34, flip_tuck[key]], [0.48, Vector3.ZERO]]
-	_anim(lib, "backflip", 0.48, false, flip, rest)
-
-	# Side hops: a short skip sideways, legs tucked, body tilted into the hop.
-	for variant in [["sidehop_r", 1.0], ["sidehop_l", -1.0]]:
-		var d: float = variant[1]
-		_anim(lib, variant[0], 0.32, false, {
-			"hips@pos": [[0.0, V.call(0, 0.86, 0)], [0.08, V.call(0, 0.9, 0)], [0.32, V.call(0, 0.9, 0)]],
-			"hips": [[0.0, V.call(0, 0, 0)], [0.1, V.call(0, 0, 14 * d)], [0.32, V.call(0, 0, 4 * d)]],
-			"torso": [[0.0, V.call(-8, 0, 0)], [0.1, V.call(-6, 0, -10 * d)]],
-			"leg_r": [[0.0, V.call(15, 0, 4)], [0.1, V.call(35, 0, 12 * d + 4)], [0.32, V.call(25, 0, 6)]],
-			"knee_r": [[0.0, V.call(-30, 0, 0)], [0.1, V.call(-70, 0, 0)], [0.32, V.call(-45, 0, 0)]],
-			"leg_l": [[0.0, V.call(15, 0, -4)], [0.1, V.call(35, 0, 12 * d - 4)], [0.32, V.call(25, 0, -6)]],
-			"knee_l": [[0.0, V.call(-30, 0, 0)], [0.1, V.call(-70, 0, 0)], [0.32, V.call(-45, 0, 0)]],
-			"shoulder_r": [[0.0, arm_r], [0.1, V.call(20, 0, 45)]], "elbow_r": [[0.0, elbow_r], [0.1, V.call(40, 0, 0)]], "hand_r": [[0.0, hand_r]],
-			"shoulder_l": [[0.0, arm_l], [0.1, V.call(20, 0, -45)]], "elbow_l": [[0.0, elbow_l], [0.1, V.call(40, 0, 0)]],
-		}, rest)
-
-	_sword_anims(lib, rest)
-
-	# Jump slash (Lpower_jump_kiru): the hero springs up with the sword swung
-	# high behind his head and his knees tucked, and holds it there until he
-	# lands; then (Lpower_jump_kiru_hit / _end) the blade comes down in a
-	# vertical chop into a deep crouch and he straightens up.
-	var raised := {
-		"torso": V.call(8, 0, 0), "head": V.call(-6, 0, 0),
-		"shoulder_r": V.call(165, 0, 6), "elbow_r": V.call(50, 0, 0), "hand_r": V.call(-15, 0, 0),
-		"shoulder_l": V.call(30, 0, -35), "elbow_l": V.call(50, 0, 0),
-		"leg_r": V.call(55, 0, 4), "knee_r": V.call(-95, 0, 0), "foot_r": V.call(30, 0, 0),
-		"leg_l": V.call(20, 0, -4), "knee_l": V.call(-60, 0, 0), "foot_l": V.call(25, 0, 0),
-	}
-	var js := {"hips@pos": [[0.0, V.call(0, 0.84, 0)], [0.1, V.call(0, 0.95, 0)], [0.45, V.call(0, 0.95, 0)]]}
-	for key: String in raised:
-		js[key] = [[0.0, Vector3.ZERO], [0.14, raised[key]], [0.45, raised[key] + V.call(4, 0, 0)]]
-	js["shoulder_r"][0] = [0.0, arm_r]
-	js["elbow_r"][0] = [0.0, elbow_r]
-	js["hand_r"][0] = [0.0, hand_r]
-	_anim(lib, "jumpslash", 0.45, false, js, rest)
-	var chop := {
-		"torso": V.call(-24, 0, 0), "head": V.call(14, 0, 0),
-		"shoulder_r": V.call(58, 0, 4), "elbow_r": V.call(4, 0, 0), "hand_r": V.call(-78, 0, 0),
-		"shoulder_l": V.call(-20, 0, -40), "elbow_l": V.call(40, 0, 0),
-		"leg_l": V.call(72, 0, -6), "knee_l": V.call(-100, 0, 0), "foot_l": V.call(28, 0, 0),
-		"leg_r": V.call(-8, 0, 8), "knee_r": V.call(-70, 0, 0), "foot_r": V.call(55, 0, 0),
-	}
-	var jl := {"hips@pos": [[0.0, V.call(0, 0.86, 0)], [0.07, V.call(0, 0.6, 0.04)], [0.28, V.call(0, 0.62, 0.04)], [0.5, V.call(0, 0.91, 0)]]}
-	var stand := {"shoulder_r": arm_r, "elbow_r": elbow_r, "hand_r": hand_r, "shoulder_l": arm_l, "elbow_l": elbow_l,
-		"leg_r": V.call(0, 0, 3), "leg_l": V.call(0, 0, -3)}
-	for key: String in chop:
-		var from: Vector3 = raised.get(key, Vector3.ZERO)
-		jl[key] = [[0.0, from], [0.07, chop[key]], [0.28, chop[key]], [0.5, stand.get(key, Vector3.ZERO)]]
-	_anim(lib, "jumpslash_land", 0.5, false, jl, rest)
-
-	# The Knight's Techniques (Chapter V). "spin_attack": the blade held out
-	# flat at arm's length, low in a wide stance, while the body turns a full
-	# circle (the controller turns him). "spin_charge": crouched, the blade
-	# drawn back low at his side, gathering strength. "shield_bash": a shove
-	# behind the shield with the weight thrown forward.
-	_anim(lib, "spin_attack", 0.42, false, {
-		"hips@pos": [[0.0, V.call(0, 0.86, 0)], [0.1, V.call(0, 0.8, 0)], [0.32, V.call(0, 0.8, 0)], [0.42, V.call(0, 0.88, 0)]],
-		"torso": [[0.0, V.call(-6, 20, 0)], [0.1, V.call(-10, -10, 0)], [0.42, V.call(-6, -20, 0)]],
-		"head": [[0.0, V.call(4, -10, 0)], [0.42, V.call(4, 10, 0)]],
-		"shoulder_r": [[0.0, V.call(80, 40, 0)], [0.1, V.call(86, -60, 0)], [0.32, V.call(86, -70, 0)], [0.42, V.call(60, -40, 0)]],
-		"elbow_r": [[0.0, V.call(20, 0, 0)], [0.1, V.call(6, 0, 0)], [0.42, V.call(20, 0, 0)]],
-		"hand_r": [[0.0, V.call(-70, 90, 0)], [0.1, V.call(-82, 90, 0)], [0.42, V.call(-60, 90, 0)]],
-		"shoulder_l": [[0.0, V.call(20, 0, -40)], [0.42, V.call(20, 0, -50)]], "elbow_l": [[0.0, V.call(45, 0, 0)]],
-		"leg_l": [[0.0, V.call(32, 0, -14)]], "knee_l": [[0.0, V.call(-48, 0, 0)]], "foot_l": [[0.0, V.call(16, 0, 0)]],
-		"leg_r": [[0.0, V.call(-14, 0, 14)]], "knee_r": [[0.0, V.call(-26, 0, 0)]], "foot_r": [[0.0, V.call(30, 0, 0)]],
-	}, rest)
-	_anim(lib, "spin_charge", 0.6, true, {
-		"hips@pos": [[0.0, V.call(0, 0.84, 0)], [0.3, V.call(0, 0.83, 0)]],
-		"torso": [[0.0, V.call(-10, 30, 0)], [0.3, V.call(-11, 32, 0)]], "head": [[0.0, V.call(6, -28, 0)]],
-		"shoulder_r": [[0.0, V.call(20, 60, 30)], [0.3, V.call(22, 62, 32)]], "elbow_r": [[0.0, V.call(30, 0, 0)]], "hand_r": [[0.0, V.call(-60, 90, 0)]],
-		"shoulder_l": [[0.0, V.call(40, -20, -20)]], "elbow_l": [[0.0, V.call(60, 0, 0)]],
-		"leg_l": [[0.0, V.call(28, 0, -12)]], "knee_l": [[0.0, V.call(-40, 0, 0)]], "foot_l": [[0.0, V.call(12, 0, 0)]],
-		"leg_r": [[0.0, V.call(-12, 0, 12)]], "knee_r": [[0.0, V.call(-24, 0, 0)]], "foot_r": [[0.0, V.call(24, 0, 0)]],
-	}, rest)
-	_anim(lib, "shield_bash", 0.38, false, {
-		"hips@pos": [[0.0, V.call(0, 0.86, 0)], [0.1, V.call(0, 0.82, -0.12)], [0.38, V.call(0, 0.88, 0)]],
-		"torso": [[0.0, V.call(-6, -18, 0)], [0.1, V.call(-18, 10, 0)], [0.38, V.call(-6, 0, 0)]],
-		"head": [[0.0, V.call(6, 10, 0)], [0.1, V.call(10, -6, 0)], [0.38, V.call(0, 0, 0)]],
-		"shoulder_l": [[0.0, V.call(50, -10, -20)], [0.1, V.call(88, 10, -6)], [0.25, V.call(84, 6, -8)], [0.38, V.call(55, -20, -20)]],
-		"elbow_l": [[0.0, V.call(90, 0, 0)], [0.1, V.call(30, 0, 0)], [0.38, V.call(80, 0, 0)]],
-		"shoulder_r": [[0.0, arm_r], [0.1, V.call(-20, 0, 20)], [0.38, arm_r]], "elbow_r": [[0.0, elbow_r]], "hand_r": [[0.0, hand_r]],
-		"leg_l": [[0.0, V.call(0, 0, -3)], [0.1, V.call(40, 0, -4)], [0.38, V.call(0, 0, -3)]],
-		"knee_l": [[0.0, V.call(0, 0, 0)], [0.1, V.call(-40, 0, 0)], [0.38, V.call(0, 0, 0)]],
-		"leg_r": [[0.0, V.call(0, 0, 3)], [0.1, V.call(-25, 0, 4)], [0.38, V.call(0, 0, 3)]],
-		"knee_r": [[0.0, V.call(0, 0, 0)], [0.1, V.call(-12, 0, 0)], [0.38, V.call(0, 0, 0)]],
-	}, rest)
-	# The knighting (Chapter V): down on his right knee, head bowed, left hand
-	# on the raised left knee.
-	_anim(lib, "kneel", 1.6, true, {
-		"hips@pos": [[0.0, V.call(0, 0.5, 0.08)], [0.8, V.call(0, 0.495, 0.08)]],
-		"torso": [[0.0, V.call(-8, 0, 0)]], "head": [[0.0, V.call(28, 0, 0)], [0.8, V.call(30, 0, 0)]],
-		"leg_l": [[0.0, V.call(85, 0, -4)]], "knee_l": [[0.0, V.call(-90, 0, 0)]], "foot_l": [[0.0, V.call(5, 0, 0)]],
-		"leg_r": [[0.0, V.call(-10, 0, 4)]], "knee_r": [[0.0, V.call(-95, 0, 0)]], "foot_r": [[0.0, V.call(40, 0, 0)]],
-		"shoulder_l": [[0.0, V.call(40, 0, -10)]], "elbow_l": [[0.0, V.call(50, 0, 0)]],
-		"shoulder_r": [[0.0, V.call(5, 0, 10)]], "elbow_r": [[0.0, V.call(20, 0, 0)]], "hand_r": [[0.0, hand_r]],
-	}, rest)
-	# Dragging a great stone (the Questlord's Gauntlets): crouched, both hands
-	# gripping it at arm's length, leaning back, stepping backward.
-	_anim(lib, "pull", 0.8, true, {
-		"hips@pos": [[0.0, V.call(0, 0.74, 0.06)], [0.2, V.call(0, 0.71, 0.08)], [0.4, V.call(0, 0.74, 0.06)], [0.6, V.call(0, 0.71, 0.08)]],
-		"torso": [[0.0, V.call(-14, 0, 0)], [0.4, V.call(-10, 0, 0)]], "head": [[0.0, V.call(10, 0, 0)]],
-		"shoulder_r": [[0.0, V.call(78, 0, 10)], [0.4, V.call(74, 0, 10)]], "elbow_r": [[0.0, V.call(12, 0, 0)]], "hand_r": [[0.0, V.call(-20, 0, 0)]],
-		"shoulder_l": [[0.0, V.call(78, 0, -10)], [0.4, V.call(74, 0, -10)]], "elbow_l": [[0.0, V.call(12, 0, 0)]],
-		"leg_r": [[0.0, V.call(50, 0, 6)], [0.2, V.call(20, 0, 6)], [0.4, V.call(-10, 0, 6)], [0.6, V.call(30, 0, 6)]],
-		"knee_r": [[0.0, V.call(-80, 0, 0)], [0.2, V.call(-50, 0, 0)], [0.4, V.call(-30, 0, 0)], [0.6, V.call(-70, 0, 0)]],
-		"leg_l": [[0.0, V.call(-10, 0, -6)], [0.2, V.call(30, 0, -6)], [0.4, V.call(50, 0, -6)], [0.6, V.call(20, 0, -6)]],
-		"knee_l": [[0.0, V.call(-30, 0, 0)], [0.2, V.call(-70, 0, 0)], [0.4, V.call(-80, 0, 0)], [0.6, V.call(-50, 0, 0)]],
-		"foot_r": [[0.0, V.call(20, 0, 0)]], "foot_l": [[0.0, V.call(20, 0, 0)]],
-	}, rest)
-
-	# On horseback: astride the saddle, knees out round the horse's barrel,
-	# both hands forward on the reins. "ride_gallop" rises in the stirrups
-	# and leans into the wind.
-	var seat_legs := {
-		"leg_r": V.call(62, 0, 28), "knee_r": V.call(-78, 0, 0), "foot_r": V.call(20, 0, 0),
-		"leg_l": V.call(62, 0, -28), "knee_l": V.call(-78, 0, 0), "foot_l": V.call(20, 0, 0),
-		"shoulder_r": V.call(38, -14, 10), "elbow_r": V.call(62, 0, 0), "hand_r": V.call(-20, 0, 0),
-		"shoulder_l": V.call(38, 14, -10), "elbow_l": V.call(62, 0, 0),
-	}
-	var ride := {"hips@pos": [[0.0, V.call(0, 0.92, 0)], [0.9, V.call(0, 0.935, 0)]], "torso": [[0.0, V.call(-6, 0, 0)], [0.9, V.call(-4, 0, 0)]]}
-	for key: String in seat_legs:
-		ride[key] = [[0.0, seat_legs[key]]]
-	_anim(lib, "ride", 1.8, true, ride, rest)
-	var gal := {"hips@pos": [[0.0, V.call(0, 0.95, 0.02)], [0.25, V.call(0, 1.02, -0.02)]], "torso": [[0.0, V.call(-18, 0, 0)], [0.25, V.call(-12, 0, 0)]],
-		"head": [[0.0, V.call(12, 0, 0)], [0.25, V.call(8, 0, 0)]]}
-	for key: String in seat_legs:
-		gal[key] = [[0.0, seat_legs[key]]]
-	gal["leg_r"] = [[0.0, V.call(50, 0, 26)], [0.25, V.call(40, 0, 24)]]
-	gal["leg_l"] = [[0.0, V.call(50, 0, -26)], [0.25, V.call(40, 0, -24)]]
-	gal["knee_r"] = [[0.0, V.call(-85, 0, 0)], [0.25, V.call(-70, 0, 0)]]
-	gal["knee_l"] = [[0.0, V.call(-85, 0, 0)], [0.25, V.call(-70, 0, 0)]]
-	_anim(lib, "ride_gallop", 0.5, true, gal, rest)
-
-	# Swimming (gPlayerAnim_link_swimer_*). The water line sits at his chest:
-	# "swim" lies him forward into a breaststroke, arms reaching ahead and
-	# sweeping out and back while the legs kick; "swim_wait" treads water
-	# upright, hands sculling; "dive" tips him head first under.
-	var sw := 0.75
-	_anim(lib, "swim", sw, true, {
-		"hips@pos": [[0.0, V.call(0, 1.12, 0.12)], [sw * 0.5, V.call(0, 1.16, 0.12)]],
-		"hips": [[0.0, V.call(-62, 0, 0)]],
-		"torso": [[0.0, V.call(4, 0, 0)], [sw * 0.5, V.call(-4, 0, 0)]],
-		"head": [[0.0, V.call(40, 0, 0)], [sw * 0.5, V.call(32, 0, 0)]],
-		"shoulder_r": [[0.0, V.call(168, 0, 8)], [sw * 0.35, V.call(120, 0, 70)], [sw * 0.6, V.call(40, 0, 40)], [sw * 0.85, V.call(110, 0, 10)]],
-		"elbow_r": [[0.0, V.call(10, 0, 0)], [sw * 0.35, V.call(25, 0, 0)], [sw * 0.6, V.call(95, 0, 0)], [sw * 0.85, V.call(70, 0, 0)]],
-		"hand_r": [[0.0, hand_r]],
-		"shoulder_l": [[0.0, V.call(168, 0, -8)], [sw * 0.35, V.call(120, 0, -70)], [sw * 0.6, V.call(40, 0, -40)], [sw * 0.85, V.call(110, 0, -10)]],
-		"elbow_l": [[0.0, V.call(10, 0, 0)], [sw * 0.35, V.call(25, 0, 0)], [sw * 0.6, V.call(95, 0, 0)], [sw * 0.85, V.call(70, 0, 0)]],
-		"leg_r": [[0.0, V.call(-10, 0, 8)], [sw * 0.4, V.call(40, 0, 20)], [sw * 0.7, V.call(-5, 0, 4)]],
-		"knee_r": [[0.0, V.call(-15, 0, 0)], [sw * 0.4, V.call(-95, 0, 0)], [sw * 0.7, V.call(-10, 0, 0)]],
-		"leg_l": [[0.0, V.call(-10, 0, -8)], [sw * 0.4, V.call(40, 0, -20)], [sw * 0.7, V.call(-5, 0, -4)]],
-		"knee_l": [[0.0, V.call(-15, 0, 0)], [sw * 0.4, V.call(-95, 0, 0)], [sw * 0.7, V.call(-10, 0, 0)]],
-		"foot_r": [[0.0, V.call(40, 0, 0)]], "foot_l": [[0.0, V.call(40, 0, 0)]],
-	}, rest)
-	_anim(lib, "swim_wait", 1.2, true, {
-		"hips@pos": [[0.0, V.call(0, 0.9, 0)], [0.6, V.call(0, 0.93, 0)]],
-		"hips": [[0.0, V.call(-12, 0, 0)]],
-		"head": [[0.0, V.call(10, 0, 0)]],
-		"shoulder_r": [[0.0, V.call(35, 0, 55)], [0.6, V.call(35, 0, 25)]],
-		"elbow_r": [[0.0, V.call(40, 0, 0)], [0.6, V.call(60, 0, 0)]], "hand_r": [[0.0, hand_r]],
-		"shoulder_l": [[0.0, V.call(35, 0, -55)], [0.6, V.call(35, 0, -25)]],
-		"elbow_l": [[0.0, V.call(40, 0, 0)], [0.6, V.call(60, 0, 0)]],
-		"leg_r": [[0.0, V.call(25, 0, 6)], [0.6, V.call(-5, 0, 6)]],
-		"knee_r": [[0.0, V.call(-60, 0, 0)], [0.6, V.call(-20, 0, 0)]],
-		"leg_l": [[0.0, V.call(-5, 0, -6)], [0.6, V.call(25, 0, -6)]],
-		"knee_l": [[0.0, V.call(-20, 0, 0)], [0.6, V.call(-60, 0, 0)]],
-		"foot_r": [[0.0, V.call(30, 0, 0)]], "foot_l": [[0.0, V.call(30, 0, 0)]],
-	}, rest)
-	_anim(lib, "dive", 0.8, true, {
-		"hips@pos": [[0.0, V.call(0, 1.0, 0.2)]],
-		"hips": [[0.0, V.call(-120, 0, 0)]],
-		"head": [[0.0, V.call(20, 0, 0)]],
-		"shoulder_r": [[0.0, V.call(172, 0, 6)], [0.4, V.call(150, 0, 40)]], "elbow_r": [[0.0, V.call(6, 0, 0)], [0.4, V.call(30, 0, 0)]], "hand_r": [[0.0, hand_r]],
-		"shoulder_l": [[0.0, V.call(172, 0, -6)], [0.4, V.call(150, 0, -40)]], "elbow_l": [[0.0, V.call(6, 0, 0)], [0.4, V.call(30, 0, 0)]],
-		"leg_r": [[0.0, V.call(-15, 0, 4)], [0.4, V.call(15, 0, 4)]], "knee_r": [[0.0, V.call(-10, 0, 0)], [0.4, V.call(-50, 0, 0)]],
-		"leg_l": [[0.0, V.call(15, 0, -4)], [0.4, V.call(-15, 0, -4)]], "knee_l": [[0.0, V.call(-50, 0, 0)], [0.4, V.call(-10, 0, 0)]],
-		"foot_r": [[0.0, V.call(45, 0, 0)]], "foot_l": [[0.0, V.call(45, 0, 0)]],
-	}, rest)
-
-	# Shield raised in front: upper arm forward/inward, forearm vertical,
-	# shield rotated about the forearm so its face points forward.
-	var block_pose := {
-		"hips@pos": [[0.0, V.call(0, 0.91, 0)], [0.12, V.call(0, 0.86, 0)]],
-		"torso": [[0.0, V.call(-4, 0, 0)], [0.12, V.call(-8, -8, 0)]],
-		"head": [[0.0, V.call(0, 0, 0)], [0.12, V.call(6, 0, 0)]],
-		"shoulder_l": [[0.0, arm_l], [0.12, V.call(58, -32, 0)]],
-		"elbow_l": [[0.0, elbow_l], [0.12, V.call(118, 0, 0)]],
-		"shield": [[0.0, V.call(0, 0, 0)], [0.12, V.call(0, 62, 0)]],
-		"shoulder_r": [[0.0, arm_r], [0.12, V.call(25, 0, 18)]],
-		"elbow_r": [[0.0, elbow_r], [0.12, V.call(45, 0, 0)]],
-		"hand_r": [[0.0, hand_r], [0.12, V.call(-5, 0, 0)]],
-		"leg_l": [[0.0, V.call(0, 0, -3)], [0.12, V.call(20, 0, -5)]],
-		"knee_l": [[0.0, V.call(0, 0, 0)], [0.12, V.call(-28, 0, 0)]],
-		"leg_r": [[0.0, V.call(0, 0, 3)], [0.12, V.call(-12, 0, 5)]],
-		"knee_r": [[0.0, V.call(0, 0, 0)], [0.12, V.call(-18, 0, 0)]],
-		"foot_r": [[0.0, V.call(0, 0, 0)], [0.12, V.call(25, 0, 0)]],
-	}
-	_anim(lib, "block", 0.12, false, block_pose, rest)
-
-	_anim(lib, "block_hit", 0.25, false, {
-		"hips@pos": [[0.0, V.call(0, 0.83, 0.06)], [0.25, V.call(0, 0.86, 0)]],
-		"torso": [[0.0, V.call(4, -8, 0)], [0.25, V.call(-8, -8, 0)]],
-		"shoulder_l": [[0.0, V.call(50, -26, 0)], [0.25, V.call(58, -32, 0)]],
-		"elbow_l": [[0.0, V.call(125, 0, 0)], [0.25, V.call(118, 0, 0)]],
-		"shield": [[0.0, V.call(0, 62, 0)]],
-		"shoulder_r": [[0.0, V.call(25, 0, 18)]], "elbow_r": [[0.0, V.call(45, 0, 0)]], "hand_r": [[0.0, V.call(-5, 0, 0)]],
-		"leg_l": [[0.0, V.call(20, 0, -5)]], "knee_l": [[0.0, V.call(-28, 0, 0)]],
-		"leg_r": [[0.0, V.call(-12, 0, 5)]], "knee_r": [[0.0, V.call(-18, 0, 0)]], "foot_r": [[0.0, V.call(25, 0, 0)]],
-	}, rest)
-
-	# OoT's "defense" pose without Z-targeting: crouched low behind the shield,
-	# front knee forward and back knee deep, sword held low behind.
-	var crouch := {
-		"hips@pos": V.call(0, 0.64, 0.03),
-		"torso": V.call(-16, -10, 0), "head": V.call(14, 6, 0),
-		"leg_l": V.call(68, 0, -6), "knee_l": V.call(-95, 0, 0), "foot_l": V.call(26, 0, 0),
-		"leg_r": V.call(22, 0, 8), "knee_r": V.call(-88, 0, 0), "foot_r": V.call(62, 0, 0),
-		"shoulder_l": V.call(62, -30, 0), "elbow_l": V.call(112, 0, 0), "shield": V.call(0, 62, 0),
-		"shoulder_r": V.call(-12, 0, 22), "elbow_r": V.call(40, 0, 0), "hand_r": V.call(-15, 0, 0),
-	}
-	var crouch_in := {}
-	for key: String in crouch:
-		var from: Vector3 = rest["hips"] if key == "hips@pos" else Vector3.ZERO
-		crouch_in[key] = [[0.0, from], [0.12, crouch[key]]]
-	_anim(lib, "block_crouch", 0.12, false, crouch_in, rest)
-	var crouch_hit := {}
-	for key: String in crouch:
-		crouch_hit[key] = [[0.0, crouch[key]], [0.25, crouch[key]]]
-	crouch_hit["hips@pos"] = [[0.0, V.call(0, 0.6, 0.1)], [0.25, crouch["hips@pos"]]]
-	crouch_hit["torso"] = [[0.0, V.call(-4, -10, 0)], [0.25, crouch["torso"]]]
-	crouch_hit["shoulder_l"] = [[0.0, V.call(54, -24, 0)], [0.25, crouch["shoulder_l"]]]
-	_anim(lib, "block_crouch_hit", 0.25, false, crouch_hit, rest)
-
-	# Putting the sword away: the right hand reaches over the right shoulder to
-	# the scabbard (the sword swaps to the back half way through) and comes back.
-	_anim(lib, "sheathe", 0.5, false, {
-		"torso": [[0.0, V.call(0, 0, 0)], [0.2, V.call(4, -12, 0)], [0.5, V.call(0, 0, 0)]],
-		"head": [[0.0, V.call(0, 0, 0)], [0.2, V.call(-4, 10, 0)], [0.5, V.call(0, 0, 0)]],
-		"shoulder_r": [[0.0, arm_r], [0.2, V.call(155, 0, 12)], [0.3, V.call(155, 0, 12)], [0.5, arm_r]],
-		"elbow_r": [[0.0, elbow_r], [0.2, V.call(105, 0, 0)], [0.3, V.call(105, 0, 0)], [0.5, elbow_r]],
-		"hand_r": [[0.0, hand_r], [0.2, V.call(-30, 0, 0)], [0.5, hand_r]],
-		"shoulder_l": [[0.0, arm_l]], "elbow_l": [[0.0, elbow_l]],
-		"leg_r": [[0.0, V.call(0, 0, 3)]], "leg_l": [[0.0, V.call(0, 0, -3)]],
-	}, rest)
-
-	_anim(lib, "hurt", 0.4, false, {
-		"hips@pos": [[0.0, V.call(0, 0.9, 0.05)], [0.4, V.call(0, 0.92, 0)]],
-		"torso": [[0.0, V.call(22, 0, 5)], [0.4, V.call(0, 0, 0)]],
-		"head": [[0.0, V.call(18, 0, 0)], [0.4, V.call(0, 0, 0)]],
-		"shoulder_r": [[0.0, V.call(20, 0, 50)], [0.4, arm_r]], "elbow_r": [[0.0, V.call(20, 0, 0)], [0.4, elbow_r]], "hand_r": [[0.0, hand_r]],
-		"shoulder_l": [[0.0, V.call(20, 0, -50)], [0.4, arm_l]], "elbow_l": [[0.0, V.call(20, 0, 0)], [0.4, elbow_l]],
-		"leg_r": [[0.0, V.call(-10, 0, 3)], [0.4, V.call(0, 0, 3)]], "leg_l": [[0.0, V.call(15, 0, -3)], [0.4, V.call(0, 0, -3)]],
-		"knee_l": [[0.0, V.call(-20, 0, 0)], [0.4, V.call(0, 0, 0)]],
-	}, rest)
-
-	# Holding up a new treasure (OoT's get-item pose): both hands high over his
-	# head, chin up, feet set apart.
-	_anim(lib, "item_get", 0.35, false, {
-		"hips@pos": [[0.0, V.call(0, 0.9, 0)], [0.2, V.call(0, 0.94, 0)], [0.35, V.call(0, 0.93, 0)]],
-		"torso": [[0.0, V.call(0, 0, 0)], [0.35, V.call(8, 0, 0)]],
-		"head": [[0.0, V.call(0, 0, 0)], [0.35, V.call(14, 0, 0)]],
-		"shoulder_r": [[0.0, arm_r], [0.25, V.call(172, 0, 18)], [0.35, V.call(168, 0, 16)]],
-		"elbow_r": [[0.0, elbow_r], [0.35, V.call(22, 0, 0)]], "hand_r": [[0.0, hand_r], [0.35, V.call(-10, 0, 0)]],
-		"shoulder_l": [[0.0, arm_l], [0.25, V.call(172, 0, -18)], [0.35, V.call(168, 0, -16)]],
-		"elbow_l": [[0.0, elbow_l], [0.35, V.call(22, 0, 0)]],
-		"leg_r": [[0.0, V.call(0, 0, 3)], [0.35, V.call(0, 0, 8)]], "leg_l": [[0.0, V.call(0, 0, -3)], [0.35, V.call(0, 0, -8)]],
-	}, rest)
-	# Throwing the boomerang: a sidearm fling from the right hand.
-	_anim(lib, "throw", 0.4, false, {
-		"torso": [[0.0, V.call(0, 0, 0)], [0.12, V.call(-4, 35, 0)], [0.22, V.call(-8, -30, 0)], [0.4, V.call(0, 0, 0)]],
-		"shoulder_r": [[0.0, arm_r], [0.12, V.call(70, 0, 70)], [0.22, V.call(80, 0, 20)], [0.4, arm_r]],
-		"elbow_r": [[0.0, elbow_r], [0.12, V.call(100, 0, 0)], [0.22, V.call(10, 0, 0)], [0.4, elbow_r]],
-		"hand_r": [[0.0, hand_r]],
-		"shoulder_l": [[0.0, arm_l]], "elbow_l": [[0.0, elbow_l]],
-		"leg_r": [[0.0, V.call(0, 0, 3)], [0.22, V.call(-12, 0, 3)], [0.4, V.call(0, 0, 3)]],
-		"leg_l": [[0.0, V.call(0, 0, -3)], [0.22, V.call(14, 0, -3)], [0.4, V.call(0, 0, -3)]],
-	}, rest)
-
-	# Lifting a pot, rock or shrub (OoT's carryB): squat and take hold of it
-	# (the controller attaches it at 0.13 s), then stand and raise it over his
-	# head into the carry pose the controller layers on the upper body.
-	var carry_up := {
-		"torso": V.call(4, 0, 0), "head": V.call(-6, 0, 0),
-		"shoulder_r": V.call(165, 0, 16), "elbow_r": V.call(30, 0, 0), "hand_r": V.call(-40, 0, 0),
-		"shoulder_l": V.call(165, 0, -16), "elbow_l": V.call(30, 0, 0),
-	}
-	_anim(lib, "lift", 0.5, false, {
-		"hips@pos": [[0.0, rest["hips"]], [0.13, V.call(0, 0.6, 0.06)], [0.22, V.call(0, 0.64, 0.05)], [0.38, V.call(0, 0.9, 0)], [0.5, rest["hips"]]],
-		"torso": [[0.0, V.call(0, 0, 0)], [0.13, V.call(-38, 0, 0)], [0.22, V.call(-30, 0, 0)], [0.38, V.call(-4, 0, 0)], [0.5, carry_up["torso"]]],
-		"head": [[0.0, V.call(0, 0, 0)], [0.13, V.call(20, 0, 0)], [0.38, V.call(4, 0, 0)], [0.5, carry_up["head"]]],
-		"shoulder_r": [[0.0, arm_r], [0.13, V.call(62, 0, 14)], [0.22, V.call(70, 0, 14)], [0.38, V.call(130, 0, 22)], [0.5, carry_up["shoulder_r"]]],
-		"elbow_r": [[0.0, elbow_r], [0.13, V.call(18, 0, 0)], [0.22, V.call(40, 0, 0)], [0.38, V.call(70, 0, 0)], [0.5, carry_up["elbow_r"]]],
-		"hand_r": [[0.0, hand_r], [0.13, V.call(-30, 0, 0)], [0.5, carry_up["hand_r"]]],
-		"shoulder_l": [[0.0, arm_l], [0.13, V.call(62, 0, -14)], [0.22, V.call(70, 0, -14)], [0.38, V.call(130, 0, -22)], [0.5, carry_up["shoulder_l"]]],
-		"elbow_l": [[0.0, elbow_l], [0.13, V.call(18, 0, 0)], [0.22, V.call(40, 0, 0)], [0.38, V.call(70, 0, 0)], [0.5, carry_up["elbow_l"]]],
-		"leg_r": [[0.0, V.call(0, 0, 3)], [0.13, V.call(62, 0, 8)], [0.22, V.call(58, 0, 8)], [0.38, V.call(12, 0, 4)], [0.5, V.call(0, 0, 3)]],
-		"knee_r": [[0.0, V.call(0, 0, 0)], [0.13, V.call(-100, 0, 0)], [0.22, V.call(-92, 0, 0)], [0.38, V.call(-20, 0, 0)], [0.5, V.call(0, 0, 0)]],
-		"foot_r": [[0.0, V.call(0, 0, 0)], [0.13, V.call(36, 0, 0)], [0.38, V.call(8, 0, 0)], [0.5, V.call(0, 0, 0)]],
-		"leg_l": [[0.0, V.call(0, 0, -3)], [0.13, V.call(62, 0, -8)], [0.22, V.call(58, 0, -8)], [0.38, V.call(12, 0, -4)], [0.5, V.call(0, 0, -3)]],
-		"knee_l": [[0.0, V.call(0, 0, 0)], [0.13, V.call(-100, 0, 0)], [0.22, V.call(-92, 0, 0)], [0.38, V.call(-20, 0, 0)], [0.5, V.call(0, 0, 0)]],
-		"foot_l": [[0.0, V.call(0, 0, 0)], [0.13, V.call(36, 0, 0)], [0.38, V.call(8, 0, 0)], [0.5, V.call(0, 0, 0)]],
-	}, rest)
-	# Throwing it (OoT's throw): hands back behind the head, then a two-handed
-	# heave forward with a step (released at 0.1 s), and back to standing.
-	_anim(lib, "throw_carry", 0.45, false, {
-		"hips@pos": [[0.0, rest["hips"]], [0.12, V.call(0, 0.86, -0.03)], [0.3, V.call(0, 0.88, -0.02)], [0.45, rest["hips"]]],
-		"torso": [[0.0, carry_up["torso"]], [0.05, V.call(12, 0, 0)], [0.13, V.call(-18, 0, 0)], [0.3, V.call(-10, 0, 0)], [0.45, V.call(0, 0, 0)]],
-		"head": [[0.0, carry_up["head"]], [0.05, V.call(-10, 0, 0)], [0.13, V.call(6, 0, 0)], [0.45, V.call(0, 0, 0)]],
-		"shoulder_r": [[0.0, carry_up["shoulder_r"]], [0.05, V.call(176, 0, 18)], [0.13, V.call(105, 0, 16)], [0.3, V.call(80, 0, 14)], [0.45, arm_r]],
-		"elbow_r": [[0.0, carry_up["elbow_r"]], [0.05, V.call(75, 0, 0)], [0.13, V.call(8, 0, 0)], [0.3, V.call(15, 0, 0)], [0.45, elbow_r]],
-		"hand_r": [[0.0, carry_up["hand_r"]], [0.13, V.call(-10, 0, 0)], [0.45, hand_r]],
-		"shoulder_l": [[0.0, carry_up["shoulder_l"]], [0.05, V.call(176, 0, -18)], [0.13, V.call(105, 0, -16)], [0.3, V.call(80, 0, -14)], [0.45, arm_l]],
-		"elbow_l": [[0.0, carry_up["elbow_l"]], [0.05, V.call(75, 0, 0)], [0.13, V.call(8, 0, 0)], [0.3, V.call(15, 0, 0)], [0.45, elbow_l]],
-		"leg_l": [[0.0, V.call(0, 0, -3)], [0.12, V.call(28, 0, -4)], [0.3, V.call(24, 0, -4)], [0.45, V.call(0, 0, -3)]],
-		"knee_l": [[0.0, V.call(0, 0, 0)], [0.12, V.call(-30, 0, 0)], [0.3, V.call(-26, 0, 0)], [0.45, V.call(0, 0, 0)]],
-		"leg_r": [[0.0, V.call(0, 0, 3)], [0.12, V.call(-16, 0, 4)], [0.3, V.call(-12, 0, 4)], [0.45, V.call(0, 0, 3)]],
-		"knee_r": [[0.0, V.call(0, 0, 0)], [0.12, V.call(-10, 0, 0)], [0.45, V.call(0, 0, 0)]],
-		"foot_r": [[0.0, V.call(0, 0, 0)], [0.12, V.call(20, 0, 0)], [0.45, V.call(0, 0, 0)]],
-	}, rest)
-
-	# Bonking into a wall during a roll (OoT: knocked back onto his seat).
-	_anim(lib, "bonk", 0.5, false, {
-		"hips@pos": [[0.0, V.call(0, 0.8, 0.04)], [0.12, V.call(0, 0.42, 0.08)], [0.35, V.call(0, 0.42, 0.08)], [0.5, V.call(0, 0.92, 0)]],
-		"torso": [[0.0, V.call(25, 0, 0)], [0.12, V.call(-20, 0, 0)], [0.5, V.call(0, 0, 0)]],
-		"head": [[0.0, V.call(25, 0, 0)], [0.12, V.call(5, 0, 0)], [0.5, V.call(0, 0, 0)]],
-		"leg_r": [[0.0, V.call(30, 0, 6)], [0.12, V.call(85, 0, 10)], [0.35, V.call(85, 0, 10)], [0.5, V.call(0, 0, 3)]],
-		"knee_r": [[0.0, V.call(-30, 0, 0)], [0.12, V.call(-40, 0, 0)], [0.35, V.call(-40, 0, 0)], [0.5, V.call(0, 0, 0)]],
-		"leg_l": [[0.0, V.call(30, 0, -6)], [0.12, V.call(85, 0, -10)], [0.35, V.call(85, 0, -10)], [0.5, V.call(0, 0, -3)]],
-		"knee_l": [[0.0, V.call(-30, 0, 0)], [0.12, V.call(-40, 0, 0)], [0.35, V.call(-40, 0, 0)], [0.5, V.call(0, 0, 0)]],
-		"shoulder_r": [[0.0, V.call(30, 0, 40)], [0.12, V.call(-20, 0, 25)], [0.5, arm_r]], "elbow_r": [[0.0, elbow_r]], "hand_r": [[0.0, hand_r]],
-		"shoulder_l": [[0.0, V.call(30, 0, -40)], [0.12, V.call(-20, 0, -25)], [0.5, arm_l]], "elbow_l": [[0.0, elbow_l]],
-	}, rest)
-
-	# --- Climbing (the controller moves the body; these give the limbs) ---------
-	# Hanging from a ledge (jump_climb_hold / _wait): arms straight up to the edge
-	# and a little forward, body against the wall, legs dangling and swaying.
-	var hang := {
-		"hips@pos": V.call(0, 0.92, 0.04),
-		"torso": V.call(-4, 0, 0), "head": V.call(10, 0, 0),
-		"shoulder_r": V.call(162, 0, -4), "elbow_r": V.call(12, 0, 0), "hand_r": V.call(-30, 0, 0),
-		"shoulder_l": V.call(162, 0, 4), "elbow_l": V.call(12, 0, 0),
-		"leg_r": V.call(8, 0, 4), "knee_r": V.call(-14, 0, 0), "foot_r": V.call(30, 0, 0),
-		"leg_l": V.call(-4, 0, -4), "knee_l": V.call(-8, 0, 0), "foot_l": V.call(30, 0, 0),
-	}
-	var hang_anim := {}
-	for key: String in hang:
-		hang_anim[key] = [[0.0, hang[key]]]
-	hang_anim["leg_r"] = [[0.0, hang["leg_r"]], [0.8, V.call(-2, 0, 4)]]
-	hang_anim["leg_l"] = [[0.0, hang["leg_l"]], [0.8, V.call(8, 0, -4)]]
-	_anim(lib, "hang", 1.6, true, hang_anim, rest)
-
-	# Pulling up from the hang (jump_climb_up): elbows bend and push down, one
-	# knee comes up onto the edge, a crouch on top, then standing.
-	var standing := {
-		"hips@pos": V.call(0, 0.92, 0), "torso": V.call(0, 0, 0), "head": V.call(0, 0, 0),
-		"shoulder_r": arm_r, "elbow_r": elbow_r, "hand_r": hand_r, "shoulder_l": arm_l, "elbow_l": elbow_l,
-		"leg_r": V.call(0, 0, 3), "knee_r": V.call(0, 0, 0), "foot_r": V.call(0, 0, 0),
-		"leg_l": V.call(0, 0, -3), "knee_l": V.call(0, 0, 0), "foot_l": V.call(0, 0, 0),
-	}
-	var pull := {
-		"hips@pos": V.call(0, 0.86, 0.05), "torso": V.call(-32, 0, 0), "head": V.call(14, 0, 0),
-		"shoulder_r": V.call(35, 0, 12), "elbow_r": V.call(95, 0, 0), "hand_r": V.call(-40, 0, 0),
-		"shoulder_l": V.call(35, 0, -12), "elbow_l": V.call(95, 0, 0),
-		"leg_r": V.call(85, 0, 6), "knee_r": V.call(-110, 0, 0), "foot_r": V.call(20, 0, 0),
-		"leg_l": V.call(-10, 0, -4), "knee_l": V.call(-25, 0, 0), "foot_l": V.call(35, 0, 0),
-	}
-	var crouch_top := {
-		"hips@pos": V.call(0, 0.62, 0.02), "torso": V.call(-28, 0, 0), "head": V.call(16, 0, 0),
-		"shoulder_r": V.call(30, 0, 18), "elbow_r": V.call(45, 0, 0), "hand_r": V.call(-20, 0, 0),
-		"shoulder_l": V.call(30, 0, -18), "elbow_l": V.call(45, 0, 0),
-		"leg_r": V.call(80, 0, 6), "knee_r": V.call(-120, 0, 0), "foot_r": V.call(40, 0, 0),
-		"leg_l": V.call(35, 0, -5), "knee_l": V.call(-100, 0, 0), "foot_l": V.call(60, 0, 0),
-	}
-	var climb_up := {}
-	for key: String in standing:
-		climb_up[key] = [[0.0, hang[key]], [0.32, pull[key]], [0.66, crouch_top[key]], [1.0, standing[key]]]
-	_anim(lib, "hang_up", 1.0, false, climb_up, rest)
-
-	# Stepping up onto chest-high (100step_up) and head-high (150step_up) ledges:
-	# reach up, plant the hands, knee onto the top, rise.
-	var reach := {
-		"hips@pos": V.call(0, 0.9, 0), "torso": V.call(-8, 0, 0), "head": V.call(12, 0, 0),
-		"shoulder_r": V.call(135, 0, 6), "elbow_r": V.call(25, 0, 0), "hand_r": V.call(-30, 0, 0),
-		"shoulder_l": V.call(135, 0, -6), "elbow_l": V.call(25, 0, 0),
-		"leg_r": V.call(10, 0, 3), "knee_r": V.call(-20, 0, 0), "foot_r": V.call(10, 0, 0),
-		"leg_l": V.call(0, 0, -3), "knee_l": V.call(-10, 0, 0), "foot_l": V.call(10, 0, 0),
-	}
-	for variant in [["climb_low", 0.55], ["climb_high", 0.8]]:
-		var L: float = variant[1]
-		var step := {}
-		for key: String in standing:
-			step[key] = [[0.0, reach[key]], [L * 0.3, pull[key]], [L * 0.68, crouch_top[key]], [L, standing[key]]]
-		_anim(lib, variant[0], L, false, step, rest)
-
-	# Springing up the wall to catch a high ledge (250jump_start): arms overhead.
-	_anim(lib, "jump_reach", 0.3, false, {
-		"hips@pos": [[0.0, V.call(0, 0.8, 0)], [0.12, V.call(0, 0.94, 0)]],
-		"torso": [[0.0, V.call(-14, 0, 0)], [0.12, V.call(-2, 0, 0)]],
-		"head": [[0.0, V.call(6, 0, 0)], [0.12, V.call(14, 0, 0)]],
-		"shoulder_r": [[0.0, V.call(-20, 0, 10)], [0.12, V.call(165, 0, -2)]],
-		"elbow_r": [[0.0, V.call(30, 0, 0)], [0.12, V.call(10, 0, 0)]], "hand_r": [[0.0, hand_r]],
-		"shoulder_l": [[0.0, V.call(-20, 0, -10)], [0.12, V.call(165, 0, 2)]],
-		"elbow_l": [[0.0, V.call(30, 0, 0)], [0.12, V.call(10, 0, 0)]],
-		"leg_r": [[0.0, V.call(40, 0, 3)], [0.12, V.call(5, 0, 3)]], "knee_r": [[0.0, V.call(-70, 0, 0)], [0.12, V.call(-10, 0, 0)]],
-		"leg_l": [[0.0, V.call(40, 0, -3)], [0.12, V.call(-5, 0, -3)]], "knee_l": [[0.0, V.call(-70, 0, 0)], [0.12, V.call(-5, 0, 0)]],
-		"foot_r": [[0.0, V.call(25, 0, 0)], [0.12, V.call(30, 0, 0)]], "foot_l": [[0.0, V.call(25, 0, 0)], [0.12, V.call(30, 0, 0)]],
-	}, rest)
-
-	# Climbing a ladder (climb_upL / climb_upR): one full cycle is two rungs; the
-	# controller plays half a cycle per rung (backward going down).
-	var rung_a := {
-		"hips@pos": V.call(0, 0.92, 0.05), "torso": V.call(-6, 0, 0), "head": V.call(8, 0, 0),
-		"shoulder_r": V.call(150, 0, -4), "elbow_r": V.call(40, 0, 0), "hand_r": V.call(-30, 0, 0),
-		"shoulder_l": V.call(100, 0, 4), "elbow_l": V.call(70, 0, 0),
-		"leg_r": V.call(62, 0, 4), "knee_r": V.call(-88, 0, 0), "foot_r": V.call(25, 0, 0),
-		"leg_l": V.call(12, 0, -4), "knee_l": V.call(-22, 0, 0), "foot_l": V.call(15, 0, 0),
-	}
-	var rung_b := rung_a.duplicate()
-	rung_b["shoulder_r"] = V.call(100, 0, -4)
-	rung_b["elbow_r"] = V.call(70, 0, 0)
-	rung_b["shoulder_l"] = V.call(150, 0, 4)
-	rung_b["elbow_l"] = V.call(40, 0, 0)
-	rung_b["leg_r"] = V.call(12, 0, 4)
-	rung_b["knee_r"] = V.call(-22, 0, 0)
-	rung_b["foot_r"] = V.call(15, 0, 0)
-	rung_b["leg_l"] = V.call(62, 0, -4)
-	rung_b["knee_l"] = V.call(-88, 0, 0)
-	rung_b["foot_l"] = V.call(25, 0, 0)
-	var ladder := {}
-	for key: String in rung_a:
-		ladder[key] = [[0.0, rung_a[key]], [0.5, rung_b[key]]]
-	_anim(lib, "ladder_climb", 1.0, true, ladder, rest)
-
-	_anim(lib, "death", 1.2, false, {
-		"hips@pos": [[0.0, V.call(0, 0.92, 0)], [0.3, V.call(0, 0.62, 0)], [0.7, V.call(0, 0.2, 0.1)], [1.2, V.call(0, 0.18, 0.1)]],
-		"hips": [[0.0, V.call(0, 0, 0)], [0.3, V.call(0, 0, 0)], [0.7, V.call(82, 0, 0)], [1.2, V.call(84, 0, 0)]],
-		"torso": [[0.0, V.call(0, 0, 0)], [0.3, V.call(-25, 0, 0)], [0.7, V.call(0, 0, 0)]],
-		"head": [[0.0, V.call(0, 0, 0)], [0.3, V.call(-20, 0, 0)], [0.7, V.call(10, 20, 0)]],
-		"leg_r": [[0.0, V.call(0, 0, 3)], [0.3, V.call(70, 0, 3)], [0.7, V.call(15, 0, 6)], [1.2, V.call(10, 0, 8)]],
-		"knee_r": [[0.0, V.call(0, 0, 0)], [0.3, V.call(-120, 0, 0)], [0.7, V.call(-30, 0, 0)], [1.2, V.call(-20, 0, 0)]],
-		"leg_l": [[0.0, V.call(0, 0, -3)], [0.3, V.call(70, 0, -3)], [0.7, V.call(5, 0, -6)], [1.2, V.call(0, 0, -8)]],
-		"knee_l": [[0.0, V.call(0, 0, 0)], [0.3, V.call(-120, 0, 0)], [0.7, V.call(-15, 0, 0)], [1.2, V.call(-10, 0, 0)]],
-		"shoulder_r": [[0.0, arm_r], [0.3, V.call(-20, 0, 25)], [0.7, V.call(0, 0, 80)], [1.2, V.call(0, 0, 85)]],
-		"elbow_r": [[0.0, elbow_r], [0.7, V.call(15, 0, 0)]], "hand_r": [[0.0, hand_r]],
-		"shoulder_l": [[0.0, arm_l], [0.3, V.call(-20, 0, -25)], [0.7, V.call(0, 0, -80)], [1.2, V.call(0, 0, -85)]],
-		"elbow_l": [[0.0, elbow_l], [0.7, V.call(15, 0, 0)]],
-	}, rest)
-	# Asleep on his back (the model lies along its +Z: turn it to fit the
-	# bed), breathing slowly, head rolled a little to one side.
-	var lie := {
-		"hips@pos": [[0.0, V.call(0, 0.13, 0)]],
-		"hips": [[0.0, V.call(88, 0, 0)]],
-		"torso": [[0.0, V.call(0, 0, 0)], [1.5, V.call(-3, 0, 0)]],
-		"head": [[0.0, V.call(4, 18, 0)], [1.5, V.call(2, 20, 0)]],
-		"shoulder_r": [[0.0, V.call(8, 0, 8)]], "elbow_r": [[0.0, V.call(20, 0, 0)]], "hand_r": [[0.0, hand_r]],
-		"shoulder_l": [[0.0, V.call(30, 0, -10)]], "elbow_l": [[0.0, V.call(70, 0, 0)]],
-		"leg_r": [[0.0, V.call(0, 0, 3)]], "leg_l": [[0.0, V.call(2, 0, -4)]],
-		"knee_r": [[0.0, V.call(-4, 0, 0)]], "knee_l": [[0.0, V.call(-10, 0, 0)]],
-		"foot_r": [[0.0, V.call(30, 0, 0)]], "foot_l": [[0.0, V.call(30, 0, 0)]],
-	}
-	_anim(lib, "sleep", 3.0, true, lie, rest)
-	# Waking: he sits up with his legs out along the bed, stretches both arms
-	# over his head with a big yawn, then rubs his eyes.
-	_anim(lib, "wake", 3.0, false, {
-		"hips@pos": [[0.0, V.call(0, 0.13, 0)], [0.7, V.call(0, 0.12, 0.05)], [3.0, V.call(0, 0.12, 0.05)]],
-		"hips": [[0.0, V.call(88, 0, 0)], [0.7, V.call(2, 0, 0)], [3.0, V.call(0, 0, 0)]],
-		"torso": [[0.0, V.call(0, 0, 0)], [0.7, V.call(8, 0, 0)], [1.5, V.call(-12, 0, 0)], [2.2, V.call(6, 0, 0)], [3.0, V.call(4, 0, 0)]],
-		"head": [[0.0, V.call(4, 18, 0)], [0.7, V.call(-6, 0, 0)], [1.5, V.call(24, 0, 0)], [2.2, V.call(-12, 0, 0)], [3.0, V.call(-4, -10, 0)]],
-		"shoulder_r": [[0.0, V.call(8, 0, 8)], [0.7, V.call(20, 0, 12)], [1.2, V.call(165, 0, 18)], [1.8, V.call(170, 0, 22)], [2.3, V.call(60, 25, 0)], [3.0, V.call(25, 0, 12)]],
-		"elbow_r": [[0.0, V.call(20, 0, 0)], [1.2, V.call(20, 0, 0)], [2.3, V.call(130, 0, 0)], [3.0, V.call(30, 0, 0)]],
-		"hand_r": [[0.0, hand_r]],
-		"shoulder_l": [[0.0, V.call(30, 0, -10)], [0.7, V.call(20, 0, -12)], [1.2, V.call(165, 0, -18)], [1.8, V.call(170, 0, -22)], [2.3, V.call(25, 0, -12)]],
-		"elbow_l": [[0.0, V.call(70, 0, 0)], [1.2, V.call(20, 0, 0)], [2.3, V.call(30, 0, 0)]],
-		"leg_r": [[0.0, V.call(0, 0, 3)], [0.7, V.call(86, 0, 4)], [3.0, V.call(86, 0, 4)]],
-		"leg_l": [[0.0, V.call(2, 0, -4)], [0.7, V.call(84, 0, -4)], [3.0, V.call(84, 0, -4)]],
-		"knee_r": [[0.0, V.call(-4, 0, 0)], [0.7, V.call(-6, 0, 0)]], "knee_l": [[0.0, V.call(-10, 0, 0)], [0.7, V.call(-12, 0, 0)]],
-		"foot_r": [[0.0, V.call(30, 0, 0)]], "foot_l": [[0.0, V.call(30, 0, 0)]],
-	}, rest)
+	# Every other animation of his is built by tools/hero_anims.gd (Beta 1.8.0).
+	preload("res://tools/hero_anims.gd").new(self, lib, rest).build()
 
 
 ## Builds an animation from whole poses: [[time, {joint: euler, "hips@pos": Vector3}], ...].
@@ -1447,149 +1028,6 @@ func _pose_anim(lib: AnimationLibrary, anim_name: String, length: float, poses: 
 			keys.append([p[0], pose.get(j, base.get(j, Vector3(0, 0.92, 0) if j == "hips@pos" else Vector3.ZERO))])
 		data[j] = keys
 	_anim(lib, anim_name, length, loop, data, rest)
-
-
-## The sword (Beta 1.6.0), after OoT's func_80837818: which cut comes out
-## depends on the stick (in the hero's own frame) and on Z-targeting, and the
-## third cut of the same kind in a row is its finisher (unk_845 >= 3, the
-## *_kiru_finsh animations):
-##   slash_left   PLAYER_MWA_RIGHT_SLASH (Lside_kiru): the forehand, right to
-##                left (standing still, or the stick to the left or back)
-##   slash_right  PLAYER_MWA_LEFT_SLASH (Rside_kiru): the backhand, left to
-##                right (the stick to the right)
-##   slash_down   PLAYER_MWA_FORWARD_SLASH (normal_kiru): a diagonal chop from
-##                high on the right (running, or Z-targeting with the stick still)
-##   stab         PLAYER_MWA_STAB (pierce_kiru): the thrust (Z + stick forward)
-## and each one's "_fin" finisher. The hero is right-handed, so OoT's left and
-## right are mirrored. In every cut the blade leads with its edge: through the
-## horizontal ones the forearm rolls a quarter turn (hand_r Y, round the
-## forearm) so the flat lies level, and the chops keep it upright. The timings
-## match PlayerCombat.SWINGS.
-func _sword_anims(lib: AnimationLibrary, rest: Dictionary) -> void:
-	var V := func(x: float, y: float, z: float) -> Vector3: return Vector3(x, y, z)
-	var ready := {
-		"hips@pos": V.call(0, 0.91, 0), "torso": V.call(-5, 0, 0), "head": V.call(0, 0, 0),
-		"shoulder_r": V.call(10, 0, 8), "elbow_r": V.call(35, 0, 0), "hand_r": V.call(-20, 0, 0),
-		"shoulder_l": V.call(5, 0, -10), "elbow_l": V.call(20, 0, 0),
-		"leg_r": V.call(0, 0, 3), "knee_r": V.call(0, 0, 0), "foot_r": V.call(0, 0, 0),
-		"leg_l": V.call(0, 0, -3), "knee_l": V.call(0, 0, 0), "foot_l": V.call(0, 0, 0),
-	}
-	# The fighting stance through a cut: the left foot forward, knees bent,
-	# the shield held in front of the chest.
-	var lunge := {
-		"hips@pos": V.call(0, 0.85, -0.05),
-		"leg_l": V.call(32, 0, -4), "knee_l": V.call(-42, 0, 0), "foot_l": V.call(10, 0, 0),
-		"leg_r": V.call(-22, 0, 5), "knee_r": V.call(-16, 0, 0), "foot_r": V.call(32, 0, 0),
-		"shoulder_l": V.call(38, 18, -22), "elbow_l": V.call(78, 0, 0),
-	}
-	var set_ := func(a: Dictionary, b: Dictionary) -> Dictionary:
-		var c := a.duplicate()
-		c.merge(b, true)
-		return c
-
-	# Horizontal cuts. `d` = -1 for the forehand (right to left), +1 for the
-	# backhand; the roll is the same both ways, since the blade has two edges.
-	for spec in [["slash_left", -1.0, false], ["slash_right", 1.0, false], ["slash_left_fin", -1.0, true], ["slash_right_fin", 1.0, true]]:
-		var n: String = spec[0]
-		var d: float = spec[1]
-		var fin: bool = spec[2]
-		var big := 1.35 if fin else 1.0
-		# Cocked: the blade drawn back to the side it starts from, the body
-		# wound up away from the cut, the forearm already rolled.
-		var cock: Dictionary = set_.call(lunge, {
-			"hips@pos": V.call(0, 0.88, 0.02),
-			"leg_l": V.call(14, 0, -4), "knee_l": V.call(-24, 0, 0),
-			"leg_r": V.call(-8, 0, 5), "knee_r": V.call(-20, 0, 0),
-			"torso": V.call(-4, 30 * d * big, 0), "head": V.call(0, -22 * d, 0),
-			"shoulder_r": (V.call(62, -82 * big, 14) if d < 0 else V.call(48, 62, -6)),
-			"elbow_r": (V.call(58, 0, 0) if d < 0 else V.call(96, 0, 0)),
-			"hand_r": (V.call(-58, 90, 0) if d < 0 else V.call(-62, 90, 0)),
-		})
-		# Mid-cut: the arm straight out in front, the blade an extension of it.
-		var mid: Dictionary = set_.call(lunge, {
-			"hips@pos": V.call(0, 0.84, -0.06 * big),
-			"torso": V.call(-10, 4 * d, 0), "head": V.call(0, -4 * d, 0),
-			"shoulder_r": V.call(84, 8 * d, 2), "elbow_r": V.call(8, 0, 0), "hand_r": V.call(-82, 90, 0),
-		})
-		# Follow-through: carried round past the far side, the body unwound.
-		var follow: Dictionary = set_.call(lunge, {
-			"hips@pos": V.call(0, 0.84, -0.07 * big),
-			"torso": V.call(-12, -34 * d * big, 0), "head": V.call(0, 22 * d, 0),
-			"shoulder_r": (V.call(78, 78 * big, -8) if d < 0 else V.call(76, -80 * big, 16)),
-			"elbow_r": V.call(18, 0, 0), "hand_r": V.call(-76, 90, 0),
-		})
-		var settle: Dictionary = set_.call(follow, {
-			"shoulder_r": (V.call(66, 70 * big, -6) if d < 0 else V.call(64, -72 * big, 18)),
-			"elbow_r": V.call(30, 0, 0), "hand_r": V.call(-62, 70, 0),
-			"torso": V.call(-10, -28 * d * big, 0),
-		})
-		if fin:
-			# The finisher winds up further, steps through and sweeps wider.
-			var step: Dictionary = set_.call(mid, {"hips@pos": V.call(0, 0.8, -0.16), "leg_l": V.call(48, 0, -4), "knee_l": V.call(-60, 0, 0),
-				"leg_r": V.call(-34, 0, 6), "knee_r": V.call(-12, 0, 0), "foot_r": V.call(40, 0, 0)})
-			follow["hips@pos"] = V.call(0, 0.8, -0.18)
-			settle["hips@pos"] = V.call(0, 0.81, -0.18)
-			_pose_anim(lib, n, 0.56, [[0.0, ready], [0.1, cock], [0.16, step], [0.24, follow], [0.36, settle], [0.56, ready]], ready, rest)
-		else:
-			_pose_anim(lib, n, 0.42, [[0.0, ready], [0.06, cock], [0.12, mid], [0.19, follow], [0.27, settle], [0.42, ready]], ready, rest)
-
-	# The diagonal chop: up over the right shoulder, down across to the left.
-	for spec in [["slash_down", false], ["slash_down_fin", true]]:
-		var n: String = spec[0]
-		var fin: bool = spec[1]
-		var up: Dictionary = set_.call(lunge, {
-			"hips@pos": V.call(0, 0.94 if fin else 0.9, 0.03),
-			"leg_l": V.call(16, 0, -4), "knee_l": V.call(-20, 0, 0), "leg_r": V.call(-6, 0, 5), "knee_r": V.call(-10, 0, 0),
-			"torso": V.call(10 if fin else 6, -14, 0), "head": V.call(-8, 10, 0),
-			"shoulder_r": V.call(172, -18, 16), "elbow_r": V.call(78, 0, 0), "hand_r": V.call(-34, 0, 0),
-			"shoulder_l": V.call(60, 10, -30),
-		})
-		var mid: Dictionary = set_.call(lunge, {
-			"hips@pos": V.call(0, 0.84, -0.06),
-			"torso": V.call(-10, -4, 0), "head": V.call(4, 2, 0),
-			"shoulder_r": V.call(118, 0, 8), "elbow_r": V.call(14, 0, 0), "hand_r": V.call(-62, 0, 0),
-		})
-		var down: Dictionary = set_.call(lunge, {
-			"hips@pos": V.call(0, 0.7 if fin else 0.8, -0.1 if fin else -0.07),
-			"leg_l": V.call(58 if fin else 46, 0, -4), "knee_l": V.call(-82 if fin else -62, 0, 0),
-			"leg_r": V.call(-26, 0, 6), "knee_r": V.call(-44 if fin else -24, 0, 0), "foot_r": V.call(44, 0, 0),
-			"torso": V.call(-34 if fin else -24, 16, 0), "head": V.call(18, -10, 0),
-			"shoulder_r": V.call(46, 16, 2), "elbow_r": V.call(4, 0, 0), "hand_r": V.call(-84, 0, 0),
-		})
-		var hold: Dictionary = set_.call(down, {"shoulder_r": V.call(42, 18, 2), "elbow_r": V.call(12, 0, 0), "hand_r": V.call(-74, 0, 0)})
-		if fin:
-			_pose_anim(lib, n, 0.6, [[0.0, ready], [0.14, up], [0.2, mid], [0.25, down], [0.4, hold], [0.6, ready]], ready, rest)
-		else:
-			_pose_anim(lib, n, 0.42, [[0.0, ready], [0.07, up], [0.12, mid], [0.17, down], [0.27, hold], [0.42, ready]], ready, rest)
-
-	# The thrust: the blade drawn back level at the hip, then driven straight
-	# out with the right shoulder turned in behind it.
-	for spec in [["stab", false], ["stab_fin", true]]:
-		var n: String = spec[0]
-		var fin: bool = spec[1]
-		var draw: Dictionary = set_.call(lunge, {
-			"hips@pos": V.call(0, 0.86, 0.04),
-			"leg_l": V.call(18, 0, -4), "knee_l": V.call(-30, 0, 0), "leg_r": V.call(-10, 0, 5), "knee_r": V.call(-22, 0, 0),
-			"torso": V.call(-6, -24, 0), "head": V.call(0, 20, 0),
-			"shoulder_r": V.call(8, -14, 22), "elbow_r": V.call(104, 0, 0), "hand_r": V.call(-88, 90, 0),
-		})
-		var out: Dictionary = set_.call(lunge, {
-			"hips@pos": V.call(0, 0.76 if fin else 0.82, -0.22 if fin else -0.12),
-			"leg_l": V.call(56 if fin else 44, 0, -4), "knee_l": V.call(-74 if fin else -58, 0, 0),
-			"leg_r": V.call(-36 if fin else -30, 0, 6), "knee_r": V.call(-8, 0, 0), "foot_r": V.call(46, 0, 0),
-			"torso": V.call(-14, 22, 0), "head": V.call(2, -18, 0),
-			"shoulder_r": V.call(86, 14, 2), "elbow_r": V.call(0, 0, 0), "hand_r": V.call(-90, 90, 0),
-		})
-		if fin:
-			var hold: Dictionary = set_.call(out, {"shoulder_r": V.call(84, 12, 2), "elbow_r": V.call(6, 0, 0)})
-			_pose_anim(lib, n, 0.52, [[0.0, ready], [0.09, draw], [0.16, out], [0.32, hold], [0.52, ready]], ready, rest)
-		else:
-			var hold: Dictionary = set_.call(out, {"shoulder_r": V.call(80, 10, 4), "elbow_r": V.call(12, 0, 0)})
-			_pose_anim(lib, n, 0.36, [[0.0, ready], [0.05, draw], [0.11, out], [0.2, hold], [0.36, ready]], ready, rest)
-
-	# The old names (title attract scene, the dark double) play the two cuts.
-	lib.add_animation("attack_1", lib.get_animation("slash_left"))
-	lib.add_animation("attack_2", lib.get_animation("slash_right"))
 
 
 # --- Mira (Mirror Lake) -------------------------------------------------------
@@ -1752,8 +1190,11 @@ func _build_mira() -> void:
 			k.pop()
 		)
 
-	var lib := AnimationLibrary.new()
 	var rest := {"hips": Vector3(0, 0.84, 0)}
+	if _playable != "":
+		_finish_playable(root, rest)
+		return
+	var lib := AnimationLibrary.new()
 	_mira_anims(lib, rest)
 	_finish_character(root, lib)
 	_save_scene(root, "mira.tscn")
@@ -1944,8 +1385,11 @@ func _build_woman(model_name: String, file: String, face: String, skin: Color, s
 		_joint(knee, "foot" + sfx, "Foot" + nsfx, Vector3(0, -0.34, 0), func(p: Parts) -> void: look.foot.call(p, side))
 	if look.has("extra"):
 		look.extra.call(root)
-	var lib := AnimationLibrary.new()
 	var rest := {"hips": Vector3(0, 0.84, 0)}
+	if _playable != "":
+		_finish_playable(root, rest)
+		return
+	var lib := AnimationLibrary.new()
 	anims.call(lib, rest)
 	_finish_character(root, lib)
 	_save_scene(root, file)

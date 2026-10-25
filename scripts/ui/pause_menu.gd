@@ -53,7 +53,10 @@ const CLOSE_TIME := 0.3
 const GRID := Vector2i(8, 6)
 
 ## (RESTART AREA and WARP went in Beta 1.6.0: the debug menu, F1, has them.)
-const OPTIONS := ["RESUME", "GRAPHICS", "SOUND", "CONTROLS", "RUMBLE", "LOCK-ON", "CAMERA", "CAMERA SPEED", "CAMERA X", "CAMERA Y", "MINIMAP", "GUIDING LIGHT", "CREDITS", "QUIT"]
+const OPTIONS := ["RESUME", "GRAPHICS", "SOUND", "CONTROLS", "ONLINE", "RUMBLE", "LOCK-ON", "CAMERA", "CAMERA SPEED", "CAMERA X", "CAMERA Y", "MINIMAP", "GUIDING LIGHT", "CREDITS", "QUIT"]
+## The OPTIONS page's ONLINE list (co-op, Net): who to play, hosting or
+## joining a game (at ADDRESS), PvP (the host's say) and leaving.
+const ONLINE_OPTIONS := ["CHARACTER", "NAME", "HOST GAME", "ADDRESS", "JOIN GAME", "PVP", "LEAVE", "BACK"]
 ## The OPTIONS page's GRAPHICS list (A on GRAPHICS opens it, B or BACK returns).
 const GRAPHICS_OPTIONS := ["TRUE N64 MODE", "N64 MIPMAPS", "FRAME RATE", "RESOLUTION", "ASPECT RATIO", "ANTI-ALIASING", "FOG", "CROSSHAIR", "HUD STYLE", "BUTTON ICONS", "FULLSCREEN", "BACK"]
 ## The OPTIONS page's SOUND list: a slider per bus (AudioMix.SLIDERS; left
@@ -380,6 +383,14 @@ func _process(delta: float) -> void:
 		(_pages[i].get_child(0) as Control).queue_redraw()
 	_portrait.render_target_update_mode = SubViewport.UPDATE_ALWAYS if visible else SubViewport.UPDATE_DISABLED
 	if visible:
+		# Whoever is being played (co-op's CHARACTER), in their own gear.
+		if _portrait_model.scene_file_path != Net.model_path(Net.character):
+			var m := (load(Net.model_path(Net.character)) as PackedScene).instantiate() as CharacterModel
+			_portrait.remove_child(_portrait_model)
+			_portrait_model.queue_free()
+			_portrait.add_child(m)
+			_portrait_model = m
+			_portrait_model.set_sword_drawn(false)
 		_portrait_model.set_gear(Equipment.sword_look(Progress.sword), Progress.shield)
 		_portrait_model.set_boots(Progress.boot)
 		_portrait_model.set_outfit(Progress.tunic, Progress.vanity_on)
@@ -392,6 +403,8 @@ func _process(delta: float) -> void:
 # --- Input --------------------------------------------------------------------
 
 func _handle_input(delta: float) -> void:
+	if is_instance_valid(_entry):
+		return
 	if save_prompt != 0:
 		_save_prompt_input(delta)
 		return
@@ -436,9 +449,61 @@ func _handle_input(delta: float) -> void:
 		_accept()
 
 
+## A line of text typed in (the ONLINE page's NAME and ADDRESS): Enter
+## keeps it, Escape leaves it as it was.
+var _entry: LineEdit
+var _entry_for := ""
+
+
+func _open_entry(what: String, text: String) -> void:
+	_entry_for = what
+	_entry = LineEdit.new()
+	_entry.text = text
+	_entry.max_length = 40 if what == "ADDRESS" else 14
+	_entry.alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_entry.add_theme_font_size_override("font_size", 14)
+	_entry.size = Vector2(200, 24)
+	_entry.position = Vector2(60, 108)
+	# The pause screen's plates: deep blue, a gold rim, cream lettering.
+	var box := StyleBoxFlat.new()
+	box.bg_color = Color("1a2240")
+	box.border_color = Color("d8b050")
+	box.set_border_width_all(2)
+	box.set_corner_radius_all(3)
+	box.content_margin_left = 6
+	box.content_margin_right = 6
+	for state in ["normal", "focus"]:
+		_entry.add_theme_stylebox_override(state, box)
+	_entry.add_theme_color_override("font_color", Color("f4e8c8"))
+	_entry.add_theme_color_override("caret_color", Color("f0c850"))
+	_entry.placeholder_text = "ADDRESS OF THE HOST" if what == "ADDRESS" else "YOUR NAME"
+	_entry.process_mode = Node.PROCESS_MODE_ALWAYS
+	add_child(_entry)
+	_entry.grab_focus()
+	_entry.caret_column = text.length()
+	_entry.text_submitted.connect(_entry_done)
+
+
+func _entry_done(text: String) -> void:
+	text = text.strip_edges()
+	if text != "":
+		if _entry_for == "ADDRESS":
+			Net.address = text
+		else:
+			Net.player_name = text.to_upper()
+	_entry.queue_free()
+	_entry = null
+	Sfx.play("menu_select", -4.0)
+
+
 ## While a CONTROLS row waits, the next key, mouse button or gamepad button
 ## (or trigger) pressed becomes its binding.
 func _input(event: InputEvent) -> void:
+	if is_instance_valid(_entry) and event.is_action_pressed("ui_cancel"):
+		_entry.queue_free()
+		_entry = null
+		get_viewport().set_input_as_handled()
+		return
 	if remap_waiting == "" or phase != Phase.OPEN:
 		return
 	var bindable: bool = (event is InputEventKey and event.pressed and not event.echo) or (event is InputEventJoypadButton and event.pressed) \
@@ -813,10 +878,30 @@ func _accept() -> void:
 			match options_list()[option_cursor]:
 				"RESUME":
 					_close()
-				"GRAPHICS", "SOUND", "CONTROLS":
+				"GRAPHICS", "SOUND", "CONTROLS", "ONLINE":
 					sub_list = options_list()[option_cursor]
 					option_cursor = 0
 					_option_scroll = 0
+				"CHARACTER":
+					var ci := Net.CHARACTERS.find(Net.character)
+					Net.set_character(Net.CHARACTERS[(ci + 1) % Net.CHARACTERS.size()])
+				"NAME":
+					_open_entry("NAME", Net.display_name())
+				"ADDRESS":
+					_open_entry("ADDRESS", Net.address)
+				"HOST GAME":
+					if not Net.host():
+						Sfx.play("error", -6.0)
+				"JOIN GAME":
+					if not Net.join():
+						Sfx.play("error", -6.0)
+				"PVP":
+					if Net.is_client():
+						Sfx.play("error", -6.0)
+					else:
+						Net.set_pvp(not Net.pvp)
+				"LEAVE":
+					Net.leave()
 				"RESET DEFAULTS":
 					GameManager.reset_controls()
 				"OUTPUT":
@@ -1025,6 +1110,7 @@ func options_list() -> Array:
 		"GRAPHICS": return GRAPHICS_OPTIONS
 		"SOUND": return SOUND_OPTIONS
 		"CONTROLS": return GameManager.REMAP_ACTIONS.map(func(a: Array) -> String: return String(a[1])) + CONTROL_EXTRA
+		"ONLINE": return ONLINE_OPTIONS
 	return OPTIONS
 
 
@@ -1071,7 +1157,14 @@ func option_parts(i: int) -> Array:
 			return [row, "PRESS A KEY..." if remap_waiting == action else GameManager.binding_text(action)]
 		return ["BACK", "<"] if row == "BACK" else [row, ""]
 	match row:
-		"GRAPHICS", "SOUND", "CONTROLS": return [row, ">"]
+		"GRAPHICS", "SOUND", "CONTROLS", "ONLINE": return [row, ">"]
+		"CHARACTER": return [row, Net.NAMES[Net.character]]
+		"NAME": return [row, Net.display_name()]
+		"ADDRESS": return [row, Net.address]
+		"HOST GAME": return [row, ("HOSTING %d" % Net.roster.size()) if Net.is_host else ("JOINED" if Net.active else "")]
+		"JOIN GAME": return [row, ""]
+		"PVP": return [row, on_off.call(Net.pvp)]
+		"LEAVE": return [row, "" if Net.active else "--"]
 		"BACK": return ["BACK", "<"]
 		"OUTPUT": return [row, "MONO" if GameManager.mono_audio else "STEREO"]
 		"PAUSE MUFFLE": return [row, on_off.call(GameManager.pause_muffle)]

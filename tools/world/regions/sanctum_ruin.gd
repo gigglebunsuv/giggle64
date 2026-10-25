@@ -78,10 +78,12 @@ func floor_paint(x: float, z: float, _f: int, r: RandomNumberGenerator) -> Color
 func build_rooms(k) -> void:
 	k.door_link(Vector3(0, 0, 25.98), 0.0, 1.8, 2.6, "batela_fells", "from_sapphire_sanctum", Color(0.25, 0.3, 0.5))
 	k.entrance("from_batela_fells", 0.0, 23.0, 0.0)
-	# The stair down into the old Sanctum, buried.
+	# The stair down into the old Sanctum, buried: heaped against the side
+	# walls, leaving the way north to the hall clear.
 	for i in 4:
-		k.rubble(-3.0 + i * 2.0, 17.6 + (i % 2) * 0.6, i * 0.8, 1.1)
-	k.examine(Vector3(3.5, 0.0, 18.5), PI, [{"text": "The great stair down into the Sanctum is choked with fallen stone. When the sky cracked, the Order's halls fell in on themselves.\nVoices chant, somewhere ahead.", "instant": true}])
+		var sx := -1.0 if i < 2 else 1.0
+		k.rubble(sx * (4.4 - (i % 2) * 0.2), 17.8 + (i % 2) * 2.4, i * 0.4, 1.1)
+	k.examine(Vector3(2.5, 0.0, 18.8), PI, [{"text": "The great stair down into the Sanctum is choked with fallen stone. When the sky cracked, the Order's halls fell in on themselves.\nVoices chant, somewhere ahead.", "instant": true}])
 	_lights(k, "stair", 1.5)
 	# The hall: the Order's guard; the roof half fallen, ash drifting in.
 	k.shutter(0.0, 9.4, 0.0, "hall", 0.0)

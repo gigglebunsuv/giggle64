@@ -244,7 +244,11 @@ func _sheet(path: String, poses: Array, center_y: float, dist: float, file: Stri
 		model.set_sword_drawn(pose[3] if pose.size() > 3 else true)
 		var bow: bool = pose.size() > 4 and pose[4]
 		model.set_bow_out(bow)
-		model.set_upper_pose(PlayerController.BOW_POSE if bow else {})
+		if bow:
+			model.set_upper_clip(&"bow_wait", PlayerController.UPPER_CLIP_PATHS, true)
+		else:
+			model.set_upper_pose({})
+		model.bow_nocked = bow
 		model.upper_weight = 1.0 if bow else 0.0
 		model.anim.play(pose[0])
 		model.anim.seek(pose[1], true)

@@ -15,10 +15,12 @@ extends RefCounted
 ## whole length), with a soft limiter keeping peaks under PEAK. The trims are
 ## the mix: small, frequent sounds (cursor ticks, footsteps, pickups) sit
 ## under the big moments, so nothing everyday is as loud as an explosion.
-## Replace any .wav in assets/audio/ with a recording of the same name to
-## swap it.
+## Sounds listed in RECORDED are recordings (built by
+## _giggle64_work/sfx_swap/build.py, credited in docs/audio_credits.md):
+## this generator leaves those files alone.
 
 const AUDIO_DIR := "res://assets/audio/"
+const RECORDED := "res://tools/recorded_sfx.txt"
 const SR := 32000
 ## Ambience loops are filtered noise and birdsong: a lower rate keeps them small.
 const AMB_SR := 22050
@@ -44,11 +46,17 @@ var rng := RandomNumberGenerator.new()
 var _sr := SR
 ## Loudness of each file written (name -> LUFS before leveling), for checks.
 var report := {}
+## Names in RECORDED (name -> true), skipped by _save.
+var _recorded := {}
 
 
 func run() -> void:
 	rng.seed = 6464
 	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(AUDIO_DIR))
+	if FileAccess.file_exists(RECORDED):
+		for line in FileAccess.get_file_as_string(RECORDED).split("\n"):
+			if line.strip_edges() != "" and not line.begins_with("#"):
+				_recorded[line.strip_edges()] = true
 	_footsteps()
 	_ui()
 	_combat()
@@ -568,6 +576,8 @@ func _level(b: PackedFloat32Array, integrated := false, trim := 0.0) -> PackedFl
 
 ## A short fade at both ends (no clicks), then leveled and saved as 16-bit mono.
 func _save(sfx_name: String, b: PackedFloat32Array, loop := false) -> void:
+	if _recorded.has(sfx_name):
+		return
 	if not loop:
 		var f := mini(int(0.004 * _sr), b.size() / 4)
 		for i in f:

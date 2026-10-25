@@ -147,7 +147,7 @@ signal respawned
 signal arrow_fired(arrow: Node3D)
 
 enum State { IDLE, MOVE, TURN, AIR, LAND, ROLL, BONK, ATTACK, BLOCK, SHEATHE, HURT, DEAD,
-	CLIMB, HANG, LADDER, LOOK, AIM, TALK, LIFT, THROW, JUMPSLASH, SWIM, RIDE, HOOKFLY, ITEM, SLIDE }
+	CLIMB, HANG, LADDER, LOOK, AIM, TALK, LIFT, THROW, JUMPSLASH, SWIM, RIDE, HOOKFLY, ITEM, SLIDE, RIPOSTE }
 ## What a CLIMB state is doing.
 enum Climb { HOP_JUMP, STEP_LOW, STEP_HIGH, JUMP_GRAB, HANG_UP, LADDER_TOP, LADDER_BOTTOM }
 ## Bow phases (OoT's upper-body bow actions).
@@ -179,36 +179,54 @@ const Z_SHIELD_POSE := {
 	"Hips/Torso/ShoulderL/ElbowL": Vector3(118, 0, 0),
 	"Hips/Torso/ShoulderL/ElbowL/Shield": Vector3(0, 62, 0),
 }
-## Bow held out at arm's length with the string drawn to the cheek, layered
-## over the legs like the shield (OoT plays the bow on the upper skeleton).
-const BOW_POSE := {
-	"Hips/Torso": Vector3(0, -8, 0),
-	"Hips/Torso/Head": Vector3(-4, 8, 0),
-	"Hips/Torso/ShoulderL": Vector3(92, 0, -4),
-	"Hips/Torso/ShoulderL/ElbowL": Vector3(4, 0, 0),
-	"Hips/Torso/ShoulderR": Vector3(86, 0, 14),
-	"Hips/Torso/ShoulderR/ElbowR": Vector3(138, 0, 0),
+## The aimed items' upper-body animations (Beta 1.8.0, tools/hero_anims.gd),
+## played over the legs as OoT plays its upper skeleton: the bow (bow_bow_ready,
+## bow_bow_wait, the loose, bow_bow_shoot_next), the Hookshot (hook_shot_ready,
+## hook_wait and its kick), the Bloom Rod, and the boomerang
+## (boom_throw_wait2waitR, boom_throw_waitR, boom_throwR, boom_catch). The
+## value: whether it loops (the others hold their last frame).
+const UPPER_CLIPS := {
+	"bow_ready": false, "bow_wait": true, "bow_shoot": false, "bow_next": false,
+	"hook_ready": false, "hook_wait": true, "hook_fire": false,
+	"rod_ready": false, "rod_wait": true, "rod_flick": false,
+	"boom_ready": false, "boom_wait": true, "boom_throw": false, "boom_catch": false,
 }
+const UPPER_CLIP_PATHS := ["Hips/Torso", "Hips/Torso/Head",
+	"Hips/Torso/ShoulderR", "Hips/Torso/ShoulderR/ElbowR", "Hips/Torso/ShoulderR/ElbowR/HandR",
+	"Hips/Torso/ShoulderL", "Hips/Torso/ShoulderL/ElbowL", "Hips/Torso/ShoulderL/ElbowL/HandL"]
+## The joints the parry plays on over the rest of the body.
+const PARRY_PATHS := ["Hips/Torso", "Hips/Torso/Head", "Hips/Torso/ShoulderR", "Hips/Torso/ShoulderR/ElbowR",
+	"Hips/Torso/ShoulderR/ElbowR/HandR", "Hips/Torso/ShoulderL", "Hips/Torso/ShoulderL/ElbowL", "Hips/Torso/ShoulderL/ElbowL/Shield"]
+## The riposte: how long a parried foe stays open to it, how near it must be,
+## how close he steps in, when the blade goes in, how long it all takes, and
+## how hard it strikes (times a cut).
+const RIPOSTE_OPEN := 1.6
+const RIPOSTE_REACH := 2.6
+const RIPOSTE_CLOSE := 1.1
+const RIPOSTE_HIT := 0.26
+const RIPOSTE_TIME := 1.2
+const RIPOSTE_DAMAGE := 3
+## The idle cycle (the "idle" animation's length) and the fidgets' sound cues.
+const IDLE_CYCLE := 2.4
+const FIDGET_CUES := {
+	&"idle_feet": [[0.62, "step"], [0.9, "step"], [1.77, "step"], [2.05, "step"]],
+	&"idle_shield": [[0.8, "strap"], [1.0, "strap"], [1.4, "strap"]],
+	&"idle_sword": [[0.4, "swing"], [0.98, "swing"]],
+}
+## A bottle held in the fist: upright along the hand's -Z, gripped round its middle.
+const BOTTLE_GRIP := Transform3D(Basis(Vector3.RIGHT, -PI / 2.0), Vector3(0, -0.06, 0.1))
+## When the fist brings the arrow up to the string in bow_ready / bow_next.
+const BOW_NOCK_AT := 0.15
+## boom_catch: the hand snaps up to the boomerang coming back.
+const CATCH_TIME := 0.5
 
 ## Shield aim per unit of stick (0-60) and its limits, in OoT binary angles.
 const SHIELD_AIM_YAW := 120.0
 const SHIELD_AIM_PITCH := 100.0
 const SHIELD_AIM_PITCH_DOWN := 3500.0
 
-## Throwing the boomerang: the right arm flung out, on the upper body only.
-const THROW_POSE := {
-	"Hips/Torso": Vector3(0, -25, 0),
-	"Hips/Torso/ShoulderR": Vector3(80, 0, 20),
-	"Hips/Torso/ShoulderR/ElbowR": Vector3(10, 0, 0),
-}
+## The boomerang's follow-through after it leaves the hand (the rest of boom_throw).
 const THROW_TIME := 0.35
-## boom_throw_waitR: the boomerang held back by the right shoulder, ready.
-const BOOM_READY_POSE := {
-	"Hips/Torso": Vector3(0, 20, 0),
-	"Hips/Torso/ShoulderR": Vector3(95, 0, 55),
-	"Hips/Torso/ShoulderR/ElbowR": Vector3(95, 0, 0),
-	"Hips/Torso/ShoulderR/ElbowR/HandR": Vector3(-30, 0, 0),
-}
 ## carryB_wait: both hands up over his head, elbows out, holding the object
 ## on his palms.
 const CARRY_POSE := {
@@ -270,8 +288,7 @@ const RIDE_SLASH_PATHS := ["Hips/Torso", "Hips/Torso/Head", "Hips/Torso/Shoulder
 	"Hips/Torso/ShoulderR/ElbowR/HandR"]
 ## Upper-body layers by name (see _update_upper_pose).
 const UPPER_POSES := {
-	"shield": Z_SHIELD_POSE, "bow": BOW_POSE, "throw": THROW_POSE,
-	"boom_ready": BOOM_READY_POSE, "carry": CARRY_POSE, "fish": FISH_POSE,
+	"shield": Z_SHIELD_POSE, "carry": CARRY_POSE, "fish": FISH_POSE,
 	"charge": CHARGE_POSE, "bash": BASH_POSE,
 	"guard": BLADE_GUARD_POSE, "great_ready": GREAT_READY_POSE,
 }
@@ -370,7 +387,9 @@ const STEP_ANIMS: Array[StringName] = [&"walk", &"run", &"run_sword", &"sidestep
 @export_group("Sword")
 ## putAwayCooldownTimer: 20 OoT frames before A offers "Put Away".
 @export var put_away_delay := 1.0
-@export var sheathe_time := 0.5
+## The flourish and the sheathing (Twilight Princess twirls the blade first);
+## the blade goes home at half time.
+@export var sheathe_time := 0.8
 
 @export_group("Carrying")
 ## carryB: the object is taken in hand on frame 4 (the animation advances 1.5
@@ -428,10 +447,12 @@ const INTERACT_ABOVE := 2.4
 ## and boom_throwR's frame 6, when it leaves the hand.
 @export var boomerang_ready_time := 0.25
 @export var boomerang_release_time := 0.2
-## CAM_MODE_AIM_BOOMERANG and CAM_MODE_AIM_ADULT (the bow) put the eye 50
-## units (1.5 m) behind the head.
+## Camera_Subj3 puts the eye eyeDist behind the head once it has settled:
+## 50 units (1.5 m) for CAM_MODE_AIM_BOOMERANG, but only 14 (0.42 m) for
+## CAM_MODE_AIM_ADULT (the bow, the Hookshot), so the bow fills the view.
+## (eyeNextDist, 50 for both, is only where the swing in starts from.)
 @export var boomerang_aim_distance := 1.5
-@export var bow_aim_distance := 1.5
+@export var bow_aim_distance := 0.42
 ## How far the reticle looks for a target for the bow (an arrow's 12 frames
 ## at 150 units carry it about 80 m).
 @export var aim_reach_bow := 80.0
@@ -617,6 +638,27 @@ var _lift_thing: Node3D = null
 var _lift_from := Transform3D.IDENTITY
 var _thrown := false
 var _upper_name := ""
+## Where the next upper clip starts (a boomerang flung at once skips its wind-up).
+var _upper_start := 0.0
+## The next arrow comes from the follow-through (bow_next), not the side.
+var _bow_reload := false
+## Seconds left of boom_catch.
+var _catch_time := 0.0
+## Who this hero is (co-op, Net.CHARACTERS): "gigglebuns" or a companion.
+var character := "gigglebuns"
+## The sword's trail (SwordTrail).
+var trail: SwordTrail
+## The idle fidgets (Player_ChooseNextIdleAnim): time in the idle cycle,
+## cycles stood still, and the fidget playing (with its sound cues).
+var _idle_t := 0.0
+var _idle_loops := 0
+var _fidget := &""
+var _fidget_t := 0.0
+var _fidget_cue := 0
+## The foe last parried, and how long it stays open to a riposte.
+var _riposte_foe: Enemy = null
+var _riposte_open := 0.0
+var _riposte_hit := false
 ## The jump slash has come down (the finishing chop is playing).
 var _js_landed := false
 ## The Down Thrust (Knight's Techniques): a JUMPSLASH straight down.
@@ -649,6 +691,9 @@ var _rod: MeshInstance3D = null
 
 
 func _ready() -> void:
+	# Co-op (Net): the hero chosen to play wears his gear and moves.
+	if Net.character != "gigglebuns":
+		use_character(Net.character)
 	# Heart containers raise the maximum for the whole game.
 	health.max_health = Progress.max_health
 	health.health = health.max_health
@@ -671,6 +716,12 @@ func _ready() -> void:
 	target_marker.visible = false
 	add_to_group("player")
 	GameManager.register_player(self)
+	# The sword's trail (SwordTrail), laid in the world behind the blade.
+	trail = SwordTrail.new()
+	trail.name = "SwordTrail"
+	trail.blade = model.find_child("Sword", true, false) as Node3D
+	add_child(trail)
+	_fit_trail()
 	# Settle onto the ground on the first physics tick (even while the title pauses the game).
 	get_tree().physics_frame.connect(_snap_to_ground, CONNECT_ONE_SHOT)
 
@@ -678,6 +729,7 @@ func _ready() -> void:
 ## Shows the equipped sword and shield and takes on their strength.
 func _apply_gear() -> void:
 	model.set_gear(Equipment.sword_look(Progress.sword), Progress.shield)
+	_fit_trail()
 	model.set_gilded(Progress.flag("shield_polish"))
 	model.set_starlight(Progress.sword == "bun" and Progress.sword_awake())
 	model.set_boots(Progress.boot)
@@ -811,10 +863,11 @@ func aim_camera_back() -> float:
 	return boomerang_aim_distance if aim_item == "boomerang" else bow_aim_distance
 
 
-## Camera_Subj3's eyeNextYOffset: +5% of his height for the boomerang, -7% for
-## the bow (sSetNormal0ModeAimBoomerangData / AimAdultData), from eye level.
+## Camera_Subj3's atOffset once settled: the head itself for the boomerang,
+## 3 units below it for the bow (sSetNormal0ModeAimBoomerangData /
+## AimAdultData; eyeNextYOffset only shapes the swing in).
 func aim_camera_height() -> float:
-	return (0.05 if aim_item == "boomerang" else -0.07) * 1.85
+	return 0.0 if aim_item == "boomerang" else -3.0 * oot_unit
 
 
 ## Where an aimed shot or throw starts: the head, on the camera's line of sight,
@@ -939,6 +992,8 @@ func _physics_process(delta: float) -> void:
 			items.state_update(delta)
 		State.SLIDE:
 			_state_slide(delta)
+		State.RIPOSTE:
+			_state_riposte(delta)
 		State.IDLE, State.TURN:
 			_state_idle(delta)
 		State.MOVE:
@@ -976,7 +1031,8 @@ func _physics_process(delta: float) -> void:
 			elif _state_time >= respawn_delay:
 				# Game over (GameOver): the choice to continue, or the old
 				# straight-back-up for the tests.
-				if GameOver.auto_respawn or in_cutscene:
+				# Online, only the host's game ends: the others get straight back up.
+				if GameOver.auto_respawn or in_cutscene or Net.is_client():
 					respawn()
 				elif not GameOver.showing():
 					GameOver.open()
@@ -1156,7 +1212,9 @@ func interact_candidate() -> Node3D:
 
 ## No wall between the hero and the thing: a level line at head height (over
 ## counters, tables and chests) to above it meets nothing but the thing
-## itself (or the wall it hangs on, right at it).
+## itself (or the wall it hangs on, right at it). A thing whose solid is baked
+## into the area's own collision (a waystone's pillar) names its width with
+## `sight_radius()`, so its own surface is not taken for a wall.
 func _can_see_interactable(node: Node3D) -> bool:
 	var from := global_position + Vector3.UP * 1.5
 	var at := Vector3(node.global_position.x, from.y, node.global_position.z)
@@ -1169,7 +1227,8 @@ func _can_see_interactable(node: Node3D) -> bool:
 	if c == node or (c is Node and (node.is_ancestor_of(c) or (c as Node).is_ancestor_of(node))):
 		return true
 	var near := Vector2(hit.position.x - node.global_position.x, hit.position.z - node.global_position.z)
-	return near.length() < 0.35
+	var own: float = node.sight_radius() if node.has_method("sight_radius") else 0.0
+	return near.length() < maxf(0.35, own)
 
 
 # --- States -------------------------------------------------------------------
@@ -1187,7 +1246,8 @@ func _state_idle(delta: float) -> void:
 		if _stick_speed(false) > 0.0:
 			_start_moving(_stick_yaw, false)
 			return
-		model.play(&"idle", 0.15)
+		# The battle stance (OoT's Z-target wait): low, shield up, blade on the foe.
+		model.play(&"idle_battle", 0.2)
 		return
 	if parallel:
 		_idle_parallel(delta)
@@ -1206,7 +1266,93 @@ func _state_idle(delta: float) -> void:
 	if state == State.TURN:
 		_change_state(State.IDLE)
 	move_yaw = facing_yaw
-	model.play(&"idle", 0.15)
+	_play_idle(delta)
+
+
+## Player_ChooseNextIdleAnim: standing still, every other idle cycle (after the
+## first two) brings a fidget, picked as OoT picks them: at critical health he
+## doubles over panting (wait_heat1, then heat2 until he is out of danger);
+## otherwise four times in five one of the common four (a practice swing with
+## the sword out, a tug at his tunic, the dirt tapped off his boots, his shield
+## set on his arm) if it suits, and else what the place calls for: shivering
+## in the snow, mopping his brow in the desert heat, or a look round (now and
+## then a stretch).
+func _play_idle(delta: float) -> void:
+	var crit := HudScreen.is_critical(health.health, health.max_health)
+	if _fidget != &"":
+		var playing := model.current_anim == _fidget
+		if playing and _fidget == &"idle_crit" and crit:
+			return
+		if playing and not model.animation_finished():
+			_fidget_t += delta
+			var cues: Array = FIDGET_CUES.get(_fidget, [])
+			while _fidget_cue < cues.size() and _fidget_t >= float(cues[_fidget_cue][0]):
+				_play_cue(cues[_fidget_cue][1])
+				_fidget_cue += 1
+			return
+		if playing and _fidget == &"idle_crit_start" and crit:
+			_start_fidget(&"idle_crit")
+			return
+		_fidget = &""
+		_idle_t = 0.0
+		_idle_loops = 0
+	model.play(&"idle", 0.3)
+	_idle_t += delta
+	if _idle_t >= IDLE_CYCLE:
+		_idle_t -= IDLE_CYCLE
+		_idle_loops += 1
+	if (crit and _idle_loops >= 1) or _idle_loops >= 2:
+		_start_fidget(_pick_fidget(crit))
+
+
+func _pick_fidget(crit: bool) -> StringName:
+	if crit:
+		return &"idle_crit_start"
+	var two := sword_drawn and Equipment.two_handed()
+	var r := randi() % 5
+	if r < 4:
+		var common: StringName = [&"idle_sword", &"idle_tunic", &"idle_feet", &"idle_shield"][r]
+		match common:
+			&"idle_sword":
+				if sword_drawn and not two:
+					return common
+			&"idle_shield":
+				if Progress.shield != "" and not two:
+					return common
+			&"idle_tunic":
+				if not sword_drawn:
+					return common
+			_:
+				return common
+	if not sword_drawn:
+		match WorldData.climate(World.area_id):
+			"cold":
+				return &"idle_cold"
+			"hot":
+				return &"idle_hot"
+		if randi() % 3 == 0:
+			return &"idle_stretch"
+	return &"idle_look"
+
+
+func _start_fidget(anim_name: StringName) -> void:
+	_fidget = anim_name
+	_fidget_t = 0.0
+	_fidget_cue = 0
+	# OoT eases into a fidget over 6 frames (LinkAnimation_Change's morph).
+	model.play(anim_name, 0.3, 1.0, true)
+
+
+## A fidget's little sounds (sFidgetAnimSfxLists): the boots knocked on the
+## ground, the shield strap, the practice swing.
+func _play_cue(kind: String) -> void:
+	match kind:
+		"step":
+			_footstep()
+		"strap":
+			Sfx.play("shield_block", -16.0, 0.05, 1.3)
+		"swing":
+			Sfx.play("sword_swing", -6.0, 0.05)
 
 
 ## Player_Action_808407CC: standing still in parallel mode.
@@ -1378,6 +1524,8 @@ func _move_parallel(delta: float) -> void:
 ## A, attack, shield, item and first-person handlers, checked from the
 ## standing and moving states.
 func _try_actions() -> bool:
+	if _try_riposte():
+		return true
 	if is_instance_valid(held):
 		# A bomb in hand with the stick at rest: A sets it down at his feet
 		# (OoT puts a bomb down instead of throwing it while standing still).
@@ -1541,6 +1689,13 @@ func _update_shield_and_sword(delta: float) -> void:
 		_update_boom_z(delta)
 	if _throw_time > 0.0:
 		_throw_time -= delta
+	if _riposte_open > 0.0:
+		_riposte_open -= delta
+	_update_trail()
+	if _catch_time > 0.0:
+		_catch_time -= delta
+		if _catch_time <= 0.0 and _boom_ready < 0.0:
+			model.set_boomerang_in_hand(false)
 	_update_upper_pose(delta)
 
 
@@ -1560,8 +1715,10 @@ func _update_upper_pose(delta: float) -> void:
 		want = "carry"
 		on = true
 	elif _throw_time > 0.0:
-		want = "throw"
+		want = "boom_throw"
 		on = true
+		# Flung without a wind-up (from the air): from the moment it leaves the hand.
+		_upper_start = boomerang_release_time if _boom_throw < 0.0 and _upper_name != "boom_throw" else 0.0
 	elif combat.stabbing:
 		# The thrust itself plays on the arm (play_upper in _state_block).
 		pass
@@ -1572,30 +1729,62 @@ func _update_upper_pose(delta: float) -> void:
 		want = "bash"
 		on = true
 	elif boom_z or (state == State.AIM and aim_item == "boomerang"):
-		want = "boom_ready"
+		want = "boom_wait" if _boom_ready >= boomerang_ready_time else "boom_ready"
+		on = true
+	elif _catch_time > 0.0:
+		want = "boom_catch"
 		on = true
 	elif _ride_swing > 0.0:
 		# The cut plays on the upper body (play_upper when it starts).
 		pass
 	elif bow_z or hook_z or ((state == State.AIM or riding_aim) and aim_item in ["bow", "hookshot", "bloom_rod"]):
-		want = "bow"
+		want = _aim_clip()
 		on = true
 	elif two and not on and not combat.is_attacking() and state in [State.IDLE, State.TURN, State.MOVE, State.LAND]:
 		# The greatsword held ready in both hands, point up in front.
 		want = "great_ready"
 		on = true
-	_set_upper(want)
+	if on:
+		_set_upper(want)
+	elif model.upper_weight <= 0.0:
+		# Faded out on whatever it last showed; the next request starts afresh.
+		_upper_name = ""
 	var blend := 0.05 if combat.stabbing else 0.12
 	model.upper_weight = move_toward(model.upper_weight, 1.0 if on else 0.0, delta / blend)
+	# The arrow on the string: from the moment the fist brings it up to the
+	# bow (bow_ready's frame 4) until it is loosed.
+	var bow_up := bow_z or ((state == State.AIM or riding_aim) and aim_item == "bow")
+	model.bow_nocked = bow_up and Progress.arrows > 0 and (bow_phase == Bow.DRAWN or (bow_phase == Bow.READY and _bow_time >= BOW_NOCK_AT))
+	model.set_nocked_arrow(arrow_kind)
 	# Aiming in first person, the chest follows the view up and down.
 	var aiming_fp := (state == State.AIM or riding_aim) and aim_item != ""
 	model.aim_pitch = lerpf(model.aim_pitch, look_pitch * 0.85 if aiming_fp else 0.0, 1.0 - exp(-18.0 * delta))
 
 
+## The upper-body animation for the aimed item and where its cycle is (OoT's
+## upper actions): ready, held, and loosed (bow_bow_ready, bow_bow_wait,
+## bow_bow_shoot_next; hook_shot_ready, hook_wait).
+func _aim_clip() -> String:
+	var item := "hookshot" if hook_z else ("bow" if bow_z else aim_item)
+	var prefix: String = {"bow": "bow", "hookshot": "hook", "bloom_rod": "rod"}.get(item, "bow")
+	match bow_phase:
+		Bow.READY:
+			if prefix == "bow" and _bow_reload:
+				return "bow_next"
+			return prefix + "_ready"
+		Bow.SHOT:
+			return {"bow": "bow_shoot", "hook": "hook_fire", "rod": "rod_flick"}[prefix]
+	return prefix + "_wait"
+
+
 func _set_upper(pose_name: String) -> void:
 	if pose_name != _upper_name:
 		_upper_name = pose_name
-		model.set_upper_pose(UPPER_POSES[pose_name])
+		if UPPER_CLIPS.has(pose_name):
+			model.set_upper_clip(StringName(pose_name), UPPER_CLIP_PATHS, UPPER_CLIPS[pose_name], 1.0, _upper_start)
+			_upper_start = 0.0
+		else:
+			model.set_upper_pose(UPPER_POSES[pose_name])
 
 
 # --- Swimming ------------------------------------------------------------------
@@ -2259,6 +2448,8 @@ func _state_block(delta: float) -> void:
 	if combat.bashing:
 		speed_oot = move_toward(speed_oot, 0.0, 1.0 * _frames(delta))
 	# func_808428D8: B stabs along the aimed shield (it needs a sword).
+	if _try_riposte():
+		return
 	if combat.wants_attack() and Progress.sword != "" and not is_carrying():
 		_set_sword_drawn(true)
 		combat.start_stab(shield_aim.x)
@@ -2284,6 +2475,9 @@ func _aim_shield(delta: float) -> void:
 
 
 func _begin_attack() -> void:
+	if _can_riposte():
+		_start_riposte()
+		return
 	var kind := _melee_kind()
 	_aim_swing()
 	# B with the sword sheathed draws it straight into the swing.
@@ -3024,10 +3218,11 @@ func _use_bottle(i: int) -> bool:
 			get_parent().add_child(f)
 			f.global_position = global_position + Vector3.UP * 1.3 + forward() * 0.4
 			Sfx.play("bottle_swing", -4.0, 0.05, 1.2)
+			_bottle_anim(&"bottle_release", "fairy", 0.7)
 		"fish":
 			# Let out: it leaps ahead, and swims off if it lands in water.
 			Progress.set_bottle(i, "empty")
-			model.play(&"throw_carry", 0.05, 1.2, true)
+			_bottle_anim(&"bottle_release", "fish", 0.7)
 			var fish := BottledFish.new()
 			get_parent().add_child(fish)
 			fish.global_position = global_position + Vector3.UP * 1.2 + forward() * 0.4
@@ -3039,7 +3234,7 @@ func _use_bottle(i: int) -> bool:
 				Sfx.play("error", -6.0)
 				return false
 			Progress.set_bottle(i, "half_milk" if content == "milk" else "empty")
-			model.play(&"item_get", 0.1, 1.0, true)
+			_bottle_anim(&"drink", content, 1.6)
 			speed_oot = 0.0
 			Sfx.play("bottle_pour", -4.0, 0.05, 0.8)
 			health.heal(heal_by)
@@ -3050,7 +3245,7 @@ func _use_bottle(i: int) -> bool:
 ## The empty bottle swung through the air: a fairy in front of the hero
 ## (within reach, ahead of him) goes into it.
 func _swing_bottle(i: int) -> void:
-	model.play(&"throw_carry", 0.05, 1.4, true)
+	_bottle_anim(&"bottle_swing", "empty", 0.55)
 	Sfx.play("bottle_swing", -4.0)
 	var reach := global_position + Vector3.UP * 1.0 + forward() * 0.6
 	for n in get_tree().get_nodes_in_group("fairies"):
@@ -3064,6 +3259,14 @@ func _swing_bottle(i: int) -> void:
 			Sfx.play("bottle_catch", -2.0, 0.0)
 			Dialogue.start(["You caught a *Fairy* in a bottle!\nUse it to be healed, or keep it: if you fall in battle, she will bring you back!"])
 			return
+
+
+## A bottle in his right fist through one of its animations (State.ITEM, so
+## nothing else takes the body meanwhile); the sword goes on his back.
+func _bottle_anim(anim_name: StringName, content: String, length: float) -> void:
+	_set_sword_drawn(false)
+	model.show_prop("res://assets/models/bottle_%s_mesh.tres" % content, length, BOTTLE_GRIP)
+	items.play_action(anim_name, length)
 
 
 ## The Bloom Rod's button: aimed like the Hookshot (CAM_MODE_AIM_ADULT);
@@ -3127,9 +3330,12 @@ func _show_bloom_rod(on: bool) -> void:
 		_bloom_mesh.name = "HandBloomRod"
 		_bloom_mesh.mesh = load("res://assets/models/bloom_rod_mesh.tres")
 		_bloom_mesh.position = Vector3(0, -0.06, 0)
+		# Along the forearm, out of the fist like a wand (hero_anims' arm_point).
+		_bloom_mesh.rotation = Vector3(-PI / 2.0, 0, 0)
 		hand.add_child(_bloom_mesh)
 	if _bloom_mesh:
 		_bloom_mesh.visible = on
+	model.hide_hand_sword(on or (_hook_mesh != null and _hook_mesh.visible))
 
 
 ## The bomb button (Player_UpdateUpperBody's explosive handling): a lit bomb
@@ -3266,13 +3472,20 @@ func _show_hookshot(on: bool) -> void:
 		_hook_mesh.name = "HandHookshot"
 		_hook_mesh.mesh = load("res://assets/models/hookshot_mesh.tres")
 		_hook_mesh.position = Vector3(0, -0.08, 0)
+		# Held like a pistol (Beta 1.8.0): the barrel runs on along the forearm
+		# (the hand's -Y) and the grip hangs down the hand's +Z.
+		_hook_mesh.rotation = Vector3(-PI / 2.0, 0, 0)
 		hand.add_child(_hook_mesh)
 	if _hook_mesh:
 		_hook_mesh.visible = on
+	model.hide_hand_sword(on or (_bloom_mesh != null and _bloom_mesh.visible))
 
 
-## Where the chain leaves his hand.
+## Where the chain leaves his hand: the launcher's muzzle (hookshot_mesh
+## points along -Z, 0.34 long), held out in front in first person too.
 func hookshot_origin() -> Vector3:
+	if _hook_mesh and _hook_mesh.visible:
+		return _hook_mesh.global_transform * Vector3(0, 0, -0.34)
 	var hand := model.get_node_or_null("Hips/Torso/ShoulderR/ElbowR/HandR") as Node3D
 	if hand and state != State.AIM:
 		return hand.global_position
@@ -3286,7 +3499,7 @@ func hook_pull(h: Hookshot) -> void:
 		aim_item = ""
 		bow_phase = Bow.NONE
 	_change_state(State.HOOKFLY)
-	model.play(&"jump_reach", 0.05)
+	model.play(&"hook_fly", 0.05)
 	if camera_rig:
 		camera_rig.snap_behind_target()
 
@@ -3438,6 +3651,162 @@ func _throw_boomerang(yaw: float, pitch: float) -> void:
 				pitch = atan2(to.y, Vector2(to.x, to.z).length())
 	b.throw(self, yaw, pitch, lock_target, from)
 	_throw_time = THROW_TIME
+
+
+## B pressed (even with the parrying bash still under way) and a foe open
+## to it: the riposte, cutting the bash short.
+func _try_riposte() -> bool:
+	if not combat.buffered() or not _can_riposte():
+		return false
+	combat.clear_buffer()
+	combat.end_bash()
+	_start_riposte()
+	return true
+
+
+## A parried foe still reeling, close and in front: B ripostes.
+func _can_riposte() -> bool:
+	if _riposte_open <= 0.0 or not is_instance_valid(_riposte_foe) or _riposte_foe.is_dead() \
+			or Progress.sword == "" or is_carrying() or not is_on_floor():
+		return false
+	var to := _riposte_foe.global_position - global_position
+	to.y = 0.0
+	return to.length() < RIPOSTE_REACH and (to.length() < 0.3 or forward().dot(to.normalized()) > 0.5)
+
+
+## Dark Souls' riposte: the camera swings in close and low beside the two of
+## them, the hero steps in and runs the reeling foe through (three times a
+## cut's damage, at 0.26 s), holds it there, twists, and shoves it off the
+## blade. He cannot be hurt meanwhile.
+func _start_riposte() -> void:
+	var foe := _riposte_foe
+	_riposte_open = 0.0
+	_riposte_hit = false
+	_set_sword_drawn(true)
+	_clear_z_targeting()
+	face_direction(foe.global_position - global_position)
+	_change_state(State.RIPOSTE)
+	model.play(&"riposte", 0.04, 1.0, true)
+	_invuln_time = maxf(_invuln_time, RIPOSTE_TIME + 0.2)
+	_blink_time = -1.0
+	Sfx.play("sword_swing", -2.0, 0.0, 0.8)
+	if camera_rig:
+		var mid := (global_position + foe.global_position) * 0.5 + Vector3.UP * 1.05
+		var right := forward().cross(Vector3.UP).normalized()
+		# Low beside the two of them, from whichever side has room (the shot
+		# itself keeps the eye this side of any wall).
+		var best := mid + right * 2.3 - forward() * 0.9 + Vector3.UP * 0.15
+		for side in [1.0, -1.0]:
+			var eye: Vector3 = mid + right * side * 2.3 - forward() * 0.9 + Vector3.UP * 0.15
+			var q := PhysicsRayQueryParameters3D.create(mid, eye, 1)
+			if get_world_3d().direct_space_state.intersect_ray(q).is_empty():
+				best = eye
+				break
+		camera_rig.hold_shot(best, mid, RIPOSTE_TIME - 0.25, 0.45, null, 40.0)
+
+
+func _state_riposte(_delta: float) -> void:
+	var foe := _riposte_foe
+	# The step in (to arm's length and the blade), then planted.
+	speed_oot = 0.0
+	velocity.x = 0.0
+	velocity.z = 0.0
+	if is_instance_valid(foe) and _state_time < RIPOSTE_HIT:
+		var to := foe.global_position - global_position
+		to.y = 0.0
+		if to.length() > RIPOSTE_CLOSE:
+			velocity.x = to.normalized().x * 5.0
+			velocity.z = to.normalized().z * 5.0
+	if not _riposte_hit and _state_time >= RIPOSTE_HIT:
+		_riposte_hit = true
+		if is_instance_valid(foe) and not foe.is_dead():
+			var info := HitInfo.new()
+			info.damage = combat.sword_damage * RIPOSTE_DAMAGE
+			info.knockback = 0.5
+			info.attacker = self
+			info.source_position = global_position
+			foe.stun_left = maxf(foe.stun_left, 1.2)
+			# Through its hurtbox, so online the host's creature takes it (Net).
+			if foe.hurtbox:
+				foe.hurtbox.receive_hit(info)
+			else:
+				foe.take_hit(info)
+			Sfx.play("sword_hit", 2.0, 0.0, 0.8)
+			Fragments.burst(get_parent(), load("res://assets/models/shard_mesh.tres"), global_position + Vector3.UP * 1.2 + forward() * 0.8,
+				10, 3.0, 2.5, 0.25, 0.25, Color(2.0, 1.6, 1.4))
+			GameManager.rumble(0.9, 0.25)
+		Impact.hit(Impact.RIPOSTE)
+	if _state_time >= RIPOSTE_TIME:
+		_change_state(State.IDLE)
+
+
+## Co-op (Beta 1.9.0): puts on the body of `id` (Net.CHARACTERS), Sir
+## Gigglebuns' own or a companion's made playable (her own gear, his moves),
+## in place of the current one, and sees from her eye height.
+func use_character(id: String) -> void:
+	var old := model
+	var m := (load(Net.model_path(id)) as PackedScene).instantiate() as CharacterModel
+	m.name = "Model"
+	m.transform = old.transform
+	var at := old.get_index()
+	remove_child(old)
+	old.queue_free()
+	add_child(m)
+	move_child(m, at)
+	model = m
+	character = id
+	eye_height = 1.68 * float(Net.HEIGHTS.get(id, 1.0))
+
+
+## The CHARACTER option while playing: everything in hand is put away, the
+## new body goes on, and the gear, trail and lantern move over to it.
+func swap_character(id: String) -> void:
+	if id == character:
+		return
+	if is_first_person():
+		_leave_first_person()
+	_end_bow_z()
+	_cancel_boomerang()
+	_drop_held()
+	_put_away_aim_item()
+	use_character(id)
+	_hook_mesh = null
+	_bloom_mesh = null
+	items.rehome()
+	_upper_name = ""
+	_apply_gear()
+	model.set_sword_drawn(sword_drawn)
+	if trail:
+		trail.blade = model.find_child("Sword", true, false) as Node3D
+		_fit_trail()
+
+
+## The trail follows the blade through a cut's live frames, a jump slash, the
+## Great Spin (red, as the 1998 builds drew it), the thrusts, the riposte's
+## drive and the slash from the saddle.
+func _update_trail() -> void:
+	if trail == null:
+		return
+	var want := combat.trail_wanted() or _ride_swing > 0.0 \
+		or (state == State.RIPOSTE and _state_time > 0.12 and _state_time < RIPOSTE_HIT + 0.12)
+	trail.emitting = want and sword_drawn
+	trail.color = SwordTrail.RED if combat.spinning else SwordTrail.WHITE
+
+
+func _fit_trail() -> void:
+	if trail == null or not is_instance_valid(trail.blade):
+		return
+	var mi := trail.blade.get_node_or_null("SwordMesh") as MeshInstance3D
+	if mi:
+		trail.fit_to(mi.mesh)
+
+
+## The boomerang is back in his hand (boom_catch): snatched out of the air
+## when his hands are free, otherwise it simply goes back in the bag.
+func boomerang_caught() -> void:
+	if state in [State.IDLE, State.TURN, State.MOVE, State.LAND] and not combat.is_attacking() 			and not is_carrying() and not is_aiming() and _throw_time <= 0.0:
+		_catch_time = CATCH_TIME
+		model.set_boomerang_in_hand(true)
 
 
 ## The unit vector along a yaw and pitch (the view's -Z).
@@ -3634,6 +4003,9 @@ func _drop_held() -> void:
 
 
 func _bow_ready() -> void:
+	# After a shot, the next arrow is fetched from the follow-through
+	# (bow_bow_shoot_next) rather than raised from the side.
+	_bow_reload = bow_phase == Bow.SHOT
 	bow_phase = Bow.READY
 	_bow_time = 0.0
 
@@ -4095,6 +4467,11 @@ func _change_state(new_state: State) -> void:
 		# First person: the sword goes back in its sheath (OoT's items are
 		# held in both hands; the blade never hangs in front of the view).
 		_set_sword_drawn(false)
+	if state == State.RIPOSTE and camera_rig:
+		camera_rig.release_shot()
+	_fidget = &""
+	_idle_t = 0.0
+	_idle_loops = 0
 	state = new_state
 	_state_time = 0.0
 	state_changed.emit(new_state)
@@ -4123,6 +4500,16 @@ func take_hit(info: HitInfo) -> int:
 		GameManager.rumble(0.6, 0.15)
 		if is_instance_valid(info.attacker) and info.attacker.has_method("parried"):
 			info.attacker.call("parried", self)
+		# Dark Souls' parry: the shield flicked out, a held beat and a slowed
+		# moment, and the reeling foe open to a riposte (B, close in front).
+		model.play_upper(&"parry", PARRY_PATHS)
+		Impact.hit(Impact.PARRY)
+		Net.parried_by_me(info.attacker)
+		if camera_rig:
+			camera_rig.shake(0.05, 0.15)
+		if info.attacker is Enemy:
+			_riposte_foe = info.attacker
+			_riposte_open = RIPOSTE_OPEN
 		parried.emit()
 		return Hurtbox.Result.BLOCKED
 	if is_shielding() and combat.can_block_from(info.source_position) and stoppable:
@@ -4155,7 +4542,9 @@ func take_hit(info: HitInfo) -> int:
 	_invuln_time = invulnerability_time
 	_blink_time = 0.0
 	_change_state(State.HURT)
-	model.play(&"hurt", 0.02, 1.0, true)
+	# Struck from behind he pitches forward; from the front he is thrown back.
+	var behind := kb.length() > 0.01 and forward().dot(kb.normalized()) > 0.3
+	model.play(&"hurt_back" if behind else &"hurt", 0.02, 1.0, true)
 	return Hurtbox.Result.HIT
 
 

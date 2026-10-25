@@ -978,946 +978,946 @@ billboard_mode = 1
 material = SubResource("StandardMaterial3D_6mhhw")
 size = Vector2(0.07, 0.07)
 
-[node name="SanctumRuin" type="Node3D" unique_id=992045913]
+[node name="SanctumRuin" type="Node3D" unique_id=84544850]
 metadata/area_id = "sanctum_ruin"
 metadata/bounds = Vector3(40, 43, 0)
 metadata/rect = Rect2(-40, -56, 80, 86)
 metadata/floors = [["1F", 0.0]]
 metadata/water = []
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=880149312]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=866253070]
 environment = SubResource("Environment_shuao")
 camera_attributes = SubResource("CameraAttributesPractical_x451x")
 
-[node name="Sun" type="DirectionalLight3D" parent="." unique_id=2096206155]
+[node name="Sun" type="DirectionalLight3D" parent="." unique_id=1661811319]
 transform = Transform3D(0.8660254, -0.40957603, 0.28678823, 0, 0.57357645, 0.81915206, -0.5, -0.7094065, 0.49673176, 0, 0, 0)
 light_color = Color(0.72156864, 0.7058824, 0.8156863, 1)
 light_energy = 0.55
 
-[node name="FillLight" type="DirectionalLight3D" parent="." unique_id=1081597520]
+[node name="FillLight" type="DirectionalLight3D" parent="." unique_id=1745112720]
 transform = Transform3D(-0.8660254, 0.21130912, -0.45315385, 0, 0.90630776, 0.42261827, 0.49999997, 0.36599815, -0.7848855, 0, 0, 0)
 light_color = Color(0.22745098, 0.2509804, 0.40784314, 1)
 light_energy = 0.5
 
-[node name="Terrain" type="StaticBody3D" parent="." unique_id=1408791413]
+[node name="Terrain" type="StaticBody3D" parent="." unique_id=527731325]
 collision_mask = 0
 metadata/surface_grid = PackedByteArray("AgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg==")
 metadata/surface_rect = Rect2(-46, -62, 92, 98)
 metadata/surface_size = Vector2i(92, 98)
 
-[node name="TerrainMesh" type="MeshInstance3D" parent="Terrain" unique_id=872836566]
+[node name="TerrainMesh" type="MeshInstance3D" parent="Terrain" unique_id=1961278806]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_ltsww")
 
-[node name="Collision" type="CollisionShape3D" parent="Terrain" unique_id=580166911]
+[node name="Collision" type="CollisionShape3D" parent="Terrain" unique_id=539000574]
 shape = SubResource("ConcavePolygonShape3D_cf04i")
 
-[node name="Props" type="Node3D" parent="." unique_id=2103915733]
+[node name="Props" type="Node3D" parent="." unique_id=1787853366]
 
-[node name="Chunk_-1_-1" type="MeshInstance3D" parent="Props" unique_id=1531917008]
+[node name="Chunk_-1_-1" type="MeshInstance3D" parent="Props" unique_id=733859800]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_a1f1l")
 
-[node name="Chunk_-1_0" type="MeshInstance3D" parent="Props" unique_id=110082703]
+[node name="Chunk_-1_0" type="MeshInstance3D" parent="Props" unique_id=1023726855]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_hqjs1")
 
-[node name="Chunk_0_-1" type="MeshInstance3D" parent="Props" unique_id=1473946468]
+[node name="Chunk_0_-1" type="MeshInstance3D" parent="Props" unique_id=214767460]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_21oqk")
 
-[node name="Chunk_0_0" type="MeshInstance3D" parent="Props" unique_id=1433028107]
+[node name="Chunk_0_0" type="MeshInstance3D" parent="Props" unique_id=2102398141]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_f5cdn")
 
-[node name="Chunk_-1_-2" type="MeshInstance3D" parent="Props" unique_id=693101861]
+[node name="Chunk_-1_-2" type="MeshInstance3D" parent="Props" unique_id=2039667650]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_blqux")
 
-[node name="Chunk_0_-2" type="MeshInstance3D" parent="Props" unique_id=1855786731]
+[node name="Chunk_0_-2" type="MeshInstance3D" parent="Props" unique_id=645845870]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_3e5dx")
 
-[node name="PropCollision" type="StaticBody3D" parent="." unique_id=1043578880]
+[node name="PropCollision" type="StaticBody3D" parent="." unique_id=1348689116]
 collision_mask = 0
 
-[node name="C0" type="CollisionShape3D" parent="PropCollision" unique_id=2092330007]
+[node name="C0" type="CollisionShape3D" parent="PropCollision" unique_id=1935263785]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 2.5, 15.6)
 shape = SubResource("BoxShape3D_qskiu")
 metadata/surface = "stone"
 metadata/no_climb = true
 
-[node name="C1" type="CollisionShape3D" parent="PropCollision" unique_id=1160755523]
+[node name="C1" type="CollisionShape3D" parent="PropCollision" unique_id=732330941]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.1, 15.6)
 shape = SubResource("BoxShape3D_xl1yx")
 metadata/surface = "stone"
 metadata/no_climb = true
 
-[node name="C2" type="CollisionShape3D" parent="PropCollision" unique_id=411019181]
+[node name="C2" type="CollisionShape3D" parent="PropCollision" unique_id=443550196]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 2.5, 15.6)
 shape = SubResource("BoxShape3D_o1vlo")
 metadata/surface = "stone"
 metadata/no_climb = true
 
-[node name="C3" type="CollisionShape3D" parent="PropCollision" unique_id=582857334]
+[node name="C3" type="CollisionShape3D" parent="PropCollision" unique_id=982556193]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.5333333, 2.5, 26.4)
 shape = SubResource("BoxShape3D_cyosw")
 metadata/surface = "stone"
 metadata/no_climb = true
 
-[node name="C4" type="CollisionShape3D" parent="PropCollision" unique_id=2141807660]
+[node name="C4" type="CollisionShape3D" parent="PropCollision" unique_id=1517678716]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 26.4)
 shape = SubResource("BoxShape3D_y5gug")
 metadata/surface = "stone"
 metadata/no_climb = true
 
-[node name="C5" type="CollisionShape3D" parent="PropCollision" unique_id=1748893364]
+[node name="C5" type="CollisionShape3D" parent="PropCollision" unique_id=740295982]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.5333333, 2.5, 26.4)
 shape = SubResource("BoxShape3D_dy88v")
 metadata/surface = "stone"
 metadata/no_climb = true
 
-[node name="C6" type="CollisionShape3D" parent="PropCollision" unique_id=1600842618]
+[node name="C6" type="CollisionShape3D" parent="PropCollision" unique_id=350602685]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.4, 2.5, 18.1)
 shape = SubResource("BoxShape3D_qntue")
 metadata/surface = "stone"
 metadata/no_climb = true
 
-[node name="C7" type="CollisionShape3D" parent="PropCollision" unique_id=1725742958]
+[node name="C7" type="CollisionShape3D" parent="PropCollision" unique_id=1157593666]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.4, 2.5, 23.9)
 shape = SubResource("BoxShape3D_h272y")
 metadata/surface = "stone"
 metadata/no_climb = true
 
-[node name="C8" type="CollisionShape3D" parent="PropCollision" unique_id=1029213455]
+[node name="C8" type="CollisionShape3D" parent="PropCollision" unique_id=1579482863]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.4, 2.5, 18.1)
 shape = SubResource("BoxShape3D_34jvi")
 metadata/surface = "stone"
 metadata/no_climb = true
 
-[node name="C9" type="CollisionShape3D" parent="PropCollision" unique_id=1170916178]
+[node name="C9" type="CollisionShape3D" parent="PropCollision" unique_id=52180528]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.4, 2.5, 23.9)
 shape = SubResource("BoxShape3D_mtyvi")
 metadata/surface = "stone"
 metadata/no_climb = true
 
-[node name="C10" type="CollisionShape3D" parent="PropCollision" unique_id=1898795435]
+[node name="C10" type="CollisionShape3D" parent="PropCollision" unique_id=1774922080]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.4, 21)
 shape = SubResource("BoxShape3D_dfnku")
 metadata/surface = "stone"
 
-[node name="C11" type="CollisionShape3D" parent="PropCollision" unique_id=1871123606]
+[node name="C11" type="CollisionShape3D" parent="PropCollision" unique_id=116692213]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.9, 3, -10.4)
 shape = SubResource("BoxShape3D_a0w42")
 metadata/surface = "stone"
 metadata/no_climb = true
 
-[node name="C12" type="CollisionShape3D" parent="PropCollision" unique_id=2113094483]
+[node name="C12" type="CollisionShape3D" parent="PropCollision" unique_id=881945620]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.1, 3, -10.4)
 shape = SubResource("BoxShape3D_sjfav")
 metadata/surface = "stone"
 metadata/no_climb = true
 
-[node name="C13" type="CollisionShape3D" parent="PropCollision" unique_id=1188768367]
+[node name="C13" type="CollisionShape3D" parent="PropCollision" unique_id=1933493744]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.6, -10.4)
 shape = SubResource("BoxShape3D_xnfcf")
 metadata/surface = "stone"
 metadata/no_climb = true
 
-[node name="C14" type="CollisionShape3D" parent="PropCollision" unique_id=335357764]
+[node name="C14" type="CollisionShape3D" parent="PropCollision" unique_id=265410718]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.1, 3, -10.4)
 shape = SubResource("BoxShape3D_ecjrw")
 metadata/surface = "stone"
 metadata/no_climb = true
 
-[node name="C15" type="CollisionShape3D" parent="PropCollision" unique_id=1944398756]
+[node name="C15" type="CollisionShape3D" parent="PropCollision" unique_id=1358321983]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.9, 3, -10.4)
 shape = SubResource("BoxShape3D_xn7k7")
 metadata/surface = "stone"
 metadata/no_climb = true
 
-[node name="C16" type="CollisionShape3D" parent="PropCollision" unique_id=911811962]
+[node name="C16" type="CollisionShape3D" parent="PropCollision" unique_id=1018226793]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.9, 3, 10.4)
 shape = SubResource("BoxShape3D_m63tw")
 metadata/surface = "stone"
 metadata/no_climb = true
 
-[node name="C17" type="CollisionShape3D" parent="PropCollision" unique_id=240432046]
+[node name="C17" type="CollisionShape3D" parent="PropCollision" unique_id=157795743]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.1, 3, 10.4)
 shape = SubResource("BoxShape3D_rjk55")
 metadata/surface = "stone"
 metadata/no_climb = true
 
-[node name="C18" type="CollisionShape3D" parent="PropCollision" unique_id=1205149052]
+[node name="C18" type="CollisionShape3D" parent="PropCollision" unique_id=968943920]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.6, 10.4)
 shape = SubResource("BoxShape3D_gifxm")
 metadata/surface = "stone"
 metadata/no_climb = true
 
-[node name="C19" type="CollisionShape3D" parent="PropCollision" unique_id=2026368791]
+[node name="C19" type="CollisionShape3D" parent="PropCollision" unique_id=459449102]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.1, 3, 10.4)
 shape = SubResource("BoxShape3D_4aqum")
 metadata/surface = "stone"
 metadata/no_climb = true
 
-[node name="C20" type="CollisionShape3D" parent="PropCollision" unique_id=1591317404]
+[node name="C20" type="CollisionShape3D" parent="PropCollision" unique_id=1692498787]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.9, 3, 10.4)
 shape = SubResource("BoxShape3D_2epch")
 metadata/surface = "stone"
 metadata/no_climb = true
 
-[node name="C21" type="CollisionShape3D" parent="PropCollision" unique_id=1694956041]
+[node name="C21" type="CollisionShape3D" parent="PropCollision" unique_id=2092351664]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.4, 3, -8.4)
 shape = SubResource("BoxShape3D_akjg1")
 metadata/surface = "stone"
 metadata/no_climb = true
 
-[node name="C22" type="CollisionShape3D" parent="PropCollision" unique_id=1149053129]
+[node name="C22" type="CollisionShape3D" parent="PropCollision" unique_id=300035122]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.4, 3, -3.6)
 shape = SubResource("BoxShape3D_qj3fo")
 metadata/surface = "stone"
 metadata/no_climb = true
 
-[node name="C23" type="CollisionShape3D" parent="PropCollision" unique_id=655781669]
+[node name="C23" type="CollisionShape3D" parent="PropCollision" unique_id=242905576]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.4, 4.6, 0)
 shape = SubResource("BoxShape3D_rejp1")
 metadata/surface = "stone"
 metadata/no_climb = true
 
-[node name="C24" type="CollisionShape3D" parent="PropCollision" unique_id=1693813047]
+[node name="C24" type="CollisionShape3D" parent="PropCollision" unique_id=1055565651]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.4, 3, 3.6)
 shape = SubResource("BoxShape3D_prrns")
 metadata/surface = "stone"
 metadata/no_climb = true
 
-[node name="C25" type="CollisionShape3D" parent="PropCollision" unique_id=89027916]
+[node name="C25" type="CollisionShape3D" parent="PropCollision" unique_id=428922953]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.4, 3, 8.4)
 shape = SubResource("BoxShape3D_w2ykc")
 metadata/surface = "stone"
 metadata/no_climb = true
 
-[node name="C26" type="CollisionShape3D" parent="PropCollision" unique_id=1266349621]
+[node name="C26" type="CollisionShape3D" parent="PropCollision" unique_id=1000869968]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.4, 3, -8.4)
 shape = SubResource("BoxShape3D_pnjqt")
 metadata/surface = "stone"
 metadata/no_climb = true
 
-[node name="C27" type="CollisionShape3D" parent="PropCollision" unique_id=1114311052]
+[node name="C27" type="CollisionShape3D" parent="PropCollision" unique_id=203038899]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.4, 3, -3.6)
 shape = SubResource("BoxShape3D_d8enm")
 metadata/surface = "stone"
 metadata/no_climb = true
 
-[node name="C28" type="CollisionShape3D" parent="PropCollision" unique_id=425222549]
+[node name="C28" type="CollisionShape3D" parent="PropCollision" unique_id=509012618]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.4, 4.6, 0)
 shape = SubResource("BoxShape3D_xttu7")
 metadata/surface = "stone"
 metadata/no_climb = true
 
-[node name="C29" type="CollisionShape3D" parent="PropCollision" unique_id=1858383899]
+[node name="C29" type="CollisionShape3D" parent="PropCollision" unique_id=1827972872]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.4, 3, 3.6)
 shape = SubResource("BoxShape3D_a1s36")
 metadata/surface = "stone"
 metadata/no_climb = true
 
-[node name="C30" type="CollisionShape3D" parent="PropCollision" unique_id=1532037207]
+[node name="C30" type="CollisionShape3D" parent="PropCollision" unique_id=1225149763]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.4, 3, 8.4)
 shape = SubResource("BoxShape3D_e31ty")
 metadata/surface = "stone"
 metadata/no_climb = true
 
-[node name="C31" type="CollisionShape3D" parent="PropCollision" unique_id=1592807099]
+[node name="C31" type="CollisionShape3D" parent="PropCollision" unique_id=433729324]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.8, 2.5, -7.4)
 shape = SubResource("BoxShape3D_u13w2")
 metadata/surface = "stone"
 metadata/no_climb = true
 
-[node name="C32" type="CollisionShape3D" parent="PropCollision" unique_id=1702457082]
+[node name="C32" type="CollisionShape3D" parent="PropCollision" unique_id=774051232]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 2.5, -7.4)
 shape = SubResource("BoxShape3D_1fk0e")
 metadata/surface = "stone"
 metadata/no_climb = true
 
-[node name="C33" type="CollisionShape3D" parent="PropCollision" unique_id=1211486123]
+[node name="C33" type="CollisionShape3D" parent="PropCollision" unique_id=1160059114]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.2, 2.5, -7.4)
 shape = SubResource("BoxShape3D_v8b04")
 metadata/surface = "stone"
 metadata/no_climb = true
 
-[node name="C34" type="CollisionShape3D" parent="PropCollision" unique_id=755761944]
+[node name="C34" type="CollisionShape3D" parent="PropCollision" unique_id=598674259]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.8, 2.5, 7.4)
 shape = SubResource("BoxShape3D_dmlt2")
 metadata/surface = "stone"
 metadata/no_climb = true
 
-[node name="C35" type="CollisionShape3D" parent="PropCollision" unique_id=1768650541]
+[node name="C35" type="CollisionShape3D" parent="PropCollision" unique_id=989401179]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 2.5, 7.4)
 shape = SubResource("BoxShape3D_ii214")
 metadata/surface = "stone"
 metadata/no_climb = true
 
-[node name="C36" type="CollisionShape3D" parent="PropCollision" unique_id=738045765]
+[node name="C36" type="CollisionShape3D" parent="PropCollision" unique_id=371950091]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.2, 2.5, 7.4)
 shape = SubResource("BoxShape3D_dnfp4")
 metadata/surface = "stone"
 metadata/no_climb = true
 
-[node name="C37" type="CollisionShape3D" parent="PropCollision" unique_id=848427747]
+[node name="C37" type="CollisionShape3D" parent="PropCollision" unique_id=1178425010]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.6, 2.5, -6.15)
 shape = SubResource("BoxShape3D_x65r8")
 metadata/surface = "stone"
 metadata/no_climb = true
 
-[node name="C38" type="CollisionShape3D" parent="PropCollision" unique_id=99020790]
+[node name="C38" type="CollisionShape3D" parent="PropCollision" unique_id=1152444250]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.6, 2.5, -2.85)
 shape = SubResource("BoxShape3D_qu3d8")
 metadata/surface = "stone"
 metadata/no_climb = true
 
-[node name="C39" type="CollisionShape3D" parent="PropCollision" unique_id=1326220332]
+[node name="C39" type="CollisionShape3D" parent="PropCollision" unique_id=2110491097]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.6, 4.1, 0)
 shape = SubResource("BoxShape3D_pdcbr")
 metadata/surface = "stone"
 metadata/no_climb = true
 
-[node name="C40" type="CollisionShape3D" parent="PropCollision" unique_id=136593618]
+[node name="C40" type="CollisionShape3D" parent="PropCollision" unique_id=287244668]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.6, 2.5, 2.85)
 shape = SubResource("BoxShape3D_u7xdi")
 metadata/surface = "stone"
 metadata/no_climb = true
 
-[node name="C41" type="CollisionShape3D" parent="PropCollision" unique_id=31182163]
+[node name="C41" type="CollisionShape3D" parent="PropCollision" unique_id=524362704]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.6, 2.5, 6.15)
 shape = SubResource("BoxShape3D_siq1p")
 metadata/surface = "stone"
 metadata/no_climb = true
 
-[node name="C42" type="CollisionShape3D" parent="PropCollision" unique_id=137106143]
+[node name="C42" type="CollisionShape3D" parent="PropCollision" unique_id=801865827]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32.4, 2.5, -5.2)
 shape = SubResource("BoxShape3D_3lgbb")
 metadata/surface = "stone"
 metadata/no_climb = true
 
-[node name="C43" type="CollisionShape3D" parent="PropCollision" unique_id=1509674991]
+[node name="C43" type="CollisionShape3D" parent="PropCollision" unique_id=1365556516]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32.4, 2.5, 8.881784e-16)
 shape = SubResource("BoxShape3D_udswg")
 metadata/surface = "stone"
 metadata/no_climb = true
 
-[node name="C44" type="CollisionShape3D" parent="PropCollision" unique_id=343175212]
+[node name="C44" type="CollisionShape3D" parent="PropCollision" unique_id=1567681037]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32.4, 2.5, 5.2)
 shape = SubResource("BoxShape3D_0hf36")
 metadata/surface = "stone"
 metadata/no_climb = true
 
-[node name="C45" type="CollisionShape3D" parent="PropCollision" unique_id=1431038313]
+[node name="C45" type="CollisionShape3D" parent="PropCollision" unique_id=2035431265]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 5.4, 0)
 shape = SubResource("BoxShape3D_u47ba")
 metadata/surface = "stone"
 
-[node name="C46" type="CollisionShape3D" parent="PropCollision" unique_id=2036393121]
+[node name="C46" type="CollisionShape3D" parent="PropCollision" unique_id=80773051]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30.2, 2.5, -7.4)
 shape = SubResource("BoxShape3D_ysvim")
 metadata/surface = "stone"
 metadata/no_climb = true
 
-[node name="C47" type="CollisionShape3D" parent="PropCollision" unique_id=141538837]
+[node name="C47" type="CollisionShape3D" parent="PropCollision" unique_id=1102093999]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, 2.5, -7.4)
 shape = SubResource("BoxShape3D_btwwg")
 metadata/surface = "stone"
 metadata/no_climb = true
 
-[node name="C48" type="CollisionShape3D" parent="PropCollision" unique_id=1849432132]
+[node name="C48" type="CollisionShape3D" parent="PropCollision" unique_id=783914202]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.8, 2.5, -7.4)
 shape = SubResource("BoxShape3D_m5jub")
 metadata/surface = "stone"
 metadata/no_climb = true
 
-[node name="C49" type="CollisionShape3D" parent="PropCollision" unique_id=937857769]
+[node name="C49" type="CollisionShape3D" parent="PropCollision" unique_id=1879721601]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30.2, 2.5, 7.4)
 shape = SubResource("BoxShape3D_8wb7h")
 metadata/surface = "stone"
 metadata/no_climb = true
 
-[node name="C50" type="CollisionShape3D" parent="PropCollision" unique_id=80243334]
+[node name="C50" type="CollisionShape3D" parent="PropCollision" unique_id=1024372151]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, 2.5, 7.4)
 shape = SubResource("BoxShape3D_3q1xe")
 metadata/surface = "stone"
 metadata/no_climb = true
 
-[node name="C51" type="CollisionShape3D" parent="PropCollision" unique_id=332041172]
+[node name="C51" type="CollisionShape3D" parent="PropCollision" unique_id=1838681870]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.8, 2.5, 7.4)
 shape = SubResource("BoxShape3D_fpiih")
 metadata/surface = "stone"
 metadata/no_climb = true
 
-[node name="C52" type="CollisionShape3D" parent="PropCollision" unique_id=1016253214]
+[node name="C52" type="CollisionShape3D" parent="PropCollision" unique_id=228847740]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32.4, 2.5, -5.2)
 shape = SubResource("BoxShape3D_kovsx")
 metadata/surface = "stone"
 metadata/no_climb = true
 
-[node name="C53" type="CollisionShape3D" parent="PropCollision" unique_id=731845165]
+[node name="C53" type="CollisionShape3D" parent="PropCollision" unique_id=1829875514]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32.4, 2.5, 8.881784e-16)
 shape = SubResource("BoxShape3D_ibq1d")
 metadata/surface = "stone"
 metadata/no_climb = true
 
-[node name="C54" type="CollisionShape3D" parent="PropCollision" unique_id=116574113]
+[node name="C54" type="CollisionShape3D" parent="PropCollision" unique_id=1873140917]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32.4, 2.5, 5.2)
 shape = SubResource("BoxShape3D_ucq4x")
 metadata/surface = "stone"
 metadata/no_climb = true
 
-[node name="C55" type="CollisionShape3D" parent="PropCollision" unique_id=1755045792]
+[node name="C55" type="CollisionShape3D" parent="PropCollision" unique_id=872069365]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.6, 2.5, -6.15)
 shape = SubResource("BoxShape3D_pxelg")
 metadata/surface = "stone"
 metadata/no_climb = true
 
-[node name="C56" type="CollisionShape3D" parent="PropCollision" unique_id=1401425277]
+[node name="C56" type="CollisionShape3D" parent="PropCollision" unique_id=1165168009]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.6, 2.5, -2.85)
 shape = SubResource("BoxShape3D_4lb6d")
 metadata/surface = "stone"
 metadata/no_climb = true
 
-[node name="C57" type="CollisionShape3D" parent="PropCollision" unique_id=1711145060]
+[node name="C57" type="CollisionShape3D" parent="PropCollision" unique_id=124766262]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.6, 4.1, 0)
 shape = SubResource("BoxShape3D_lmm0v")
 metadata/surface = "stone"
 metadata/no_climb = true
 
-[node name="C58" type="CollisionShape3D" parent="PropCollision" unique_id=618977070]
+[node name="C58" type="CollisionShape3D" parent="PropCollision" unique_id=1348851662]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.6, 2.5, 2.85)
 shape = SubResource("BoxShape3D_4hesl")
 metadata/surface = "stone"
 metadata/no_climb = true
 
-[node name="C59" type="CollisionShape3D" parent="PropCollision" unique_id=1873750326]
+[node name="C59" type="CollisionShape3D" parent="PropCollision" unique_id=1231793069]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.6, 2.5, 6.15)
 shape = SubResource("BoxShape3D_nhpip")
 metadata/surface = "stone"
 metadata/no_climb = true
 
-[node name="C60" type="CollisionShape3D" parent="PropCollision" unique_id=1847310810]
+[node name="C60" type="CollisionShape3D" parent="PropCollision" unique_id=258687885]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, 5.4, 0)
 shape = SubResource("BoxShape3D_abhxp")
 metadata/surface = "stone"
 
-[node name="C61" type="CollisionShape3D" parent="PropCollision" unique_id=542364782]
+[node name="C61" type="CollisionShape3D" parent="PropCollision" unique_id=1725620373]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14, 3.5, -50.4)
 shape = SubResource("BoxShape3D_x40ol")
 metadata/surface = "stone"
 metadata/no_climb = true
 
-[node name="C62" type="CollisionShape3D" parent="PropCollision" unique_id=1875706247]
+[node name="C62" type="CollisionShape3D" parent="PropCollision" unique_id=1195174747]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.4, 3.5, -50.4)
 shape = SubResource("BoxShape3D_ev8cq")
 metadata/surface = "stone"
 metadata/no_climb = true
 
-[node name="C63" type="CollisionShape3D" parent="PropCollision" unique_id=1021334428]
+[node name="C63" type="CollisionShape3D" parent="PropCollision" unique_id=833508116]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.8, 3.5, -50.4)
 shape = SubResource("BoxShape3D_dl0qq")
 metadata/surface = "stone"
 metadata/no_climb = true
 
-[node name="C64" type="CollisionShape3D" parent="PropCollision" unique_id=840351114]
+[node name="C64" type="CollisionShape3D" parent="PropCollision" unique_id=932874747]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.8, 3.5, -50.4)
 shape = SubResource("BoxShape3D_eo0ij")
 metadata/surface = "stone"
 metadata/no_climb = true
 
-[node name="C65" type="CollisionShape3D" parent="PropCollision" unique_id=1799826708]
+[node name="C65" type="CollisionShape3D" parent="PropCollision" unique_id=1574695258]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.4, 3.5, -50.4)
 shape = SubResource("BoxShape3D_ykfiw")
 metadata/surface = "stone"
 metadata/no_climb = true
 
-[node name="C66" type="CollisionShape3D" parent="PropCollision" unique_id=1499830222]
+[node name="C66" type="CollisionShape3D" parent="PropCollision" unique_id=1304190149]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 3.5, -50.4)
 shape = SubResource("BoxShape3D_sthko")
 metadata/surface = "stone"
 metadata/no_climb = true
 
-[node name="C67" type="CollisionShape3D" parent="PropCollision" unique_id=1786390428]
+[node name="C67" type="CollisionShape3D" parent="PropCollision" unique_id=2142316321]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.2, 3.5, -17.6)
 shape = SubResource("BoxShape3D_5ci6u")
 metadata/surface = "stone"
 metadata/no_climb = true
 
-[node name="C68" type="CollisionShape3D" parent="PropCollision" unique_id=1813155293]
+[node name="C68" type="CollisionShape3D" parent="PropCollision" unique_id=1476380762]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 3.5, -17.6)
 shape = SubResource("BoxShape3D_7my5h")
 metadata/surface = "stone"
 metadata/no_climb = true
 
-[node name="C69" type="CollisionShape3D" parent="PropCollision" unique_id=262859375]
+[node name="C69" type="CollisionShape3D" parent="PropCollision" unique_id=1802348135]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.8, 3.5, -17.6)
 shape = SubResource("BoxShape3D_ruahw")
 metadata/surface = "stone"
 metadata/no_climb = true
 
-[node name="C70" type="CollisionShape3D" parent="PropCollision" unique_id=282715489]
+[node name="C70" type="CollisionShape3D" parent="PropCollision" unique_id=844408830]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.1, -17.6)
 shape = SubResource("BoxShape3D_7lacn")
 metadata/surface = "stone"
 metadata/no_climb = true
 
-[node name="C71" type="CollisionShape3D" parent="PropCollision" unique_id=1551967833]
+[node name="C71" type="CollisionShape3D" parent="PropCollision" unique_id=599464039]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.8, 3.5, -17.6)
 shape = SubResource("BoxShape3D_qaar6")
 metadata/surface = "stone"
 metadata/no_climb = true
 
-[node name="C72" type="CollisionShape3D" parent="PropCollision" unique_id=588979937]
+[node name="C72" type="CollisionShape3D" parent="PropCollision" unique_id=207745709]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 3.5, -17.6)
 shape = SubResource("BoxShape3D_3v85d")
 metadata/surface = "stone"
 metadata/no_climb = true
 
-[node name="C73" type="CollisionShape3D" parent="PropCollision" unique_id=1879531940]
+[node name="C73" type="CollisionShape3D" parent="PropCollision" unique_id=969010497]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.2, 3.5, -17.6)
 shape = SubResource("BoxShape3D_t812a")
 metadata/surface = "stone"
 metadata/no_climb = true
 
-[node name="C74" type="CollisionShape3D" parent="PropCollision" unique_id=2065835390]
+[node name="C74" type="CollisionShape3D" parent="PropCollision" unique_id=2012738879]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.4, 3.5, -48)
 shape = SubResource("BoxShape3D_8mms4")
 metadata/surface = "stone"
 metadata/no_climb = true
 
-[node name="C75" type="CollisionShape3D" parent="PropCollision" unique_id=1984346432]
+[node name="C75" type="CollisionShape3D" parent="PropCollision" unique_id=259276582]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.4, 3.5, -42.4)
 shape = SubResource("BoxShape3D_qat53")
 metadata/surface = "stone"
 metadata/no_climb = true
 
-[node name="C76" type="CollisionShape3D" parent="PropCollision" unique_id=200828977]
+[node name="C76" type="CollisionShape3D" parent="PropCollision" unique_id=444406255]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.4, 3.5, -36.8)
 shape = SubResource("BoxShape3D_s401v")
 metadata/surface = "stone"
 metadata/no_climb = true
 
-[node name="C77" type="CollisionShape3D" parent="PropCollision" unique_id=904158174]
+[node name="C77" type="CollisionShape3D" parent="PropCollision" unique_id=213299136]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.4, 3.5, -31.2)
 shape = SubResource("BoxShape3D_202y0")
 metadata/surface = "stone"
 metadata/no_climb = true
 
-[node name="C78" type="CollisionShape3D" parent="PropCollision" unique_id=170105367]
+[node name="C78" type="CollisionShape3D" parent="PropCollision" unique_id=764687764]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.4, 3.5, -25.6)
 shape = SubResource("BoxShape3D_pb35n")
 metadata/surface = "stone"
 metadata/no_climb = true
 
-[node name="C79" type="CollisionShape3D" parent="PropCollision" unique_id=185047645]
+[node name="C79" type="CollisionShape3D" parent="PropCollision" unique_id=721287146]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.4, 3.5, -20)
 shape = SubResource("BoxShape3D_g3ufk")
 metadata/surface = "stone"
 metadata/no_climb = true
 
-[node name="C80" type="CollisionShape3D" parent="PropCollision" unique_id=2137704986]
+[node name="C80" type="CollisionShape3D" parent="PropCollision" unique_id=1184941117]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.4, 3.5, -48)
 shape = SubResource("BoxShape3D_jeph7")
 metadata/surface = "stone"
 metadata/no_climb = true
 
-[node name="C81" type="CollisionShape3D" parent="PropCollision" unique_id=2006233427]
+[node name="C81" type="CollisionShape3D" parent="PropCollision" unique_id=1830655773]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.4, 3.5, -42.4)
 shape = SubResource("BoxShape3D_rkqw1")
 metadata/surface = "stone"
 metadata/no_climb = true
 
-[node name="C82" type="CollisionShape3D" parent="PropCollision" unique_id=456863288]
+[node name="C82" type="CollisionShape3D" parent="PropCollision" unique_id=440153435]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.4, 3.5, -36.8)
 shape = SubResource("BoxShape3D_o6s8u")
 metadata/surface = "stone"
 metadata/no_climb = true
 
-[node name="C83" type="CollisionShape3D" parent="PropCollision" unique_id=56178920]
+[node name="C83" type="CollisionShape3D" parent="PropCollision" unique_id=1138550193]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.4, 3.5, -31.2)
 shape = SubResource("BoxShape3D_4jnv4")
 metadata/surface = "stone"
 metadata/no_climb = true
 
-[node name="C84" type="CollisionShape3D" parent="PropCollision" unique_id=1967842192]
+[node name="C84" type="CollisionShape3D" parent="PropCollision" unique_id=553702950]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.4, 3.5, -25.6)
 shape = SubResource("BoxShape3D_foi33")
 metadata/surface = "stone"
 metadata/no_climb = true
 
-[node name="C85" type="CollisionShape3D" parent="PropCollision" unique_id=1500369402]
+[node name="C85" type="CollisionShape3D" parent="PropCollision" unique_id=1158693618]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.4, 3.5, -20)
 shape = SubResource("BoxShape3D_8aanq")
 metadata/surface = "stone"
 metadata/no_climb = true
 
-[node name="C86" type="CollisionShape3D" parent="PropCollision" unique_id=892063579]
+[node name="C86" type="CollisionShape3D" parent="PropCollision" unique_id=1001843213]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.4, 2, 13)
 shape = SubResource("BoxShape3D_iqjus")
 metadata/surface = "stone"
 metadata/no_climb = true
 
-[node name="C87" type="CollisionShape3D" parent="PropCollision" unique_id=1847146609]
+[node name="C87" type="CollisionShape3D" parent="PropCollision" unique_id=1949454223]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.4, 2, 13)
 shape = SubResource("BoxShape3D_i71cd")
 metadata/surface = "stone"
 metadata/no_climb = true
 
-[node name="C88" type="CollisionShape3D" parent="PropCollision" unique_id=1713778663]
+[node name="C88" type="CollisionShape3D" parent="PropCollision" unique_id=1840805280]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.4, 13)
 shape = SubResource("BoxShape3D_gjo2q")
 metadata/surface = "stone"
 
-[node name="C89" type="CollisionShape3D" parent="PropCollision" unique_id=421471640]
+[node name="C89" type="CollisionShape3D" parent="PropCollision" unique_id=711768770]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 2, -2.4)
 shape = SubResource("BoxShape3D_5j70i")
 metadata/surface = "stone"
 metadata/no_climb = true
 
-[node name="C90" type="CollisionShape3D" parent="PropCollision" unique_id=1146648126]
+[node name="C90" type="CollisionShape3D" parent="PropCollision" unique_id=1914604870]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 2, 2.4)
 shape = SubResource("BoxShape3D_5whgn")
 metadata/surface = "stone"
 metadata/no_climb = true
 
-[node name="C91" type="CollisionShape3D" parent="PropCollision" unique_id=846080221]
+[node name="C91" type="CollisionShape3D" parent="PropCollision" unique_id=209703632]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 4.4, 0)
 shape = SubResource("BoxShape3D_qcpbw")
 metadata/surface = "stone"
 
-[node name="C92" type="CollisionShape3D" parent="PropCollision" unique_id=474164279]
+[node name="C92" type="CollisionShape3D" parent="PropCollision" unique_id=336784011]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 2, -2.4)
 shape = SubResource("BoxShape3D_017y4")
 metadata/surface = "stone"
 metadata/no_climb = true
 
-[node name="C93" type="CollisionShape3D" parent="PropCollision" unique_id=692596417]
+[node name="C93" type="CollisionShape3D" parent="PropCollision" unique_id=1708094608]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 2, 2.4)
 shape = SubResource("BoxShape3D_0f0ju")
 metadata/surface = "stone"
 metadata/no_climb = true
 
-[node name="C94" type="CollisionShape3D" parent="PropCollision" unique_id=1628595730]
+[node name="C94" type="CollisionShape3D" parent="PropCollision" unique_id=931660810]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 4.4, 0)
 shape = SubResource("BoxShape3D_vfxsv")
 metadata/surface = "stone"
 
-[node name="C95" type="CollisionShape3D" parent="PropCollision" unique_id=995115095]
+[node name="C95" type="CollisionShape3D" parent="PropCollision" unique_id=1977525843]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.4, 2, -15.975)
 shape = SubResource("BoxShape3D_ritgp")
 metadata/surface = "stone"
 metadata/no_climb = true
 
-[node name="C96" type="CollisionShape3D" parent="PropCollision" unique_id=1798273516]
+[node name="C96" type="CollisionShape3D" parent="PropCollision" unique_id=29384451]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.4, 2, -12.025)
 shape = SubResource("BoxShape3D_m0fk3")
 metadata/surface = "stone"
 metadata/no_climb = true
 
-[node name="C97" type="CollisionShape3D" parent="PropCollision" unique_id=880751957]
+[node name="C97" type="CollisionShape3D" parent="PropCollision" unique_id=108309870]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.4, 2, -15.975)
 shape = SubResource("BoxShape3D_5jbp0")
 metadata/surface = "stone"
 metadata/no_climb = true
 
-[node name="C98" type="CollisionShape3D" parent="PropCollision" unique_id=843242679]
+[node name="C98" type="CollisionShape3D" parent="PropCollision" unique_id=811164852]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.4, 2, -12.025)
 shape = SubResource("BoxShape3D_hfyyf")
 metadata/surface = "stone"
 metadata/no_climb = true
 
-[node name="C99" type="CollisionShape3D" parent="PropCollision" unique_id=1026700896]
+[node name="C99" type="CollisionShape3D" parent="PropCollision" unique_id=529133248]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.4, -14)
 shape = SubResource("BoxShape3D_ewek4")
 metadata/surface = "stone"
 
-[node name="C100" type="CollisionShape3D" parent="PropCollision" unique_id=652160369]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0.44, 17.6)
+[node name="C100" type="CollisionShape3D" parent="PropCollision" unique_id=1850786353]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.4, 0.44, 17.8)
 shape = SubResource("BoxShape3D_xu1l7")
 metadata/surface = "stone"
 metadata/no_climb = true
 
-[node name="C101" type="CollisionShape3D" parent="PropCollision" unique_id=726712610]
-transform = Transform3D(0.6967067, 0, 0.7173561, 0, 1, 0, -0.7173561, 0, 0.6967067, -1, 0.44, 18.2)
+[node name="C101" type="CollisionShape3D" parent="PropCollision" unique_id=1141663136]
+transform = Transform3D(0.921061, 0, 0.38941833, 0, 1, 0, -0.38941833, 0, 0.921061, -4.2, 0.44, 20.2)
 shape = SubResource("BoxShape3D_6klos")
 metadata/surface = "stone"
 metadata/no_climb = true
 
-[node name="C102" type="CollisionShape3D" parent="PropCollision" unique_id=1985281859]
-transform = Transform3D(-0.029199546, 0, 0.9995736, 0, 1, 0, -0.9995736, 0, -0.029199546, 1, 0.44, 17.6)
+[node name="C102" type="CollisionShape3D" parent="PropCollision" unique_id=627494068]
+transform = Transform3D(0.6967067, 0, 0.7173561, 0, 1, 0, -0.7173561, 0, 0.6967067, 4.4, 0.44, 17.8)
 shape = SubResource("BoxShape3D_ka8yj")
 metadata/surface = "stone"
 metadata/no_climb = true
 
-[node name="C103" type="CollisionShape3D" parent="PropCollision" unique_id=2080991980]
-transform = Transform3D(-0.7373938, 0, 0.67546314, 0, 1, 0, -0.67546314, 0, -0.7373938, 3, 0.44, 18.2)
+[node name="C103" type="CollisionShape3D" parent="PropCollision" unique_id=1614306299]
+transform = Transform3D(0.3623577, 0, 0.9320391, 0, 1, 0, -0.9320391, 0, 0.3623577, 4.2, 0.44, 20.2)
 shape = SubResource("BoxShape3D_nwww8")
 metadata/surface = "stone"
 metadata/no_climb = true
 
-[node name="C104" type="CollisionShape3D" parent="PropCollision" unique_id=1703811541]
+[node name="C104" type="CollisionShape3D" parent="PropCollision" unique_id=567797454]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 3, -6)
 shape = SubResource("CylinderShape3D_gcmam")
 metadata/surface = "stone"
 
-[node name="C105" type="CollisionShape3D" parent="PropCollision" unique_id=128043832]
+[node name="C105" type="CollisionShape3D" parent="PropCollision" unique_id=1205270130]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 1.3521408, -6)
 shape = SubResource("CylinderShape3D_5fk14")
 metadata/surface = "stone"
 
-[node name="C106" type="CollisionShape3D" parent="PropCollision" unique_id=1545190612]
+[node name="C106" type="CollisionShape3D" parent="PropCollision" unique_id=1487803898]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 3, 6)
 shape = SubResource("CylinderShape3D_wey5l")
 metadata/surface = "stone"
 
-[node name="C107" type="CollisionShape3D" parent="PropCollision" unique_id=296588011]
+[node name="C107" type="CollisionShape3D" parent="PropCollision" unique_id=1964375040]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 3, 6)
 shape = SubResource("CylinderShape3D_6vg43")
 metadata/surface = "stone"
 
-[node name="C108" type="CollisionShape3D" parent="PropCollision" unique_id=1717717318]
+[node name="C108" type="CollisionShape3D" parent="PropCollision" unique_id=1691265062]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0.4, -1)
 shape = SubResource("BoxShape3D_mdak7")
 metadata/surface = "stone"
 metadata/no_climb = true
 
-[node name="C109" type="CollisionShape3D" parent="PropCollision" unique_id=182750557]
+[node name="C109" type="CollisionShape3D" parent="PropCollision" unique_id=1835806626]
 transform = Transform3D(0.4535961, 0, 0.8912074, 0, 1, 0, -0.8912074, 0, 0.4535961, -4.5, 0.4, 0.5)
 shape = SubResource("BoxShape3D_dfopm")
 metadata/surface = "stone"
 metadata/no_climb = true
 
-[node name="C110" type="CollisionShape3D" parent="PropCollision" unique_id=628964962]
+[node name="C110" type="CollisionShape3D" parent="PropCollision" unique_id=949995310]
 transform = Transform3D(-0.58850116, 0, 0.80849636, 0, 1, 0, -0.80849636, 0, -0.58850116, 0, 0.4, 2)
 shape = SubResource("BoxShape3D_2xtbx")
 metadata/surface = "stone"
 metadata/no_climb = true
 
-[node name="C111" type="CollisionShape3D" parent="PropCollision" unique_id=2091698504]
+[node name="C111" type="CollisionShape3D" parent="PropCollision" unique_id=1707700649]
 transform = Transform3D(-0.9874798, 0, -0.15774564, 0, 1, 0, 0.15774564, 0, -0.9874798, 4.5, 0.4, -1)
 shape = SubResource("BoxShape3D_or63l")
 metadata/surface = "stone"
 metadata/no_climb = true
 
-[node name="C112" type="CollisionShape3D" parent="PropCollision" unique_id=562126432]
+[node name="C112" type="CollisionShape3D" parent="PropCollision" unique_id=1706087890]
 transform = Transform3D(-0.30733278, 0, -0.9516021, 0, 1, 0, 0.9516021, 0, -0.30733278, 9, 0.4, 0.5)
 shape = SubResource("BoxShape3D_wqi66")
 metadata/surface = "stone"
 metadata/no_climb = true
 
-[node name="C113" type="CollisionShape3D" parent="PropCollision" unique_id=1194769507]
+[node name="C113" type="CollisionShape3D" parent="PropCollision" unique_id=561140742]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0.65, 0)
 shape = SubResource("CylinderShape3D_0euyd")
 metadata/surface = "stone"
 
-[node name="C114" type="CollisionShape3D" parent="PropCollision" unique_id=1808483795]
+[node name="C114" type="CollisionShape3D" parent="PropCollision" unique_id=827964746]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0.65, 0)
 shape = SubResource("CylinderShape3D_8dle6")
 metadata/surface = "stone"
 
-[node name="C115" type="CollisionShape3D" parent="PropCollision" unique_id=1968773622]
+[node name="C115" type="CollisionShape3D" parent="PropCollision" unique_id=487134224]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 29.1, 1.1, -3)
 shape = SubResource("BoxShape3D_gion1")
 metadata/surface = "wood"
 metadata/no_climb = true
 
-[node name="C116" type="CollisionShape3D" parent="PropCollision" unique_id=1860863953]
+[node name="C116" type="CollisionShape3D" parent="PropCollision" unique_id=1253207606]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 26.9, 1.1, -3)
 shape = SubResource("BoxShape3D_sdjsi")
 metadata/surface = "wood"
 metadata/no_climb = true
 
-[node name="C117" type="CollisionShape3D" parent="PropCollision" unique_id=2037582860]
+[node name="C117" type="CollisionShape3D" parent="PropCollision" unique_id=156711233]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 28, 1.1, -1.9)
 shape = SubResource("BoxShape3D_cgd50")
 metadata/surface = "wood"
 metadata/no_climb = true
 
-[node name="C118" type="CollisionShape3D" parent="PropCollision" unique_id=1094831822]
+[node name="C118" type="CollisionShape3D" parent="PropCollision" unique_id=820045142]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 29.1, 1.1, 3)
 shape = SubResource("BoxShape3D_g23n5")
 metadata/surface = "wood"
 metadata/no_climb = true
 
-[node name="C119" type="CollisionShape3D" parent="PropCollision" unique_id=1819594396]
+[node name="C119" type="CollisionShape3D" parent="PropCollision" unique_id=1153985002]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 26.9, 1.1, 3)
 shape = SubResource("BoxShape3D_6u2kp")
 metadata/surface = "wood"
 metadata/no_climb = true
 
-[node name="C120" type="CollisionShape3D" parent="PropCollision" unique_id=1561080213]
+[node name="C120" type="CollisionShape3D" parent="PropCollision" unique_id=835172698]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 28, 1.1, 4.1)
 shape = SubResource("BoxShape3D_bqgv6")
 metadata/surface = "wood"
 metadata/no_climb = true
 
-[node name="C121" type="CollisionShape3D" parent="PropCollision" unique_id=1857963296]
+[node name="C121" type="CollisionShape3D" parent="PropCollision" unique_id=659243690]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31.2, 1.2, -4.5)
 shape = SubResource("BoxShape3D_w8iu0")
 metadata/surface = "wood"
 
-[node name="C122" type="CollisionShape3D" parent="PropCollision" unique_id=1157619529]
+[node name="C122" type="CollisionShape3D" parent="PropCollision" unique_id=880558335]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31.2, 1.2, 0)
 shape = SubResource("BoxShape3D_6jqa3")
 metadata/surface = "wood"
 
-[node name="C123" type="CollisionShape3D" parent="PropCollision" unique_id=1949800394]
+[node name="C123" type="CollisionShape3D" parent="PropCollision" unique_id=1308229879]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31.2, 1.2, 4.5)
 shape = SubResource("BoxShape3D_4lkuk")
 metadata/surface = "wood"
 
-[node name="C124" type="CollisionShape3D" parent="PropCollision" unique_id=462049905]
+[node name="C124" type="CollisionShape3D" parent="PropCollision" unique_id=2100964834]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.086554, 3.25, -29.407799)
 shape = SubResource("CylinderShape3D_7hicu")
 metadata/surface = "stone"
 
-[node name="C125" type="CollisionShape3D" parent="PropCollision" unique_id=408880023]
+[node name="C125" type="CollisionShape3D" parent="PropCollision" unique_id=276592557]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.314916, 0.65, -30.55585)
 shape = SubResource("CylinderShape3D_2cynb")
 metadata/surface = "stone"
 
-[node name="C126" type="CollisionShape3D" parent="PropCollision" unique_id=530645742]
+[node name="C126" type="CollisionShape3D" parent="PropCollision" unique_id=786376706]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.592201, 1.2112197, -22.913446)
 shape = SubResource("CylinderShape3D_uerub")
 metadata/surface = "stone"
 
-[node name="C127" type="CollisionShape3D" parent="PropCollision" unique_id=2064990349]
+[node name="C127" type="CollisionShape3D" parent="PropCollision" unique_id=1007428367]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.592201, 3.25, -22.913446)
 shape = SubResource("CylinderShape3D_xxveu")
 metadata/surface = "stone"
 
-[node name="C128" type="CollisionShape3D" parent="PropCollision" unique_id=882769759]
+[node name="C128" type="CollisionShape3D" parent="PropCollision" unique_id=999367159]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.444151, 0.65, -25.685083)
 shape = SubResource("CylinderShape3D_ymjqi")
 metadata/surface = "stone"
 
-[node name="C129" type="CollisionShape3D" parent="PropCollision" unique_id=2128978319]
+[node name="C129" type="CollisionShape3D" parent="PropCollision" unique_id=1211660441]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.086554, 3.25, -29.407799)
 shape = SubResource("CylinderShape3D_87wk7")
 metadata/surface = "stone"
 
-[node name="C130" type="CollisionShape3D" parent="PropCollision" unique_id=2038034763]
+[node name="C130" type="CollisionShape3D" parent="PropCollision" unique_id=1304560772]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.086554, 2.015704, -38.5922)
 shape = SubResource("CylinderShape3D_4xa0a")
 metadata/surface = "stone"
 
-[node name="C131" type="CollisionShape3D" parent="PropCollision" unique_id=703492230]
+[node name="C131" type="CollisionShape3D" parent="PropCollision" unique_id=1250490558]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.314916, 0.65, -37.44415)
 shape = SubResource("CylinderShape3D_m5fvk")
 metadata/surface = "stone"
 
-[node name="C132" type="CollisionShape3D" parent="PropCollision" unique_id=164847268]
+[node name="C132" type="CollisionShape3D" parent="PropCollision" unique_id=473912354]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.592201, 3.25, -45.086555)
 shape = SubResource("CylinderShape3D_sc4ek")
 metadata/surface = "stone"
 
-[node name="C133" type="CollisionShape3D" parent="PropCollision" unique_id=2115787411]
+[node name="C133" type="CollisionShape3D" parent="PropCollision" unique_id=1682424165]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.592201, 3.25, -45.086555)
 shape = SubResource("CylinderShape3D_pgljp")
 metadata/surface = "stone"
 
-[node name="C134" type="CollisionShape3D" parent="PropCollision" unique_id=1933110979]
+[node name="C134" type="CollisionShape3D" parent="PropCollision" unique_id=1401849078]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.444151, 0.65, -42.314915)
 shape = SubResource("CylinderShape3D_vcrkn")
 metadata/surface = "stone"
 
-[node name="C135" type="CollisionShape3D" parent="PropCollision" unique_id=21803060]
+[node name="C135" type="CollisionShape3D" parent="PropCollision" unique_id=158501312]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.086554, 1.2044946, -38.5922)
 shape = SubResource("CylinderShape3D_hp8pf")
 metadata/surface = "stone"
 
-[node name="C136" type="CollisionShape3D" parent="PropCollision" unique_id=421420475]
+[node name="C136" type="CollisionShape3D" parent="PropCollision" unique_id=1964699276]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 20, -60)
 shape = SubResource("BoxShape3D_8jxod")
 metadata/surface = "stone"
 
-[node name="C137" type="CollisionShape3D" parent="PropCollision" unique_id=187512339]
+[node name="C137" type="CollisionShape3D" parent="PropCollision" unique_id=1660451165]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 44, 20, -13)
 shape = SubResource("BoxShape3D_d2b16")
 metadata/surface = "stone"
 
-[node name="C138" type="CollisionShape3D" parent="PropCollision" unique_id=186881461]
+[node name="C138" type="CollisionShape3D" parent="PropCollision" unique_id=574835727]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0, 20, 34)
 shape = SubResource("BoxShape3D_yyya4")
 metadata/surface = "stone"
 
-[node name="C139" type="CollisionShape3D" parent="PropCollision" unique_id=355237230]
+[node name="C139" type="CollisionShape3D" parent="PropCollision" unique_id=956986070]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -44, 20, -13)
 shape = SubResource("BoxShape3D_ma1ur")
 metadata/surface = "stone"
 
-[node name="Features" type="Node3D" parent="." unique_id=1587085553]
+[node name="Features" type="Node3D" parent="." unique_id=693463940]
 
-[node name="Room_stair" type="Area3D" parent="Features" unique_id=1829886914]
+[node name="Room_stair" type="Area3D" parent="Features" unique_id=1622584704]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 21)
 script = ExtResource("6_1ysr4")
 room_id = "stair"
 dungeon = "sanctum_ruin"
 
-[node name="Shape" type="CollisionShape3D" parent="Features/Room_stair" unique_id=665577633]
+[node name="Shape" type="CollisionShape3D" parent="Features/Room_stair" unique_id=1001054318]
 shape = SubResource("BoxShape3D_knj2n")
 
-[node name="Room_hall" type="Area3D" parent="Features" unique_id=1263491937]
+[node name="Room_hall" type="Area3D" parent="Features" unique_id=924339728]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
 script = ExtResource("6_1ysr4")
 room_id = "hall"
 dungeon = "sanctum_ruin"
 
-[node name="Shape" type="CollisionShape3D" parent="Features/Room_hall" unique_id=1791268883]
+[node name="Shape" type="CollisionShape3D" parent="Features/Room_hall" unique_id=711414945]
 shape = SubResource("BoxShape3D_to4ky")
 
-[node name="Room_cells" type="Area3D" parent="Features" unique_id=1483645169]
+[node name="Room_cells" type="Area3D" parent="Features" unique_id=637017687]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 2.5, 0)
 script = ExtResource("6_1ysr4")
 room_id = "cells"
 dungeon = "sanctum_ruin"
 
-[node name="Shape" type="CollisionShape3D" parent="Features/Room_cells" unique_id=218256695]
+[node name="Shape" type="CollisionShape3D" parent="Features/Room_cells" unique_id=345127774]
 shape = SubResource("BoxShape3D_0rif3")
 
-[node name="Room_archive" type="Area3D" parent="Features" unique_id=1104533256]
+[node name="Room_archive" type="Area3D" parent="Features" unique_id=1097282382]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, 2.5, 0)
 script = ExtResource("6_1ysr4")
 room_id = "archive"
 dungeon = "sanctum_ruin"
 
-[node name="Shape" type="CollisionShape3D" parent="Features/Room_archive" unique_id=403544106]
+[node name="Shape" type="CollisionShape3D" parent="Features/Room_archive" unique_id=1861609711]
 shape = SubResource("BoxShape3D_gvd3f")
 
-[node name="Room_circle" type="Area3D" parent="Features" unique_id=1905281856]
+[node name="Room_circle" type="Area3D" parent="Features" unique_id=609877990]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.3, -34)
 script = ExtResource("6_1ysr4")
 room_id = "circle"
 dungeon = "sanctum_ruin"
 
-[node name="Shape" type="CollisionShape3D" parent="Features/Room_circle" unique_id=1664607032]
+[node name="Shape" type="CollisionShape3D" parent="Features/Room_circle" unique_id=70137356]
 shape = SubResource("BoxShape3D_hubuu")
 
-[node name="Display5" type="MeshInstance3D" parent="Features" unique_id=865543483]
-transform = Transform3D(1.1, 0, 0, 0, 1.1, 0, 0, 0, 1.1, -3, 0, 17.6)
+[node name="Display5" type="MeshInstance3D" parent="Features" unique_id=141954602]
+transform = Transform3D(1.1, 0, 0, 0, 1.1, 0, 0, 0, 1.1, -4.4, 0, 17.8)
 cast_shadow = 0
 mesh = ExtResource("7_0hq6u")
 
-[node name="Display6" type="MeshInstance3D" parent="Features" unique_id=1289833317]
-transform = Transform3D(0.7663774, 0, 0.7890917, 0, 1.1, 0, -0.7890917, 0, 0.7663774, -1, 0, 18.2)
+[node name="Display6" type="MeshInstance3D" parent="Features" unique_id=1653900094]
+transform = Transform3D(1.0131671, 0, 0.42836016, 0, 1.1, 0, -0.42836016, 0, 1.0131671, -4.2, 0, 20.2)
 cast_shadow = 0
 mesh = ExtResource("7_0hq6u")
 
-[node name="Display7" type="MeshInstance3D" parent="Features" unique_id=1558545018]
-transform = Transform3D(-0.0321195, 0, 1.0995309, 0, 1.1, 0, -1.0995309, 0, -0.0321195, 1, 0, 17.6)
+[node name="Display7" type="MeshInstance3D" parent="Features" unique_id=1060362009]
+transform = Transform3D(0.7663774, 0, 0.7890917, 0, 1.1, 0, -0.7890917, 0, 0.7663774, 4.4, 0, 17.8)
 cast_shadow = 0
 mesh = ExtResource("7_0hq6u")
 
-[node name="Display8" type="MeshInstance3D" parent="Features" unique_id=1636820602]
-transform = Transform3D(-0.8111332, 0, 0.74300945, 0, 1.1, 0, -0.74300945, 0, -0.8111332, 3, 0, 18.2)
+[node name="Display8" type="MeshInstance3D" parent="Features" unique_id=207699869]
+transform = Transform3D(0.3985935, 0, 1.025243, 0, 1.1, 0, -1.025243, 0, 0.3985935, 4.2, 0, 20.2)
 cast_shadow = 0
 mesh = ExtResource("7_0hq6u")
 
-[node name="Examine9" type="Node3D" parent="Features" unique_id=1032849518]
-transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 3.5, 0, 18.5)
+[node name="Examine9" type="Node3D" parent="Features" unique_id=1548975806]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 2.5, 0, 18.8)
 script = ExtResource("8_4jk4a")
 pages = [{
 "instant": true,
@@ -1925,392 +1925,392 @@ pages = [{
 Voices chant, somewhere ahead."
 }]
 
-[node name="Torch10" type="StaticBody3D" parent="Features" unique_id=1505762737]
+[node name="Torch10" type="StaticBody3D" parent="Features" unique_id=569243438]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.5, 0, 17.5)
 script = ExtResource("9_45rp6")
 lit_at_start = true
 
-[node name="Stand" type="MeshInstance3D" parent="Features/Torch10" unique_id=849667880]
+[node name="Stand" type="MeshInstance3D" parent="Features/Torch10" unique_id=1879027048]
 mesh = SubResource("ArrayMesh_2fen8")
 
-[node name="Shape" type="CollisionShape3D" parent="Features/Torch10" unique_id=2085685395]
+[node name="Shape" type="CollisionShape3D" parent="Features/Torch10" unique_id=1795536007]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.65, 0)
 shape = SubResource("CylinderShape3D_bsrm2")
 metadata/no_climb = true
 
-[node name="Torch11" type="StaticBody3D" parent="Features" unique_id=1139905251]
+[node name="Torch11" type="StaticBody3D" parent="Features" unique_id=1016676736]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.5, 0, 17.5)
 script = ExtResource("9_45rp6")
 lit_at_start = true
 
-[node name="Stand" type="MeshInstance3D" parent="Features/Torch11" unique_id=41945245]
+[node name="Stand" type="MeshInstance3D" parent="Features/Torch11" unique_id=427070480]
 mesh = SubResource("ArrayMesh_v1xjn")
 
-[node name="Shape" type="CollisionShape3D" parent="Features/Torch11" unique_id=1727176622]
+[node name="Shape" type="CollisionShape3D" parent="Features/Torch11" unique_id=77473768]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.65, 0)
 shape = SubResource("CylinderShape3D_84sas")
 metadata/no_climb = true
 
-[node name="Torch12" type="StaticBody3D" parent="Features" unique_id=2042698228]
+[node name="Torch12" type="StaticBody3D" parent="Features" unique_id=1666689842]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.5, 0, 24.5)
 script = ExtResource("9_45rp6")
 lit_at_start = true
 
-[node name="Stand" type="MeshInstance3D" parent="Features/Torch12" unique_id=1973381608]
+[node name="Stand" type="MeshInstance3D" parent="Features/Torch12" unique_id=935891013]
 mesh = SubResource("ArrayMesh_48jrk")
 
-[node name="Shape" type="CollisionShape3D" parent="Features/Torch12" unique_id=1020205215]
+[node name="Shape" type="CollisionShape3D" parent="Features/Torch12" unique_id=1677660671]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.65, 0)
 shape = SubResource("CylinderShape3D_3suif")
 metadata/no_climb = true
 
-[node name="Torch13" type="StaticBody3D" parent="Features" unique_id=1489685398]
+[node name="Torch13" type="StaticBody3D" parent="Features" unique_id=1580965907]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.5, 0, 24.5)
 script = ExtResource("9_45rp6")
 lit_at_start = true
 
-[node name="Stand" type="MeshInstance3D" parent="Features/Torch13" unique_id=425320850]
+[node name="Stand" type="MeshInstance3D" parent="Features/Torch13" unique_id=625928507]
 mesh = SubResource("ArrayMesh_s7wbl")
 
-[node name="Shape" type="CollisionShape3D" parent="Features/Torch13" unique_id=210349991]
+[node name="Shape" type="CollisionShape3D" parent="Features/Torch13" unique_id=4015830]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.65, 0)
 shape = SubResource("CylinderShape3D_rantp")
 metadata/no_climb = true
 
-[node name="Shutter14" type="AnimatableBody3D" parent="Features" unique_id=1925920559]
+[node name="Shutter14" type="AnimatableBody3D" parent="Features" unique_id=71374448]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 9.4)
 script = ExtResource("10_q5oqr")
 room_id = "hall"
 
-[node name="Shutter15" type="AnimatableBody3D" parent="Features" unique_id=256203868]
+[node name="Shutter15" type="AnimatableBody3D" parent="Features" unique_id=178245662]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -9.4)
 script = ExtResource("10_q5oqr")
 room_id = "hall"
 
-[node name="Display16" type="MeshInstance3D" parent="Features" unique_id=75275904]
+[node name="Display16" type="MeshInstance3D" parent="Features" unique_id=1280854597]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0, -1)
 cast_shadow = 0
 mesh = ExtResource("7_0hq6u")
 
-[node name="Display17" type="MeshInstance3D" parent="Features" unique_id=1647389816]
+[node name="Display17" type="MeshInstance3D" parent="Features" unique_id=548357822]
 transform = Transform3D(0.4535961, 0, 0.8912074, 0, 1, 0, -0.8912074, 0, 0.4535961, -4.5, 0, 0.5)
 cast_shadow = 0
 mesh = ExtResource("7_0hq6u")
 
-[node name="Display18" type="MeshInstance3D" parent="Features" unique_id=1160201761]
+[node name="Display18" type="MeshInstance3D" parent="Features" unique_id=1538412341]
 transform = Transform3D(-0.58850116, 0, 0.80849636, 0, 1, 0, -0.80849636, 0, -0.58850116, 0, 0, 2)
 cast_shadow = 0
 mesh = ExtResource("7_0hq6u")
 
-[node name="Display19" type="MeshInstance3D" parent="Features" unique_id=88379155]
+[node name="Display19" type="MeshInstance3D" parent="Features" unique_id=1582885579]
 transform = Transform3D(-0.9874798, 0, -0.15774564, 0, 1, 0, 0.15774564, 0, -0.9874798, 4.5, 0, -1)
 cast_shadow = 0
 mesh = ExtResource("7_0hq6u")
 
-[node name="Display20" type="MeshInstance3D" parent="Features" unique_id=1317109008]
+[node name="Display20" type="MeshInstance3D" parent="Features" unique_id=1267190637]
 transform = Transform3D(-0.30733278, 0, -0.9516021, 0, 1, 0, 0.9516021, 0, -0.30733278, 9, 0, 0.5)
 cast_shadow = 0
 mesh = ExtResource("7_0hq6u")
 
-[node name="SapphireFlame21" type="Node3D" parent="Features" unique_id=1626191459]
+[node name="SapphireFlame21" type="Node3D" parent="Features" unique_id=1333187061]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 1.3, 0)
 script = ExtResource("11_71w0v")
 
-[node name="FlameMesh" type="MeshInstance3D" parent="Features/SapphireFlame21" unique_id=1151629138]
+[node name="FlameMesh" type="MeshInstance3D" parent="Features/SapphireFlame21" unique_id=2057723594]
 mesh = ExtResource("12_ersef")
 
-[node name="Light" type="OmniLight3D" parent="Features/SapphireFlame21" unique_id=807879239]
+[node name="Light" type="OmniLight3D" parent="Features/SapphireFlame21" unique_id=2071796590]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 light_color = Color(0.41568628, 0.3529412, 1, 1)
 light_energy = 1.2
 omni_range = 6.0
 
-[node name="SapphireFlame22" type="Node3D" parent="Features" unique_id=1028466088]
+[node name="SapphireFlame22" type="Node3D" parent="Features" unique_id=1508880270]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 1.3, 0)
 script = ExtResource("11_71w0v")
 
-[node name="FlameMesh" type="MeshInstance3D" parent="Features/SapphireFlame22" unique_id=1270784280]
+[node name="FlameMesh" type="MeshInstance3D" parent="Features/SapphireFlame22" unique_id=362901371]
 mesh = ExtResource("12_ersef")
 
-[node name="Light" type="OmniLight3D" parent="Features/SapphireFlame22" unique_id=529534374]
+[node name="Light" type="OmniLight3D" parent="Features/SapphireFlame22" unique_id=367756571]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 light_color = Color(0.41568628, 0.3529412, 1, 1)
 light_energy = 1.2
 omni_range = 6.0
 
-[node name="Barrier23" type="StaticBody3D" parent="Features" unique_id=129270275]
+[node name="Barrier23" type="StaticBody3D" parent="Features" unique_id=1668974296]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 28, 1.1, -4.1)
 script = ExtResource("13_h0co1")
 
-[node name="Shape" type="CollisionShape3D" parent="Features/Barrier23" unique_id=156345173]
+[node name="Shape" type="CollisionShape3D" parent="Features/Barrier23" unique_id=1487681388]
 shape = SubResource("BoxShape3D_8dcnf")
 metadata/no_climb = true
 
-[node name="Mesh" type="MeshInstance3D" parent="Features/Barrier23" unique_id=1996085963]
+[node name="Mesh" type="MeshInstance3D" parent="Features/Barrier23" unique_id=1628265263]
 mesh = SubResource("ArrayMesh_eg2ht")
 
-[node name="Barrier24" type="StaticBody3D" parent="Features" unique_id=2142338818]
+[node name="Barrier24" type="StaticBody3D" parent="Features" unique_id=462917781]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 28, 1.1, 1.9)
 script = ExtResource("13_h0co1")
 
-[node name="Shape" type="CollisionShape3D" parent="Features/Barrier24" unique_id=2045912306]
+[node name="Shape" type="CollisionShape3D" parent="Features/Barrier24" unique_id=1921955176]
 shape = SubResource("BoxShape3D_ovjdp")
 metadata/no_climb = true
 
-[node name="Mesh" type="MeshInstance3D" parent="Features/Barrier24" unique_id=724681234]
+[node name="Mesh" type="MeshInstance3D" parent="Features/Barrier24" unique_id=379676739]
 mesh = SubResource("ArrayMesh_al4aq")
 
-[node name="Ashwick Scout" type="Node3D" parent="Features" unique_id=1011180216]
+[node name="Ashwick Scout" type="Node3D" parent="Features" unique_id=187754919]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 22, 0, 3)
 script = ExtResource("14_xfmx0")
 npc_name = "Ashwick Scout"
 lines_script = ExtResource("15_q2tag")
 hide_flag = "ch5:velloran_done"
 
-[node name="Model" type="Node3D" parent="Features/Ashwick Scout" unique_id=1476407231 instance=ExtResource("16_onhd0")]
+[node name="Model" type="Node3D" parent="Features/Ashwick Scout" unique_id=341426444 instance=ExtResource("16_onhd0")]
 transform = Transform3D(1.02, 0, 0, 0, 1.02, 0, 0, 0, 1.02, 0, 0, 0)
 script = ExtResource("17_bfaho")
 
-[node name="Body" type="StaticBody3D" parent="Features/Ashwick Scout" unique_id=209112612]
+[node name="Body" type="StaticBody3D" parent="Features/Ashwick Scout" unique_id=145755624]
 collision_layer = 4
 collision_mask = 0
 
-[node name="Shape" type="CollisionShape3D" parent="Features/Ashwick Scout/Body" unique_id=1166573253]
+[node name="Shape" type="CollisionShape3D" parent="Features/Ashwick Scout/Body" unique_id=1090367049]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
 shape = SubResource("CapsuleShape3D_eldrg")
 
-[node name="BlobShadow" type="MeshInstance3D" parent="Features/Ashwick Scout" unique_id=1986289349]
+[node name="BlobShadow" type="MeshInstance3D" parent="Features/Ashwick Scout" unique_id=934132740]
 mesh = ExtResource("18_jec0d")
 script = ExtResource("19_f1lo7")
 radius = 0.4
 
-[node name="Torch26" type="StaticBody3D" parent="Features" unique_id=1012756116]
+[node name="Torch26" type="StaticBody3D" parent="Features" unique_id=1537195701]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.5, 0, -5.5)
 script = ExtResource("9_45rp6")
 lit_at_start = true
 
-[node name="Stand" type="MeshInstance3D" parent="Features/Torch26" unique_id=89258419]
+[node name="Stand" type="MeshInstance3D" parent="Features/Torch26" unique_id=1430827593]
 mesh = SubResource("ArrayMesh_4iih5")
 
-[node name="Shape" type="CollisionShape3D" parent="Features/Torch26" unique_id=2136068606]
+[node name="Shape" type="CollisionShape3D" parent="Features/Torch26" unique_id=1790942738]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.65, 0)
 shape = SubResource("CylinderShape3D_wrh3q")
 metadata/no_climb = true
 
-[node name="Torch27" type="StaticBody3D" parent="Features" unique_id=1462513730]
+[node name="Torch27" type="StaticBody3D" parent="Features" unique_id=1539139280]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.5, 0, -5.5)
 script = ExtResource("9_45rp6")
 lit_at_start = true
 
-[node name="Stand" type="MeshInstance3D" parent="Features/Torch27" unique_id=1760526617]
+[node name="Stand" type="MeshInstance3D" parent="Features/Torch27" unique_id=546209016]
 mesh = SubResource("ArrayMesh_pwhbm")
 
-[node name="Shape" type="CollisionShape3D" parent="Features/Torch27" unique_id=1047358434]
+[node name="Shape" type="CollisionShape3D" parent="Features/Torch27" unique_id=301263574]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.65, 0)
 shape = SubResource("CylinderShape3D_m8x0j")
 metadata/no_climb = true
 
-[node name="Torch28" type="StaticBody3D" parent="Features" unique_id=113195497]
+[node name="Torch28" type="StaticBody3D" parent="Features" unique_id=1543599535]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.5, 0, 5.5)
 script = ExtResource("9_45rp6")
 lit_at_start = true
 
-[node name="Stand" type="MeshInstance3D" parent="Features/Torch28" unique_id=1282976297]
+[node name="Stand" type="MeshInstance3D" parent="Features/Torch28" unique_id=1540245990]
 mesh = SubResource("ArrayMesh_eeuit")
 
-[node name="Shape" type="CollisionShape3D" parent="Features/Torch28" unique_id=844776030]
+[node name="Shape" type="CollisionShape3D" parent="Features/Torch28" unique_id=924231989]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.65, 0)
 shape = SubResource("CylinderShape3D_4tu7m")
 metadata/no_climb = true
 
-[node name="Torch29" type="StaticBody3D" parent="Features" unique_id=2072665496]
+[node name="Torch29" type="StaticBody3D" parent="Features" unique_id=557526560]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.5, 0, 5.5)
 script = ExtResource("9_45rp6")
 lit_at_start = true
 
-[node name="Stand" type="MeshInstance3D" parent="Features/Torch29" unique_id=90500399]
+[node name="Stand" type="MeshInstance3D" parent="Features/Torch29" unique_id=431402916]
 mesh = SubResource("ArrayMesh_glgyt")
 
-[node name="Shape" type="CollisionShape3D" parent="Features/Torch29" unique_id=446832681]
+[node name="Shape" type="CollisionShape3D" parent="Features/Torch29" unique_id=1701488758]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.65, 0)
 shape = SubResource("CylinderShape3D_mtbyw")
 metadata/no_climb = true
 
-[node name="Chest30" type="StaticBody3D" parent="Features" unique_id=1799832831]
+[node name="Chest30" type="StaticBody3D" parent="Features" unique_id=228952799]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -22, 0, 4.5)
 script = ExtResource("20_b3dih")
 item = "magic_large"
 flag = "sanctum_ruin:chest_archive"
 
-[node name="Pot31" type="StaticBody3D" parent="Features" unique_id=1516335117]
+[node name="Pot31" type="StaticBody3D" parent="Features" unique_id=170750044]
 transform = Transform3D(-0.86691725, 0, 0.49845213, 0, 1, 0, -0.49845213, 0, -0.86691725, -20, 0, -5)
 script = ExtResource("21_4js7q")
 item = "heart"
 
-[node name="Pot32" type="StaticBody3D" parent="Features" unique_id=515123353]
+[node name="Pot32" type="StaticBody3D" parent="Features" unique_id=1126637762]
 transform = Transform3D(-0.17092834, 0, 0.98528343, 0, 1, 0, -0.98528343, 0, -0.17092834, -21, 0, -5.4)
 script = ExtResource("21_4js7q")
 item = "arrows_10"
 
-[node name="Torch33" type="StaticBody3D" parent="Features" unique_id=1956542456]
+[node name="Torch33" type="StaticBody3D" parent="Features" unique_id=533207179]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30.5, 0, -5.5)
 script = ExtResource("9_45rp6")
 lit_at_start = true
 
-[node name="Stand" type="MeshInstance3D" parent="Features/Torch33" unique_id=738520007]
+[node name="Stand" type="MeshInstance3D" parent="Features/Torch33" unique_id=1985144040]
 mesh = SubResource("ArrayMesh_qhtoh")
 
-[node name="Shape" type="CollisionShape3D" parent="Features/Torch33" unique_id=1359914671]
+[node name="Shape" type="CollisionShape3D" parent="Features/Torch33" unique_id=89999072]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.65, 0)
 shape = SubResource("CylinderShape3D_rixsd")
 metadata/no_climb = true
 
-[node name="Torch34" type="StaticBody3D" parent="Features" unique_id=1824454154]
+[node name="Torch34" type="StaticBody3D" parent="Features" unique_id=951053416]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.5, 0, -5.5)
 script = ExtResource("9_45rp6")
 lit_at_start = true
 
-[node name="Stand" type="MeshInstance3D" parent="Features/Torch34" unique_id=1400618773]
+[node name="Stand" type="MeshInstance3D" parent="Features/Torch34" unique_id=306127467]
 mesh = SubResource("ArrayMesh_xemr4")
 
-[node name="Shape" type="CollisionShape3D" parent="Features/Torch34" unique_id=109976496]
+[node name="Shape" type="CollisionShape3D" parent="Features/Torch34" unique_id=377509026]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.65, 0)
 shape = SubResource("CylinderShape3D_ivsuk")
 metadata/no_climb = true
 
-[node name="Torch35" type="StaticBody3D" parent="Features" unique_id=516900385]
+[node name="Torch35" type="StaticBody3D" parent="Features" unique_id=1220094749]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30.5, 0, 5.5)
 script = ExtResource("9_45rp6")
 lit_at_start = true
 
-[node name="Stand" type="MeshInstance3D" parent="Features/Torch35" unique_id=1207253767]
+[node name="Stand" type="MeshInstance3D" parent="Features/Torch35" unique_id=1814351414]
 mesh = SubResource("ArrayMesh_losxt")
 
-[node name="Shape" type="CollisionShape3D" parent="Features/Torch35" unique_id=817842313]
+[node name="Shape" type="CollisionShape3D" parent="Features/Torch35" unique_id=2093861492]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.65, 0)
 shape = SubResource("CylinderShape3D_x0dld")
 metadata/no_climb = true
 
-[node name="Torch36" type="StaticBody3D" parent="Features" unique_id=465454793]
+[node name="Torch36" type="StaticBody3D" parent="Features" unique_id=1200852293]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.5, 0, 5.5)
 script = ExtResource("9_45rp6")
 lit_at_start = true
 
-[node name="Stand" type="MeshInstance3D" parent="Features/Torch36" unique_id=2105456645]
+[node name="Stand" type="MeshInstance3D" parent="Features/Torch36" unique_id=1502985615]
 mesh = SubResource("ArrayMesh_fpy4a")
 
-[node name="Shape" type="CollisionShape3D" parent="Features/Torch36" unique_id=1185894531]
+[node name="Shape" type="CollisionShape3D" parent="Features/Torch36" unique_id=1785233024]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.65, 0)
 shape = SubResource("CylinderShape3D_l2slo")
 metadata/no_climb = true
 
-[node name="SapphireFlame37" type="Node3D" parent="Features" unique_id=520558645]
+[node name="SapphireFlame37" type="Node3D" parent="Features" unique_id=1006239232]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.314916, 1.3, -30.55585)
 script = ExtResource("11_71w0v")
 
-[node name="FlameMesh" type="MeshInstance3D" parent="Features/SapphireFlame37" unique_id=11134883]
+[node name="FlameMesh" type="MeshInstance3D" parent="Features/SapphireFlame37" unique_id=35142180]
 mesh = ExtResource("12_ersef")
 
-[node name="Light" type="OmniLight3D" parent="Features/SapphireFlame37" unique_id=1292422187]
+[node name="Light" type="OmniLight3D" parent="Features/SapphireFlame37" unique_id=1063198018]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 light_color = Color(0.41568628, 0.3529412, 1, 1)
 light_energy = 1.2
 omni_range = 6.0
 
-[node name="SapphireFlame38" type="Node3D" parent="Features" unique_id=1777655781]
+[node name="SapphireFlame38" type="Node3D" parent="Features" unique_id=1081190275]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.444151, 1.3, -25.685083)
 script = ExtResource("11_71w0v")
 
-[node name="FlameMesh" type="MeshInstance3D" parent="Features/SapphireFlame38" unique_id=2010819943]
+[node name="FlameMesh" type="MeshInstance3D" parent="Features/SapphireFlame38" unique_id=1154399880]
 mesh = ExtResource("12_ersef")
 
-[node name="Light" type="OmniLight3D" parent="Features/SapphireFlame38" unique_id=1413495688]
+[node name="Light" type="OmniLight3D" parent="Features/SapphireFlame38" unique_id=660912671]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 light_color = Color(0.41568628, 0.3529412, 1, 1)
 light_energy = 1.2
 omni_range = 6.0
 
-[node name="SapphireFlame39" type="Node3D" parent="Features" unique_id=1781616926]
+[node name="SapphireFlame39" type="Node3D" parent="Features" unique_id=1086227558]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.314916, 1.3, -37.44415)
 script = ExtResource("11_71w0v")
 
-[node name="FlameMesh" type="MeshInstance3D" parent="Features/SapphireFlame39" unique_id=793769685]
+[node name="FlameMesh" type="MeshInstance3D" parent="Features/SapphireFlame39" unique_id=22213333]
 mesh = ExtResource("12_ersef")
 
-[node name="Light" type="OmniLight3D" parent="Features/SapphireFlame39" unique_id=1926360430]
+[node name="Light" type="OmniLight3D" parent="Features/SapphireFlame39" unique_id=359567724]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 light_color = Color(0.41568628, 0.3529412, 1, 1)
 light_energy = 1.2
 omni_range = 6.0
 
-[node name="SapphireFlame40" type="Node3D" parent="Features" unique_id=1397994386]
+[node name="SapphireFlame40" type="Node3D" parent="Features" unique_id=1578024979]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.444151, 1.3, -42.314915)
 script = ExtResource("11_71w0v")
 
-[node name="FlameMesh" type="MeshInstance3D" parent="Features/SapphireFlame40" unique_id=1970814195]
+[node name="FlameMesh" type="MeshInstance3D" parent="Features/SapphireFlame40" unique_id=2005168996]
 mesh = ExtResource("12_ersef")
 
-[node name="Light" type="OmniLight3D" parent="Features/SapphireFlame40" unique_id=1181962817]
+[node name="Light" type="OmniLight3D" parent="Features/SapphireFlame40" unique_id=1562461390]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 light_color = Color(0.41568628, 0.3529412, 1, 1)
 light_energy = 1.2
 omni_range = 6.0
 
-[node name="Shutter41" type="AnimatableBody3D" parent="Features" unique_id=653617837]
+[node name="Shutter41" type="AnimatableBody3D" parent="Features" unique_id=954524742]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -18.6)
 script = ExtResource("10_q5oqr")
 room_id = "circle"
 
-[node name="cs_ruin_velloran" type="Marker3D" parent="Features" unique_id=882794084]
+[node name="cs_ruin_velloran" type="Marker3D" parent="Features" unique_id=1828545146]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -34)
 
-[node name="cs_ruin_hero" type="Marker3D" parent="Features" unique_id=1101792262]
+[node name="cs_ruin_hero" type="Marker3D" parent="Features" unique_id=1346479511]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -22)
 
-[node name="cs_ruin_cam" type="Marker3D" parent="Features" unique_id=583039818]
+[node name="cs_ruin_cam" type="Marker3D" parent="Features" unique_id=579787007]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 3, -18)
 
-[node name="Story_velloran_stand" type="Area3D" parent="Features" unique_id=2044952690]
+[node name="Story_velloran_stand" type="Area3D" parent="Features" unique_id=1678423515]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -18.5)
 script = ExtResource("22_2olyp")
 scene = "velloran_stand"
 flag = "ch5:velloran_met"
 
-[node name="@CollisionShape3D@170" type="CollisionShape3D" parent="Features/Story_velloran_stand" unique_id=878952005]
+[node name="@CollisionShape3D@2" type="CollisionShape3D" parent="Features/Story_velloran_stand" unique_id=481402491]
 shape = SubResource("BoxShape3D_5wv8p")
 
-[node name="Warp46" type="Area3D" parent="Features" unique_id=1845079423]
+[node name="Warp46" type="Area3D" parent="Features" unique_id=1275722483]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -28)
 script = ExtResource("23_s2d1e")
 flag = "ch5:velloran_done"
 target_area = "batela_fells"
 target_entrance = "warp_sapphire_sanctum"
 
-[node name="Exits" type="Node3D" parent="." unique_id=539869221]
+[node name="Exits" type="Node3D" parent="." unique_id=931650091]
 
-[node name="Door_batela_fells" type="Node3D" parent="Exits" unique_id=346090150]
+[node name="Door_batela_fells" type="Node3D" parent="Exits" unique_id=1593843303]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 25.98)
 script = ExtResource("24_wyly4")
 target_area = "batela_fells"
 target_entrance = "from_sapphire_sanctum"
 
-[node name="Leaf" type="Node3D" parent="Exits/Door_batela_fells" unique_id=478623532]
+[node name="Leaf" type="Node3D" parent="Exits/Door_batela_fells" unique_id=1619973342]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.9, 0, 0)
 
-[node name="LeafMesh" type="MeshInstance3D" parent="Exits/Door_batela_fells/Leaf" unique_id=2079832878]
+[node name="LeafMesh" type="MeshInstance3D" parent="Exits/Door_batela_fells/Leaf" unique_id=802971451]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_14hul")
 
-[node name="Entrances" type="Node3D" parent="." unique_id=1169737191]
+[node name="Entrances" type="Node3D" parent="." unique_id=11290588]
 
-[node name="from_batela_fells" type="Marker3D" parent="Entrances" unique_id=45319180]
+[node name="from_batela_fells" type="Marker3D" parent="Entrances" unique_id=1112197102]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 23)
 
-[node name="MapIcons" type="Node3D" parent="." unique_id=893162063]
+[node name="MapIcons" type="Node3D" parent="." unique_id=69579778]
 
-[node name="Enemies" type="Node3D" parent="." unique_id=398096230]
+[node name="Enemies" type="Node3D" parent="." unique_id=1619526838]
 
-[node name="SapphireMage0" type="CharacterBody3D" parent="Enemies" unique_id=1550799675 instance=ExtResource("26_ax3qu")]
+[node name="SapphireMage0" type="CharacterBody3D" parent="Enemies" unique_id=313785665 instance=ExtResource("26_ax3qu")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -5, 0, -3)
 collision_layer = 4
 collision_mask = 7
@@ -2321,7 +2321,7 @@ target_offset = 2.1
 boomerang_stun = 2.0
 metadata/room = "hall"
 
-[node name="SapphireMage1" type="CharacterBody3D" parent="Enemies" unique_id=1490924549 instance=ExtResource("26_ax3qu")]
+[node name="SapphireMage1" type="CharacterBody3D" parent="Enemies" unique_id=604744550 instance=ExtResource("26_ax3qu")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 5, 0, -3)
 collision_layer = 4
 collision_mask = 7
@@ -2332,7 +2332,7 @@ target_offset = 2.1
 boomerang_stun = 2.0
 metadata/room = "hall"
 
-[node name="SapphireKnight2" type="CharacterBody3D" parent="Enemies" unique_id=1718486406 instance=ExtResource("28_de1k4")]
+[node name="SapphireKnight2" type="CharacterBody3D" parent="Enemies" unique_id=1748209552 instance=ExtResource("28_de1k4")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, -6)
 collision_layer = 4
 collision_mask = 7
@@ -2344,7 +2344,7 @@ boomerang_stun = 0.0
 tint = Color(0.6, 0.72, 1.35, 1)
 metadata/room = "hall"
 
-[node name="SapphireMage3" type="CharacterBody3D" parent="Enemies" unique_id=1583548750 instance=ExtResource("26_ax3qu")]
+[node name="SapphireMage3" type="CharacterBody3D" parent="Enemies" unique_id=1117403472 instance=ExtResource("26_ax3qu")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0.8660254, 0, 3.5)
 collision_layer = 4
 collision_mask = 7
@@ -2355,7 +2355,7 @@ target_offset = 2.1
 boomerang_stun = 2.0
 metadata/room = "hall"
 
-[node name="SapphireKnight4" type="CharacterBody3D" parent="Enemies" unique_id=243198973 instance=ExtResource("28_de1k4")]
+[node name="SapphireKnight4" type="CharacterBody3D" parent="Enemies" unique_id=2080577796 instance=ExtResource("28_de1k4")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -3, 0, 4)
 collision_layer = 4
 collision_mask = 7
@@ -2367,7 +2367,7 @@ boomerang_stun = 0.0
 tint = Color(0.6, 0.72, 1.35, 1)
 metadata/room = "hall"
 
-[node name="Keese5" type="CharacterBody3D" parent="Enemies" unique_id=693039607 instance=ExtResource("30_t6kh3")]
+[node name="Keese5" type="CharacterBody3D" parent="Enemies" unique_id=2092037453 instance=ExtResource("30_t6kh3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26, 3, 0)
 collision_layer = 4
 collision_mask = 7
@@ -2378,7 +2378,7 @@ boomerang_stun = 4.0
 boomerang_damage = 1
 metadata/room = "archive"
 
-[node name="Velloran6" type="CharacterBody3D" parent="Enemies" unique_id=2064936971 instance=ExtResource("32_6su4u")]
+[node name="Velloran6" type="CharacterBody3D" parent="Enemies" unique_id=1439541287 instance=ExtResource("32_6su4u")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -34)
 collision_layer = 4
 collision_mask = 7
@@ -2389,18 +2389,18 @@ target_offset = 2.3
 boomerang_stun = 0.0
 metadata/room = "circle"
 
-[node name="SkyDome" type="Node3D" parent="." unique_id=1470935563]
+[node name="SkyDome" type="Node3D" parent="." unique_id=2041533642]
 script = ExtResource("34_ojqsh")
 
-[node name="Dome" type="MeshInstance3D" parent="SkyDome" unique_id=1879725667]
+[node name="Dome" type="MeshInstance3D" parent="SkyDome" unique_id=1324964378]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_c5mry")
 
-[node name="Horizon" type="MeshInstance3D" parent="SkyDome" unique_id=2038059133]
+[node name="Horizon" type="MeshInstance3D" parent="SkyDome" unique_id=452171807]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_ue1yl")
 
-[node name="Particles" type="CPUParticles3D" parent="SkyDome" unique_id=825372202]
+[node name="Particles" type="CPUParticles3D" parent="SkyDome" unique_id=1994904291]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, 0)
 amount = 420
 lifetime = 6.0
@@ -2414,18 +2414,18 @@ initial_velocity_min = 0.6
 initial_velocity_max = 1.2
 color = Color(0.55, 0.53, 0.5, 0.85)
 
-[node name="Player" type="CharacterBody3D" parent="." unique_id=853695498 node_paths=PackedStringArray("camera_rig") instance=ExtResource("37_0uwth")]
+[node name="Player" type="CharacterBody3D" parent="." unique_id=931724952 node_paths=PackedStringArray("camera_rig") instance=ExtResource("37_0uwth")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 23)
 collision_layer = 2
 collision_mask = 5
 script = ExtResource("38_qjxxc")
 camera_rig = NodePath("../CameraRig")
 
-[node name="CameraRig" type="Node3D" parent="." unique_id=1610429832 node_paths=PackedStringArray("target")]
+[node name="CameraRig" type="Node3D" parent="." unique_id=288395240 node_paths=PackedStringArray("target")]
 script = ExtResource("39_vxnyc")
 target = NodePath("../Player")
 
-[node name="Camera3D" type="Camera3D" parent="CameraRig" unique_id=554328604]
+[node name="Camera3D" type="Camera3D" parent="CameraRig" unique_id=495623606]
 current = true
 fov = 60.0
 near = 0.1

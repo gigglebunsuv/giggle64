@@ -24,3 +24,7 @@ desktop.ini
 /beta * plan.txt
 /* motif.png
 /* motif.png.import
+
+# Standalone review projects; the model study is built from the Link reference model, never commit it
+/prototypes/
+/CODEX_HANDOFF.md

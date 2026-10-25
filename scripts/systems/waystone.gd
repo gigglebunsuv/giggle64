@@ -49,6 +49,12 @@ func interact_reach() -> float:
 	return 1.8
 
 
+## The pillar's collision (WorldKit.waystone's col_cyl, r 0.6) is part of the
+## area's static body, not this node: the hero's line of sight ends on it.
+func sight_radius() -> float:
+	return 0.75
+
+
 func interact_label() -> String:
 	return "TOUCH"
 

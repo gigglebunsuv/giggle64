@@ -222,6 +222,21 @@ static func dungeon(area: String) -> String:
 
 
 ## Bitterly cold (Frostpeak Hollow): the hero needs the Frost Mantle there.
+## The air in an area, for the hero's idle fidgets (OoT picks them by the
+## room's environment type): "cold" in the snows of Frostpeak, "hot" in the
+## desert and round the cinders, "" elsewhere (and indoors).
+static func climate(area: String) -> String:
+	var a := _area(area)
+	if a.get("interior", false):
+		return ""
+	var amb: String = a.get("ambience", "")
+	if amb == "amb_snow" or a.get("parent", "") == "snow" or area == "snow":
+		return "cold"
+	if amb in ["amb_desert", "amb_cinder"]:
+		return "hot"
+	return ""
+
+
 static func chilly(area: String) -> bool:
 	return _area(area).get("chill", false)
 

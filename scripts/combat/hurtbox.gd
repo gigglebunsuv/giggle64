@@ -16,6 +16,9 @@ func _ready() -> void:
 
 
 func receive_hit(info: HitInfo) -> int:
+	# Online, a creature is the host's to hurt: a client's blow goes there.
+	if Net.forward_hit(receiver, info):
+		return Result.HIT
 	if receiver and receiver.has_method("take_hit"):
 		return receiver.take_hit(info)
 	return Result.IGNORED

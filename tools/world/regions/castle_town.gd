@@ -176,7 +176,9 @@ func build(k) -> void:
 		_row(k, Vector2(side * 26.5, 40), Vector2(side * 26.5, 15), side * PI * 0.5, 7.0, 3, r)
 		_row(k, Vector2(side * 33.5, 15), Vector2(side * 33.5, 40), -side * PI * 0.5, 7.0, 3, r)
 		_row(k, Vector2(side * 26.5, -10), Vector2(side * 26.5, -32), side * PI * 0.5, 7.0, 2, r)
-		_row(k, Vector2(side * 8, 40), Vector2(side * 19, 40), PI, 6.0, 2, r)
+		# Facing up the alley between the main street's backs (|x| 12) and the
+		# side street's (|x| 19.5): any wider and a door opens onto a back wall.
+		_row(k, Vector2(side * 12.2, 40), Vector2(side * 19.4, 40), PI, 6.0, 2, r)
 	# The temple (east) and Pink's Armory (west) on the north side of the square.
 	k.house(42, -21, -PI * 0.5, 12.0, 16.0, 9.0, Color(0.96, 0.95, 0.92), Color.html("5a5a6a"), {"wall": "stone", "door": false, "roof_h": 5.0})
 	if chapel_open:

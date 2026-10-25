@@ -118,6 +118,9 @@ func _on_health(current: int, maximum: int) -> void:
 
 
 func _process(delta: float) -> void:
+	if not Net.status.is_connected(_on_net_status):
+		Net.status.connect(_on_net_status)
+	_net_text_t = maxf(_net_text_t - delta, 0.0)
 	# The hero is a new node in every area: follow whichever one is current.
 	if not is_instance_valid(_player):
 		_player = null
@@ -198,6 +201,10 @@ func _draw() -> void:
 	# skip one frame rather than read the old one.
 	if _player != GameManager.player:
 		return
+	# A heavy blow's impact frame (Impact): the picture flashes white.
+	if Impact.flash > 0.0:
+		var whole := GameManager.screen_rect()
+		draw_rect(Rect2(whole.position.x, 0, whole.size.x, 240), Color(1, 0.97, 0.9, Impact.flash))
 	# Z-target letterbox bars. As in OoT the HUD stays put and draws over them.
 	var bar := roundf(letterbox)
 	if bar > 0.0:
@@ -229,6 +236,7 @@ func _draw() -> void:
 	draw_set_transform(Vector2(-pad, 0))
 	_draw_riding_carrots()
 	draw_set_transform(Vector2.ZERO)
+	_draw_party()
 	_draw_course_clock()
 	_draw_range_clock()
 	_draw_chill()
@@ -384,6 +392,41 @@ func heart_rows() -> int:
 
 ## OoT's life meter: a row of hearts (two at most), the one being emptied
 ## beating (it swells and settles, faster when health is low).
+## Online (Net): who is playing, their hero and their hearts, at the right
+## below the buttons; and what the connection is up to, for a while.
+func _draw_party() -> void:
+	var screen := GameManager.screen_rect()
+	if _net_text_t > 0.0:
+		# Below the buttons, in the middle of the picture.
+		PixelFont.draw_centered(self, screen.get_center().x, 84, _net_text, Color(1.0, 0.92, 0.6, minf(_net_text_t, 1.0)))
+	if not Net.active:
+		return
+	# Right-aligned at the picture's right edge, under the buttons.
+	var right := screen.end.x - 5.0
+	var y := 66.0
+	var head := "ONLINE%s" % (" - PVP" if Net.pvp else "")
+	PixelFont.draw(self, Vector2(right - PixelFont.measure(head).x, y), head, Color(0.6, 0.95, 1.0))
+	y += PixelFont.H + 4.0
+	for id in Net.roster:
+		var r: Dictionary = Net.roster[id]
+		var st: Dictionary = Net.states.get(id, {})
+		var hp := "%d/%d" % [int(st.get("hp", 0)) / 2, int(st.get("mh", 0)) / 2] if not st.is_empty() else ""
+		if id == multiplayer.get_unique_id() and is_instance_valid(_player):
+			hp = "%d/%d" % [_player.health.health / 2, _player.health.max_health / 2]
+		var line := "%s %s" % [String(r.get("name", "?")).substr(0, 10), hp]
+		PixelFont.draw(self, Vector2(right - PixelFont.measure(line).x, y), line, Color(1, 1, 1, 0.9))
+		y += PixelFont.H + 3.0
+
+
+var _net_text := ""
+var _net_text_t := 0.0
+
+
+func _on_net_status(text: String) -> void:
+	_net_text = text
+	_net_text_t = 4.0
+
+
 func _draw_hearts() -> void:
 	var hearts := int(ceil(_max_hp / 2.0))
 	var beating := clampi(int(ceil(_hp / 2.0)) - 1, 0, hearts - 1)

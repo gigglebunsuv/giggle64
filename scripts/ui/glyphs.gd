@@ -3,7 +3,9 @@ extends RefCounted
 ## Button pictures for prompts, matched to what the player is holding: the
 ## keyboard's key names, or the face buttons of an Xbox pad (colored A B X Y),
 ## a PlayStation pad (cross, circle, square, triangle) or a Nintendo pad (whose
-## letters sit in other places: B at the bottom, A on the right).
+## letters sit in other places: B at the bottom, A on the right). In handheld
+## mode (GameManager.handheld) AUTO means Nintendo: the handhelds PortMaster
+## runs on are labelled that way, and SDL names their buttons by position.
 ##
 ## Prompts are written with tokens for the game's buttons by their position
 ## on an Xbox pad, which is how Godot names them (JOY_BUTTON_A is the bottom
@@ -38,6 +40,8 @@ static func family() -> String:
 	var forced: String = FAMILIES[clampi(GameManager.glyph_family, 0, FAMILIES.size() - 1)]
 	if forced != "AUTO":
 		return forced.to_lower()
+	if GameManager.handheld:
+		return "nintendo"
 	return detect(_pad_name())
 
 

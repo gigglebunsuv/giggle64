@@ -156,9 +156,10 @@ func populate(k) -> void:
 	var behind := Vector2(8.5, 7.5) - to_square * 0.75
 	k.npc("Tansy", "res://assets/models/tansy.tscn", "res://scripts/npc/tansy_lines.gd", behind.x, behind.y, k.yaw_of(to_square))
 	_market(k)
-	k.npc("Posy", "res://assets/models/posy.tscn", "res://scripts/npc/chapter5_lines.gd", 8.0, 30.0, -PI * 0.5)
-	k._dyn("res://scripts/npc/pepper.gd", "Pepper", k.g(9.0, 31.0), -PI * 0.5, {"grown": true}, Node3D.new())
-	k.npc("Haven Folk", "res://assets/models/haven_soldier.tscn", "res://scripts/npc/chapter5_lines.gd", -8.0, -24.0, PI * 0.5)
+	# On the street before the homes (the houses run from |x| 5 to 12).
+	k.npc("Posy", "res://assets/models/posy.tscn", "res://scripts/npc/chapter5_lines.gd", 3.0, 28.4, PI * 0.5)
+	k._dyn("res://scripts/npc/pepper.gd", "Pepper", k.g(2.2, 27.6), PI * 0.5, {"grown": true}, Node3D.new())
+	k.npc("Haven Folk", "res://assets/models/haven_soldier.tscn", "res://scripts/npc/chapter5_lines.gd", -3.0, -25.5, -PI * 0.5)
 	# The Knights' Yard.
 	# (She marches west with the knights once Firebuns leaves the Vault.)
 	k.npc("Commander Rowena", "res://assets/models/rowena.tscn", "res://scripts/npc/knights_lines.gd", YARD.end.x - 4.0, YARD.end.y - 4.0, PI * 0.75, YARD_Y, {"hide": "ch5:cinder_done"})

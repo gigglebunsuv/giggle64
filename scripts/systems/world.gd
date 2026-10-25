@@ -173,6 +173,9 @@ func change_area(area: String, entrance := "") -> void:
 	if not ResourceLoader.exists(WorldData.scene_path(area)):
 		push_warning("World: no scene for area '%s'" % area)
 		return
+	# Online the party travels together, as the host leads (Net).
+	if Net.intercept_area_change(area, entrance):
+		return
 	transitioning = true
 	var from_area := area_id
 	Dialogue.cancel()
@@ -589,6 +592,10 @@ func _spawn(area: String, entrance: String) -> void:
 	var player := scene.get_node_or_null("Player") as Node3D
 	if marker and player:
 		player.transform = Transform3D(Basis(Vector3.UP, marker.rotation.y), marker.position)
+		# Online, the party arrives side by side rather than on one spot.
+		var s := Net.slot() if Net.active else 0
+		if s > 0:
+			player.position += player.transform.basis * Vector3((1.0 if s % 2 == 1 else -1.0) * 0.9 * ((s + 1) / 2), 0, 0)
 	if player:
 		entry_transform = player.transform
 	area_id = area

@@ -166,6 +166,18 @@ func _on_progress() -> void:
 		_show_lantern(false)
 
 
+## The hero changed bodies (co-op's CHARACTER): the lantern moves to the new
+## belt, and what was in the old hands went with them.
+func rehome() -> void:
+	var hips := p.model.get_node_or_null("Hips") as Node3D
+	if _lantern_mesh and hips:
+		if _lantern_mesh.get_parent():
+			_lantern_mesh.get_parent().remove_child(_lantern_mesh)
+		hips.add_child(_lantern_mesh)
+	_mallet = null
+	_tool = null
+
+
 ## An item button with one of these items on it. True when he took up an
 ## action (the controller stops looking at other input this frame).
 func use(item: String, _button: String) -> bool:
@@ -246,16 +258,16 @@ func _begin(kind: String) -> bool:
 	p._change_state(PlayerController.State.ITEM)
 	match kind:
 		"nut":
-			p.model.play(&"throw_carry", 0.04, 1.5, true)
+			p.model.play(&"nut_throw", 0.04, 1.0, true)
 		"mallet":
 			p._set_sword_drawn(false)
 			_show_mallet(true)
-			p.model.play(&"jumpslash", 0.05, 1.0, true)
+			p.model.play(&"mallet_swing", 0.05, 1.0, true)
 			Sfx.play("lift_pot", -6.0, 0.05, 0.7)
 		"dig":
 			p._set_sword_drawn(false)
 			_show_tool("grave_spade_mesh")
-			p.model.play(&"jumpslash", 0.05, 1.3, true)
+			p.model.play(&"dig", 0.05, 1.0, true)
 		"ember":
 			if not Progress.use_magic(Progress.magic_cost("ember_rod")):
 				action = ""
@@ -263,11 +275,11 @@ func _begin(kind: String) -> bool:
 				return false
 			p._set_sword_drawn(false)
 			_show_tool("ember_rod_mesh")
-			p.model.play(&"throw", 0.04, 1.6, true)
+			p.model.play(&"ember_flick", 0.04, 1.0, true)
 		"flail":
 			p._set_sword_drawn(false)
 			_show_tool("iron_flail_handle_mesh")
-			p.model.play(&"throw", 0.06, 0.8, true)
+			p.model.play(&"flail_hurl", 0.06, 1.0, true)
 			Sfx.play("heavy_swing", -6.0, 0.05, 0.7)
 		"staff":
 			if not Progress.use_magic(Progress.magic_cost("sapphire_staff")):
@@ -276,18 +288,39 @@ func _begin(kind: String) -> bool:
 				return false
 			p._set_sword_drawn(false)
 			_show_tool("sapphire_staff_mesh")
-			p.model.play(&"item_get", 0.08, 1.4, true)
+			p.model.play(&"staff_cast", 0.08, 1.0, true)
 			Sfx.play("magic_cast", -4.0, 0.0, 0.8)
 		_:
 			if Progress.use_magic(Progress.magic_cost({"harvest": "alans_harvest", "gale": "aphiels_gale", "ruin": "serielyes_ruin", "dream": "lothelyes_dream"}[kind])):
 				p._set_sword_drawn(false)
-				p.model.play(&"item_get", 0.08, 1.2, true)
+				# OoT's spells: kaze (the Gale), honoo (the Ruin), tamashii (the Harvest).
+				p.model.play(StringName("cast_" + kind), 0.08, 1.0, true)
 				Sfx.play("magic_cast", -2.0, 0.0)
 			else:
 				action = ""
 				p._change_state(PlayerController.State.IDLE)
 				return false
 	return true
+
+
+## An animation played through on the spot (a bottle swung, drunk from or
+## emptied), State.ITEM holding the body for `length` seconds. In the air or
+## otherwise busy he simply does without it.
+var _anim_end := 0.0
+
+
+func play_action(anim_name: StringName, length: float) -> void:
+	if not _can_act():
+		return
+	p._end_bow_z()
+	p._cancel_boomerang()
+	action = "anim"
+	_t = 0.0
+	_fired = true
+	_anim_end = length
+	p.speed_oot = 0.0
+	p._change_state(PlayerController.State.ITEM)
+	p.model.play(anim_name, 0.05, 1.0, true)
 
 
 ## While in State.ITEM.
@@ -299,6 +332,8 @@ func state_update(delta: float) -> void:
 	p.move_yaw = p.facing_yaw
 	var end := CAST_END
 	match action:
+		"anim":
+			end = _anim_end
 		"nut":
 			end = NUT_END
 			if not _fired and _t >= NUT_RELEASE:
@@ -306,17 +341,11 @@ func state_update(delta: float) -> void:
 				_throw_nut()
 		"mallet":
 			end = MALLET_END
-			if not _raised and _t >= MALLET_RAISE:
-				_raised = true
-				p.model.play(&"jumpslash_land", 0.03, 1.0, true)
 			if not _fired and _t >= MALLET_HIT:
 				_fired = true
 				_mallet_blow()
 		"dig":
 			end = DIG_END
-			if not _raised and _t >= DIG_HIT * 0.6:
-				_raised = true
-				p.model.play(&"jumpslash_land", 0.03, 1.2, true)
 			if not _fired and _t >= DIG_HIT:
 				_fired = true
 				_dig()
@@ -349,6 +378,8 @@ func state_update(delta: float) -> void:
 
 ## Leaving State.ITEM, finished or knocked out of it.
 func end_action() -> void:
+	if action == "anim":
+		p.model.show_prop("", 0.0)
 	action = ""
 	_show_mallet(false)
 	_show_tool("")

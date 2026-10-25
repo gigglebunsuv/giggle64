@@ -203,8 +203,26 @@ func marker_point() -> Vector3:
 ## as OoT's room-bound actors do, so nothing hunts him through a floor or wall.
 ## One that belongs to no room (in a passage) must see him, on its own level:
 ## once it has, it keeps after him for SIGHT_MEMORY seconds out of sight.
+## Online (Net), every hero in the area counts and the nearest it may chase
+## is the one.
 func _player() -> PlayerController:
-	var p := GameManager.player
+	if not Net.active:
+		return _chases(GameManager.player)
+	var best: PlayerController = null
+	var best_d := INF
+	for h: PlayerController in Net.heroes():
+		if h.is_dead() and h != GameManager.player:
+			continue
+		var c := _chases(h)
+		if c:
+			var d := _flat_dist(c.global_position)
+			if d < best_d:
+				best_d = d
+				best = c
+	return best
+
+
+func _chases(p: PlayerController) -> PlayerController:
 	if p == null:
 		return null
 	var room := _room_zone()
@@ -215,19 +233,23 @@ func _player() -> PlayerController:
 		if absf(p.global_position.y - global_position.y) > 3.5:
 			return null
 		var now := Time.get_ticks_msec() * 0.001
-		if now - _sight_check > 0.2:
-			_sight_check = now
+		var key := p.get_instance_id()
+		if now - float(_sight_checks.get(key, -10.0)) > 0.2:
+			_sight_checks[key] = now
 			if _sees(p):
-				_seen_at = now
-		if now - _seen_at > SIGHT_MEMORY:
+				_seen_ats[key] = now
+		if now - float(_seen_ats.get(key, -100.0)) > SIGHT_MEMORY:
 			return null
 	return p
 
 
+## When each hero was last looked for, and last seen (instance id -> seconds).
+var _sight_checks := {}
+var _seen_ats := {}
+
+
 const SIGHT_MEMORY := 2.5
 var _in_dungeon := false
-var _sight_check := -10.0
-var _seen_at := -100.0
 
 
 ## A clear line from its head to his (walls and floors block it).

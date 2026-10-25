@@ -7,10 +7,10 @@
 **A third-person action-adventure in the style of a late-90s 64-bit classic.**
 Sword and shield, lock-on combat, towers and tombs, a horse named Biscuit, and a kingdom on fire.
 
-![Version](https://img.shields.io/badge/version-beta%201.7.0-6e1519?style=for-the-badge)
+![Version](https://img.shields.io/badge/version-beta%201.9.0-6e1519?style=for-the-badge)
 ![Engine](https://img.shields.io/badge/Godot-4.7.2-c99a3e?style=for-the-badge&logo=godotengine&logoColor=white)
 ![Platforms](https://img.shields.io/badge/platforms-Windows%20%7C%20Linux-4a0c10?style=for-the-badge)
-![Players](https://img.shields.io/badge/players-1-c99a3e?style=for-the-badge)
+![Players](https://img.shields.io/badge/players-1--6%20online-c99a3e?style=for-the-badge)
 
 [**Trailer**](promo/giggle64_trailer.mp4) &nbsp;·&nbsp;
 [**Instruction Booklet**](promo/manual/giggle64_manual.pdf) &nbsp;·&nbsp;
@@ -88,6 +88,10 @@ Bunsriel through to its end, across five chapters.
   day if you lose your way.
 - **The real 64-bit look.** Native 320 × 240 rendering, bilinear-filtered textures and an optional **TRUE N64 MODE**,
   in 4:3 or widescreen.
+- **Online co-op for up to six.** Play as Sir Gigglebuns, Pink, Aladriel, Idrith, Mira or Himeko. Each has the hero's
+  full moveset and her own take on every sword, shield and tunic. The party shares one world: items, coins and progress
+  are shared, everyone fights the same creatures, and the party travels between areas together. PvP is optional. Host
+  or join from **OPTIONS › ONLINE**.
 - **Three save files.** OoT-style Game Over with Continue, rumble, remappable controls, and Xbox, PlayStation or
   Nintendo button icons.
 
@@ -169,12 +173,17 @@ Optional launch flags go after `--`:
 | `--skip-title` | Start straight in the game |
 | `--skip-splash` | Go straight to the title screen |
 | `--fps=21` | Run at 21, 30 or 60 frames per second |
+| `--net-host[=port]` | Host an online game (port 24064 by default) |
+| `--net-join=address[:port]` | Join someone's online game |
+| `--net-char=pink` | Play as `gigglebuns`, `pink`, `aladriel`, `idrith`, `mira` or `himeko` |
+| `--net-name=NAME` | The name over your head online |
 
 ### For developers
 
 - **Generated assets.** Models, animations, textures, sounds and the world are built by the generators in
   [`tools/`](tools). Edit the generators, not the generated `.tscn` and `.tres` files, then rebuild with
-  `tools/build_assets.ps1 -Godot <path to Godot>`.
+  `tools/build_assets.ps1 -Godot <path to Godot>`. Sound effects are recordings (listed in
+  [`tools/recorded_sfx.txt`](tools/recorded_sfx.txt)), which `tools/gen_sfx.gd` leaves alone.
 - **Tests.** Run `Godot --headless --path . --fixed-fps 60 res://tests/test_runner.tscn` (add `-- --tests=a,b` for a
   subset). Visual capture scenes and the geometry audit are described in [`tests/README.md`](tests/README.md).
 - **Debug menu.** Press **F1** (or **View + Menu**) in a development build.
@@ -219,6 +228,7 @@ tools/       asset and world generators, promo renderers
 | **Art and character design** | Saoirse Redmond, Darcy Shaw |
 | **Game design** | Saoirse Redmond, Darcy Shaw |
 | **Music** | Another (Saoirse Redmond), Water on Red |
+| **Sound effects** | Recordings shared under CC0 and CC BY, credited in [`docs/audio_credits.md`](docs/audio_credits.md) |
 | **Special thanks** | Darcy Shaw, Zabi, Avalon, Trent, John, Zach |
 
 <div align="center">

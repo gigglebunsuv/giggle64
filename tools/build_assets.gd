@@ -20,6 +20,7 @@ func _initialize() -> void:
 		"scenes":
 			var mats := _materials()
 			preload("res://tools/gen_characters.gd").new().run(mats)
+			preload("res://tools/gen_characters.gd").new().run_playable(mats)
 			preload("res://tools/gen_items.gd").new().run(mats)
 			preload("res://tools/gen_update_items.gd").new().run(mats)
 			preload("res://tools/gen_tower_items.gd").new().run(mats)
@@ -50,6 +51,12 @@ func _initialize() -> void:
 		"chars":
 			# Quick rebuild of the character models alone (while working on them).
 			preload("res://tools/gen_characters.gd").new().run(_materials())
+		"hero":
+			# Quick rebuild of the hero's model and gear alone.
+			preload("res://tools/gen_characters.gd").new().run_hero(_materials())
+		"playable":
+			# The co-op companions (playable_<id>.tscn) alone.
+			preload("res://tools/gen_characters.gd").new().run_playable(_materials())
 		"items":
 			# Quick rebuild of the update's item meshes alone.
 			var mats := _materials()
@@ -84,7 +91,7 @@ func _initialize() -> void:
 			preload("res://tools/gen_ridge_creatures.gd").new().run(mats)
 			preload("res://tools/gen_final_creatures.gd").new().run(mats)
 		_:
-			push_error("Usage: -- media | scenes | chars | items | creatures | world")
+			push_error("Usage: -- media | scenes | chars | hero | playable | items | creatures | world")
 	print("build_assets: finished step '%s'" % step)
 	quit()
 

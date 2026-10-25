@@ -1,4 +1,4 @@
-extends Node
+﻿extends Node
 ## The story's cutscenes (the "Fall of Castle Town" chapter), played through
 ## Cutscene (z_demo.c-style scenes: halted hero, scene camera, letterbox):
 ## - wake_up():     a new game: the hero wakes in his bed at home
@@ -1692,7 +1692,7 @@ func pages_on_cues(pages: Array) -> void:
 
 ## The credits (OPTIONS > CREDITS for now; the game's true ending will roll them).
 const CREDITS := [
-	"GIGGLE 64", "THE GAUNTLET OF FIRE", "BETA 1.7.0", "",
+	"GIGGLE 64", "THE GAUNTLET OF FIRE", "BETA 1.9.0", "",
 	"DEVELOPED BY", "SAOIRSE REDMOND", "DARCY SHAW", "",
 	"STORY AND THE WORLD OF BUNSRIEL", "SAOIRSE REDMOND", "",
 	"ART AND CHARACTER DESIGN", "SAOIRSE REDMOND", "DARCY SHAW", "",

@@ -17,6 +17,8 @@ extends Node3D
 @export var key := ""
 ## Only there once this flag is set ("" = always).
 @export var show_flag := ""
+## Gone once this flag is set ("" = never).
+@export var hide_flag := ""
 
 
 func _ready() -> void:
@@ -25,6 +27,8 @@ func _ready() -> void:
 
 func can_interact(by: Node3D) -> bool:
 	if show_flag != "" and not Progress.flag(show_flag):
+		return false
+	if hide_flag != "" and Progress.flag(hide_flag):
 		return false
 	if not front_only:
 		return true

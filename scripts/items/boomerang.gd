@@ -184,6 +184,8 @@ func _caught() -> void:
 	if carried and is_instance_valid(carried):
 		carried.collect(thrower)
 	Sfx.play("boomerang_catch", -6.0)
+	if is_instance_valid(thrower) and thrower.has_method("boomerang_caught"):
+		thrower.boomerang_caught()
 	_finish()
 
 
